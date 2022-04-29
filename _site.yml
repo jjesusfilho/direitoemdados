@@ -3,6 +3,7 @@ title: "Jurimetria"
 description: |
   Ciência de Dados Aplicada ao Direito
 output_dir: "docs"
+base_url: https://direitoemdados.consudata.com.br/
 navbar:
   right:
     - text: "Início"
