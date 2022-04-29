@@ -81,7 +81,7 @@ dir.create("feminicidio")
 dir.create("feminicidio/cjsg")
 ```
 
-A consulta por feminicídio resultou em mais de 2500 julgados de segundo grau. Vamos baixar apenas as primerias 10 páginas da consulta. Veja abaixo como ficará a consulta.
+A consulta por feminicídio resultou em mais de 2500 julgados de segundo grau. Vamos baixar apenas as primeiras 10 páginas da consulta. Veja abaixo como ficará a consulta.
 
 ```r
 tjsp_baixar_cjsg(livre = "feminicídio",
