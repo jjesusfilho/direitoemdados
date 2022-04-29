@@ -1,0 +1,20 @@
+{
+  "articles": [
+    {
+      "path": "about.html",
+      "title": "Jurimetria",
+      "description": "Blog voltado à ciência de dados aplicada ao direito",
+      "author": [],
+      "contents": "\n\n\n\n",
+      "last_modified": "2022-04-29T11:30:52-03:00"
+    },
+    {
+      "path": "index.html",
+      "title": "Direito em Dados",
+      "author": [],
+      "contents": "\n\n\n\n",
+      "last_modified": "2022-04-29T11:23:40-03:00"
+    }
+  ],
+  "collections": ["posts/posts.json"]
+}

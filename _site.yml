@@ -1,0 +1,12 @@
+name: "direitoemdados"
+title: "Jurimetria"
+description: |
+  Ciência de Dados Aplicada ao Direito
+output_dir: "docs"
+navbar:
+  right:
+    - text: "Início"
+      href: index.html
+    - text: "Sobre"
+      href: about.html
+output: distill::distill_article

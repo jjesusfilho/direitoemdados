@@ -1,0 +1,9 @@
+---
+title: "Jurimetria"
+description: |
+  Blog voltado à ciência de dados aplicada ao direito
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
