@@ -1,7 +1,7 @@
 ---
 title: "Como baixar dados do TJSP"
 description: |
-  A primeira postagem será como baixar os dados do Tribunal de Justiça de São Paulo usando o pacote tjsp.
+  Nesta primeira postagem do blog, falaremos sobre como baixar e estruturar dados do Tribunal de Justiça de São Paulo. Nas próximas, veremos como agregar valor a esses dados e como aplicar técnicas de machine learning  e métodos estatísticos para analisar e fazer predições.
 author:
   - name: José de Jesus Filho
     url: https://github.com/jjesusfilho
@@ -31,7 +31,7 @@ Inicialmente, vamos instalar o pacote [tjsp](https://tjsp.consudata.com.br), o q
 remotes::install_package("jjesusfilho/tjsp")
 ```
 
-O pacote tjsp possui muitas funções para baixar e organizar os dados do TJSP. Ele segue uma sintaxe simples. A maioria das funções começam com tjsp_, seguido do verbo indicador da ação, e.g., baixar, seguido da sigla do repositório. Basicamente, o sistema esaj, responsável por disponibilizar os dados processuais do TJSP em meio eletrônico, usa quatro siglas: 
+O pacote tjsp possui muitas funções para baixar e organizar os dados do TJSP. Ele segue uma sintaxe simples. A maioria das funções começa com tjsp_, seguido do verbo indicador da ação, e.g., baixar, seguido da sigla do repositório. Basicamente, o sistema esaj, responsável por disponibilizar os dados processuais do TJSP em meio eletrônico, usa quatro siglas: 
 
 -  cjsg para consulta de julgados de segundo grau (busca jurisprudencia), [nesta página](https://esaj.tjsp.jus.br/cjsg/resultadoCompleta.do).
 
@@ -71,9 +71,9 @@ tjsp_baixar_cjsg(
 )
 ```
 
-O primeiro argumento da função chama-se livre, o qual corresponde à "Pesquisa livre` na página. Há outros argumentos, como especificação de assunto ou de classe processual. Hoje usaremos somente o primeiro e o argumento n, que indica o número de páginas. Além deles, indicaremos no argumento diretorio, onde queremos baixar as consultas:
+O primeiro argumento da função chama-se livre, o qual corresponde à "Pesquisa livre` na página referida. Há outros argumentos, como a especificação do assunto ou da classe processual. Hoje usaremos somente a busca livre e o argumento n, o qual indica o número de páginas. Além deles, indicaremos, no argumento diretorio, onde queremos baixar as consultas:
 
-Vamos fazer um experimento com a palavra "feminicídio". Vamos criar um diretório chamado femicidio (sem acento) e, dentro dele, um coutro chamado cjsg.
+Vamos fazer um experimento com a palavra "feminicídio". Vamos criar um diretório chamado feminicidio (sem acento) e, dentro dele, um outro chamado cjsg.
 
 ```
 dir.create("feminicidio")
@@ -109,7 +109,7 @@ glimpse(cjsg)
 
 ## Consulta processual
 
-O próximo passo é consultar os dados de capa desses processos. No entanto, para automatizar a coleta de dados processuais, é necessário [identificar-se](https://esaj.tjsp.jus.br/sajcas/login) antes com CPF e senha. Se você está cadastrado no esaj, use a função abaixo. Ela abrir um caixa para você incluir seu cpf e senha.
+O próximo passo é consultar os dados de capa desses processos. No entanto, para automatizar a coleta de dados processuais, é necessário [identificar-se](https://esaj.tjsp.jus.br/sajcas/login) antes com CPF e senha. Se você está cadastrada no esaj, use a função abaixo. Ela irá abrir um caixa para você incluir seu cpf e senha.
 
 ```r
 tjsp_autenticar()
@@ -121,15 +121,15 @@ Vamos criar um diretório chamado "cposg" dentro do diretório "feminicidio".
 dir.create("feminicidio/cposg")
 ```
 
-Agora, vamos baixar os processos para a pasta criada. Iremos usar a coluna processo do dataframe cjsg. Para usá-la, basta colocar o cifrão entre o nome do dataframe e o nome da coluna.
+Agora vamos baixar os processos para a pasta criada. Iremos usar a coluna processo do dataframe cjsg. Para usá-la, basta colocar o cifrão entre o nome do dataframe e o nome da coluna.
 
 ```r
 tjsp_baixar_cposg(cjsg$processo, diretorio = "feminicidio/cposg")
 ```
 
-A leitura dos htmls contendo as informações ocorre em quatro pedaços. Iniciamos, nós lemos os dados de capa propriamente ditos, número do processo, magistrado, comarca, vara etc. Em seguida, lemos os dados das partes. Depois lemos a movimentação processual e, por fim, lemos o dispositivo do acórdão. 
+A leitura dos htmls contendo as informações ocorre em quatro etapas. Iniciamos, nós lemos os dados de capa propriamente ditos, número do processo, magistrado, comarca, vara etc. Em seguida, lemos os dados das partes. Depois lemos a movimentação processual e, por fim, lemos o dispositivo do acórdão. 
 
-Para isso, primeiramente listamos todos os arquivos para então usar o caminho dos arquivos para "parsear" cada um dos grupos de dados mencionados acima. A função abaixo lista todos os htmls.
+Para isso, primeiramente listamos todos os arquivos, para então usar o caminho dos arquivos para "parsear" cada um dos grupos de dados mencionados acima. A função abaixo lista todos os htmls.
 
 ```r
 arquivos <- list.files("feminicidio/cposg",full.names = TRUE)
@@ -162,7 +162,7 @@ partes <- tjsp_ler_partes(arquivos)
 glimpse(partes)
 ```
 
-### movimentação processual
+### Movimentação processual
 
 O mesmo fazemos com a movimentação processual.
 
