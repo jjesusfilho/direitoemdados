@@ -127,7 +127,7 @@ Agora vamos baixar os processos para a pasta criada. Iremos usar a coluna proces
 tjsp_baixar_cposg(cjsg$processo, diretorio = "feminicidio/cposg")
 ```
 
-A leitura dos htmls contendo as informações ocorre em quatro etapas. Iniciamos, nós lemos os dados de capa propriamente ditos, número do processo, magistrado, comarca, vara etc. Em seguida, lemos os dados das partes. Depois lemos a movimentação processual e, por fim, lemos o dispositivo do acórdão. 
+A leitura dos htmls contendo as informações ocorre em quatro etapas. Inicialmente, nós lemos os dados de capa propriamente ditos, número do processo, magistrado, comarca, vara etc. Em seguida, lemos os dados das partes. Depois lemos a movimentação processual e, por fim, lemos o dispositivo do acórdão. 
 
 Para isso, primeiramente listamos todos os arquivos, para então usar o caminho dos arquivos para "parsear" cada um dos grupos de dados mencionados acima. A função abaixo lista todos os htmls.
 

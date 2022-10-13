@@ -7,7 +7,16 @@
     <description>Ciência de Dados Aplicada ao Direito
 </description>
     <generator>Distill</generator>
-    <lastBuildDate>Fri, 29 Apr 2022 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 06 Oct 2022 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>O tempo do processo judicial</title>
+      <dc:creator>José de Jesus Filho</dc:creator>
+      <link>https://direitoemdados.consudata.com.br/posts/2022-10-06-sobrevivencia</link>
+      <description>Como calculo a duração do processo? Neste tutorial, introduzo uma metodologia própria para estimar o tempo desde a instauração até a apreciação do pedido. A análise de sobrevivência ou análise de duração compreende várias técnicas estatísticas para estimar a duração do processo.</description>
+      <guid>https://direitoemdados.consudata.com.br/posts/2022-10-06-sobrevivencia</guid>
+      <pubDate>Thu, 06 Oct 2022 00:00:00 +0000</pubDate>
+      <media:content url="https://direitoemdados.consudata.com.br/posts/2022-10-06-sobrevivencia/sobrevivencia_files/figure-html5/unnamed-chunk-10-1.png" medium="image" type="image/png" width="1248" height="768"/>
+    </item>
     <item>
       <title>Jurimetria</title>
       <dc:creator>José de Jesus Filho</dc:creator>

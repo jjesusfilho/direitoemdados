@@ -1,0 +1,2364 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+  <meta name="generator" content="distill" />
+
+  <style type="text/css">
+  /* Hide doc at startup (prevent jankiness while JS renders/transforms) */
+  body {
+    visibility: hidden;
+  }
+  </style>
+
+ <!--radix_placeholder_import_source-->
+ <!--/radix_placeholder_import_source-->
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  { color: #00769e; background-color: #f1f3f5; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span { color: #00769e; } /* Normal */
+code span.al { color: #ad0000; } /* Alert */
+code span.an { color: #5e5e5e; } /* Annotation */
+code span.at { color: #657422; } /* Attribute */
+code span.bn { color: #ad0000; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #00769e; } /* ControlFlow */
+code span.ch { color: #20794d; } /* Char */
+code span.cn { color: #8f5902; } /* Constant */
+code span.co { color: #5e5e5e; } /* Comment */
+code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+code span.dt { color: #ad0000; } /* DataType */
+code span.dv { color: #ad0000; } /* DecVal */
+code span.er { color: #ad0000; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #ad0000; } /* Float */
+code span.fu { color: #4758ab; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #5e5e5e; } /* Information */
+code span.kw { color: #00769e; } /* Keyword */
+code span.op { color: #5e5e5e; } /* Operator */
+code span.ot { color: #00769e; } /* Other */
+code span.pp { color: #ad0000; } /* Preprocessor */
+code span.sc { color: #5e5e5e; } /* SpecialChar */
+code span.ss { color: #20794d; } /* SpecialString */
+code span.st { color: #20794d; } /* String */
+code span.va { color: #111111; } /* Variable */
+code span.vs { color: #20794d; } /* VerbatimString */
+code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+</style>
+
+
+  <!--radix_placeholder_meta_tags-->
+  <title>O tempo do processo judicial</title>
+
+  <meta property="description" itemprop="description" content="Como calculo a duração do processo? Neste tutorial, introduzo uma metodologia própria para estimar o tempo desde a instauração até a apreciação do pedido. A análise de sobrevivência ou análise de duração compreende várias técnicas estatísticas para estimar a duração do processo."/>
+
+
+  <!--  https://schema.org/Article -->
+  <meta property="article:published" itemprop="datePublished" content="2022-10-06"/>
+  <meta property="article:created" itemprop="dateCreated" content="2022-10-06"/>
+  <meta name="article:author" content="José de Jesus Filho"/>
+
+  <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
+  <meta property="og:title" content="O tempo do processo judicial"/>
+  <meta property="og:type" content="article"/>
+  <meta property="og:description" content="Como calculo a duração do processo? Neste tutorial, introduzo uma metodologia própria para estimar o tempo desde a instauração até a apreciação do pedido. A análise de sobrevivência ou análise de duração compreende várias técnicas estatísticas para estimar a duração do processo."/>
+  <meta property="og:locale" content="en_US"/>
+
+  <!--  https://dev.twitter.com/cards/types/summary -->
+  <meta property="twitter:card" content="summary"/>
+  <meta property="twitter:title" content="O tempo do processo judicial"/>
+  <meta property="twitter:description" content="Como calculo a duração do processo? Neste tutorial, introduzo uma metodologia própria para estimar o tempo desde a instauração até a apreciação do pedido. A análise de sobrevivência ou análise de duração compreende várias técnicas estatísticas para estimar a duração do processo."/>
+
+  <!--/radix_placeholder_meta_tags-->
+  <!--radix_placeholder_rmarkdown_metadata-->
+
+  <script type="text/json" id="radix-rmarkdown-metadata">
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","output"]}},"value":[{"type":"character","attributes":{},"value":["O tempo do processo judicial"]},{"type":"character","attributes":{},"value":["Como calculo a duração do processo? Neste tutorial, introduzo uma metodologia própria para estimar o tempo desde a instauração até a apreciação do pedido. A análise de sobrevivência ou análise de duração compreende várias técnicas estatísticas para estimar a duração do processo.\n"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url"]}},"value":[{"type":"character","attributes":{},"value":["José de Jesus Filho"]},{"type":"character","attributes":{},"value":["https://github.com/jjesusfilho"]}]}]},{"type":"character","attributes":{},"value":["2022-10-06"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[false]}]}]}]}
+  </script>
+  <!--/radix_placeholder_rmarkdown_metadata-->
+  
+  <script type="text/json" id="radix-resource-manifest">
+  {"type":"character","attributes":{},"value":["sobrevivencia_files/anchor-4.2.2/anchor.min.js","sobrevivencia_files/bowser-1.9.3/bowser.min.js","sobrevivencia_files/distill-2.2.21/template.v2.js","sobrevivencia_files/figure-html5/unnamed-chunk-10-1.png","sobrevivencia_files/figure-html5/unnamed-chunk-12-1.png","sobrevivencia_files/figure-html5/unnamed-chunk-14-1.png","sobrevivencia_files/header-attrs-2.14/header-attrs.js","sobrevivencia_files/jquery-3.6.0/jquery-3.6.0.js","sobrevivencia_files/jquery-3.6.0/jquery-3.6.0.min.js","sobrevivencia_files/jquery-3.6.0/jquery-3.6.0.min.map","sobrevivencia_files/popper-2.6.0/popper.min.js","sobrevivencia_files/tippy-6.2.7/tippy-bundle.umd.min.js","sobrevivencia_files/tippy-6.2.7/tippy-light-border.css","sobrevivencia_files/tippy-6.2.7/tippy.css","sobrevivencia_files/tippy-6.2.7/tippy.umd.min.js","sobrevivencia_files/webcomponents-2.0.0/webcomponents.js"]}
+  </script>
+  <!--radix_placeholder_navigation_in_header-->
+  <!--/radix_placeholder_navigation_in_header-->
+  <!--radix_placeholder_distill-->
+
+  <style type="text/css">
+
+  body {
+    background-color: white;
+  }
+
+  .pandoc-table {
+    width: 100%;
+  }
+
+  .pandoc-table>caption {
+    margin-bottom: 10px;
+  }
+
+  .pandoc-table th:not([align]) {
+    text-align: left;
+  }
+
+  .pagedtable-footer {
+    font-size: 15px;
+  }
+
+  d-byline .byline {
+    grid-template-columns: 2fr 2fr;
+  }
+
+  d-byline .byline h3 {
+    margin-block-start: 1.5em;
+  }
+
+  d-byline .byline .authors-affiliations h3 {
+    margin-block-start: 0.5em;
+  }
+
+  .authors-affiliations .orcid-id {
+    width: 16px;
+    height:16px;
+    margin-left: 4px;
+    margin-right: 4px;
+    vertical-align: middle;
+    padding-bottom: 2px;
+  }
+
+  d-title .dt-tags {
+    margin-top: 1em;
+    grid-column: text;
+  }
+
+  .dt-tags .dt-tag {
+    text-decoration: none;
+    display: inline-block;
+    color: rgba(0,0,0,0.6);
+    padding: 0em 0.4em;
+    margin-right: 0.5em;
+    margin-bottom: 0.4em;
+    font-size: 70%;
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 3px;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  d-article table.gt_table td,
+  d-article table.gt_table th {
+    border-bottom: none;
+  }
+
+  .html-widget {
+    margin-bottom: 2.0em;
+  }
+
+  .l-screen-inset {
+    padding-right: 16px;
+  }
+
+  .l-screen .caption {
+    margin-left: 10px;
+  }
+
+  .shaded {
+    background: rgb(247, 247, 247);
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .shaded .html-widget {
+    margin-bottom: 0;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .shaded .shaded-content {
+    background: white;
+  }
+
+  .text-output {
+    margin-top: 0;
+    line-height: 1.5em;
+  }
+
+  .hidden {
+    display: none !important;
+  }
+
+  d-article {
+    padding-top: 2.5rem;
+    padding-bottom: 30px;
+  }
+
+  d-appendix {
+    padding-top: 30px;
+  }
+
+  d-article>p>img {
+    width: 100%;
+  }
+
+  d-article h2 {
+    margin: 1rem 0 1.5rem 0;
+  }
+
+  d-article h3 {
+    margin-top: 1.5rem;
+  }
+
+  d-article iframe {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    margin-bottom: 2.0em;
+    width: 100%;
+  }
+
+  /* Tweak code blocks */
+
+  d-article div.sourceCode code,
+  d-article pre code {
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  }
+
+  d-article pre,
+  d-article div.sourceCode,
+  d-article div.sourceCode pre {
+    overflow: auto;
+  }
+
+  d-article div.sourceCode {
+    background-color: white;
+  }
+
+  d-article div.sourceCode pre {
+    padding-left: 10px;
+    font-size: 12px;
+    border-left: 2px solid rgba(0,0,0,0.1);
+  }
+
+  d-article pre {
+    font-size: 12px;
+    color: black;
+    background: none;
+    margin-top: 0;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    line-height: 1.5;
+
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+  }
+
+  d-article pre a {
+    border-bottom: none;
+  }
+
+  d-article pre a:hover {
+    border-bottom: none;
+    text-decoration: underline;
+  }
+
+  d-article details {
+    grid-column: text;
+    margin-bottom: 0.8em;
+  }
+
+  @media(min-width: 768px) {
+
+  d-article pre,
+  d-article div.sourceCode,
+  d-article div.sourceCode pre {
+    overflow: visible !important;
+  }
+
+  d-article div.sourceCode pre {
+    padding-left: 18px;
+    font-size: 14px;
+  }
+
+  d-article pre {
+    font-size: 14px;
+  }
+
+  }
+
+  figure img.external {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+    padding: 18px;
+    box-sizing: border-box;
+  }
+
+  /* CSS for d-contents */
+
+  .d-contents {
+    grid-column: text;
+    color: rgba(0,0,0,0.8);
+    font-size: 0.9em;
+    padding-bottom: 1em;
+    margin-bottom: 1em;
+    padding-bottom: 0.5em;
+    margin-bottom: 1em;
+    padding-left: 0.25em;
+    justify-self: start;
+  }
+
+  @media(min-width: 1000px) {
+    .d-contents.d-contents-float {
+      height: 0;
+      grid-column-start: 1;
+      grid-column-end: 4;
+      justify-self: center;
+      padding-right: 3em;
+      padding-left: 2em;
+    }
+  }
+
+  .d-contents nav h3 {
+    font-size: 18px;
+    margin-top: 0;
+    margin-bottom: 1em;
+  }
+
+  .d-contents li {
+    list-style-type: none
+  }
+
+  .d-contents nav > ul {
+    padding-left: 0;
+  }
+
+  .d-contents ul {
+    padding-left: 1em
+  }
+
+  .d-contents nav ul li {
+    margin-top: 0.6em;
+    margin-bottom: 0.2em;
+  }
+
+  .d-contents nav a {
+    font-size: 13px;
+    border-bottom: none;
+    text-decoration: none
+    color: rgba(0, 0, 0, 0.8);
+  }
+
+  .d-contents nav a:hover {
+    text-decoration: underline solid rgba(0, 0, 0, 0.6)
+  }
+
+  .d-contents nav > ul > li > a {
+    font-weight: 600;
+  }
+
+  .d-contents nav > ul > li > ul {
+    font-weight: inherit;
+  }
+
+  .d-contents nav > ul > li > ul > li {
+    margin-top: 0.2em;
+  }
+
+
+  .d-contents nav ul {
+    margin-top: 0;
+    margin-bottom: 0.25em;
+  }
+
+  .d-article-with-toc h2:nth-child(2) {
+    margin-top: 0;
+  }
+
+
+  /* Figure */
+
+  .figure {
+    position: relative;
+    margin-bottom: 2.5em;
+    margin-top: 1.5em;
+  }
+
+  .figure .caption {
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 12px;
+    line-height: 1.5em;
+  }
+
+  .figure img.external {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+    padding: 18px;
+    box-sizing: border-box;
+  }
+
+  .figure .caption a {
+    color: rgba(0, 0, 0, 0.6);
+  }
+
+  .figure .caption b,
+  .figure .caption strong, {
+    font-weight: 600;
+    color: rgba(0, 0, 0, 1.0);
+  }
+
+  /* Citations */
+
+  d-article .citation {
+    color: inherit;
+    cursor: inherit;
+  }
+
+  div.hanging-indent{
+    margin-left: 1em; text-indent: -1em;
+  }
+
+  /* Citation hover box */
+
+  .tippy-box[data-theme~=light-border] {
+    background-color: rgba(250, 250, 250, 0.95);
+  }
+
+  .tippy-content > p {
+    margin-bottom: 0;
+    padding: 2px;
+  }
+
+
+  /* Tweak 1000px media break to show more text */
+
+  @media(min-width: 1000px) {
+    .base-grid,
+    distill-header,
+    d-title,
+    d-abstract,
+    d-article,
+    d-appendix,
+    distill-appendix,
+    d-byline,
+    d-footnote-list,
+    d-citation-list,
+    distill-footer {
+      grid-template-columns: [screen-start] 1fr [page-start kicker-start] 80px [middle-start] 50px [text-start kicker-end] 65px 65px 65px 65px 65px 65px 65px 65px [text-end gutter-start] 65px [middle-end] 65px [page-end gutter-end] 1fr [screen-end];
+      grid-column-gap: 16px;
+    }
+
+    .grid {
+      grid-column-gap: 16px;
+    }
+
+    d-article {
+      font-size: 1.06rem;
+      line-height: 1.7em;
+    }
+    figure .caption, .figure .caption, figure figcaption {
+      font-size: 13px;
+    }
+  }
+
+  @media(min-width: 1180px) {
+    .base-grid,
+    distill-header,
+    d-title,
+    d-abstract,
+    d-article,
+    d-appendix,
+    distill-appendix,
+    d-byline,
+    d-footnote-list,
+    d-citation-list,
+    distill-footer {
+      grid-template-columns: [screen-start] 1fr [page-start kicker-start] 60px [middle-start] 60px [text-start kicker-end] 60px 60px 60px 60px 60px 60px 60px 60px [text-end gutter-start] 60px [middle-end] 60px [page-end gutter-end] 1fr [screen-end];
+      grid-column-gap: 32px;
+    }
+
+    .grid {
+      grid-column-gap: 32px;
+    }
+  }
+
+
+  /* Get the citation styles for the appendix (not auto-injected on render since
+     we do our own rendering of the citation appendix) */
+
+  d-appendix .citation-appendix,
+  .d-appendix .citation-appendix {
+    font-size: 11px;
+    line-height: 15px;
+    border-left: 1px solid rgba(0, 0, 0, 0.1);
+    padding-left: 18px;
+    border: 1px solid rgba(0,0,0,0.1);
+    background: rgba(0, 0, 0, 0.02);
+    padding: 10px 18px;
+    border-radius: 3px;
+    color: rgba(150, 150, 150, 1);
+    overflow: hidden;
+    margin-top: -12px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+
+  /* Include appendix styles here so they can be overridden */
+
+  d-appendix {
+    contain: layout style;
+    font-size: 0.8em;
+    line-height: 1.7em;
+    margin-top: 60px;
+    margin-bottom: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    color: rgba(0,0,0,0.5);
+    padding-top: 60px;
+    padding-bottom: 48px;
+  }
+
+  d-appendix h3 {
+    grid-column: page-start / text-start;
+    font-size: 15px;
+    font-weight: 500;
+    margin-top: 1em;
+    margin-bottom: 0;
+    color: rgba(0,0,0,0.65);
+  }
+
+  d-appendix h3 + * {
+    margin-top: 1em;
+  }
+
+  d-appendix ol {
+    padding: 0 0 0 15px;
+  }
+
+  @media (min-width: 768px) {
+    d-appendix ol {
+      padding: 0 0 0 30px;
+      margin-left: -30px;
+    }
+  }
+
+  d-appendix li {
+    margin-bottom: 1em;
+  }
+
+  d-appendix a {
+    color: rgba(0, 0, 0, 0.6);
+  }
+
+  d-appendix > * {
+    grid-column: text;
+  }
+
+  d-appendix > d-footnote-list,
+  d-appendix > d-citation-list,
+  d-appendix > distill-appendix {
+    grid-column: screen;
+  }
+
+  /* Include footnote styles here so they can be overridden */
+
+  d-footnote-list {
+    contain: layout style;
+  }
+
+  d-footnote-list > * {
+    grid-column: text;
+  }
+
+  d-footnote-list a.footnote-backlink {
+    color: rgba(0,0,0,0.3);
+    padding-left: 0.5em;
+  }
+
+
+
+  /* Anchor.js */
+
+  .anchorjs-link {
+    /*transition: all .25s linear; */
+    text-decoration: none;
+    border-bottom: none;
+  }
+  *:hover > .anchorjs-link {
+    margin-left: -1.125em !important;
+    text-decoration: none;
+    border-bottom: none;
+  }
+
+  /* Social footer */
+
+  .social_footer {
+    margin-top: 30px;
+    margin-bottom: 0;
+    color: rgba(0,0,0,0.67);
+  }
+
+  .disqus-comments {
+    margin-right: 30px;
+  }
+
+  .disqus-comment-count {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+  }
+
+  #disqus_thread {
+    margin-top: 30px;
+  }
+
+  .article-sharing a {
+    border-bottom: none;
+    margin-right: 8px;
+  }
+
+  .article-sharing a:hover {
+    border-bottom: none;
+  }
+
+  .sidebar-section.subscribe {
+    font-size: 12px;
+    line-height: 1.6em;
+  }
+
+  .subscribe p {
+    margin-bottom: 0.5em;
+  }
+
+
+  .article-footer .subscribe {
+    font-size: 15px;
+    margin-top: 45px;
+  }
+
+
+  .sidebar-section.custom {
+    font-size: 12px;
+    line-height: 1.6em;
+  }
+
+  .custom p {
+    margin-bottom: 0.5em;
+  }
+
+  /* Styles for listing layout (hide title) */
+  .layout-listing d-title, .layout-listing .d-title {
+    display: none;
+  }
+
+  /* Styles for posts lists (not auto-injected) */
+
+
+  .posts-with-sidebar {
+    padding-left: 45px;
+    padding-right: 45px;
+  }
+
+  .posts-list .description h2,
+  .posts-list .description p {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+  }
+
+  .posts-list .description h2 {
+    font-weight: 700;
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .posts-list h2.post-tag {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    padding-bottom: 12px;
+  }
+  .posts-list {
+    margin-top: 60px;
+    margin-bottom: 24px;
+  }
+
+  .posts-list .post-preview {
+    text-decoration: none;
+    overflow: hidden;
+    display: block;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 24px 0;
+  }
+
+  .post-preview-last {
+    border-bottom: none !important;
+  }
+
+  .posts-list .posts-list-caption {
+    grid-column: screen;
+    font-weight: 400;
+  }
+
+  .posts-list .post-preview h2 {
+    margin: 0 0 6px 0;
+    line-height: 1.2em;
+    font-style: normal;
+    font-size: 24px;
+  }
+
+  .posts-list .post-preview p {
+    margin: 0 0 12px 0;
+    line-height: 1.4em;
+    font-size: 16px;
+  }
+
+  .posts-list .post-preview .thumbnail {
+    box-sizing: border-box;
+    margin-bottom: 24px;
+    position: relative;
+    max-width: 500px;
+  }
+  .posts-list .post-preview img {
+    width: 100%;
+    display: block;
+  }
+
+  .posts-list .metadata {
+    font-size: 12px;
+    line-height: 1.4em;
+    margin-bottom: 18px;
+  }
+
+  .posts-list .metadata > * {
+    display: inline-block;
+  }
+
+  .posts-list .metadata .publishedDate {
+    margin-right: 2em;
+  }
+
+  .posts-list .metadata .dt-authors {
+    display: block;
+    margin-top: 0.3em;
+    margin-right: 2em;
+  }
+
+  .posts-list .dt-tags {
+    display: block;
+    line-height: 1em;
+  }
+
+  .posts-list .dt-tags .dt-tag {
+    display: inline-block;
+    color: rgba(0,0,0,0.6);
+    padding: 0.3em 0.4em;
+    margin-right: 0.2em;
+    margin-bottom: 0.4em;
+    font-size: 60%;
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 3px;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .posts-list img {
+    opacity: 1;
+  }
+
+  .posts-list img[data-src] {
+    opacity: 0;
+  }
+
+  .posts-more {
+    clear: both;
+  }
+
+
+  .posts-sidebar {
+    font-size: 16px;
+  }
+
+  .posts-sidebar h3 {
+    font-size: 16px;
+    margin-top: 0;
+    margin-bottom: 0.5em;
+    font-weight: 400;
+    text-transform: uppercase;
+  }
+
+  .sidebar-section {
+    margin-bottom: 30px;
+  }
+
+  .categories ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .categories li {
+    color: rgba(0, 0, 0, 0.8);
+    margin-bottom: 0;
+  }
+
+  .categories li>a {
+    border-bottom: none;
+  }
+
+  .categories li>a:hover {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+  }
+
+  .categories .active {
+    font-weight: 600;
+  }
+
+  .categories .category-count {
+    color: rgba(0, 0, 0, 0.4);
+  }
+
+
+  @media(min-width: 768px) {
+    .posts-list .post-preview h2 {
+      font-size: 26px;
+    }
+    .posts-list .post-preview .thumbnail {
+      float: right;
+      width: 30%;
+      margin-bottom: 0;
+    }
+    .posts-list .post-preview .description {
+      float: left;
+      width: 45%;
+    }
+    .posts-list .post-preview .metadata {
+      float: left;
+      width: 20%;
+      margin-top: 8px;
+    }
+    .posts-list .post-preview p {
+      margin: 0 0 12px 0;
+      line-height: 1.5em;
+      font-size: 16px;
+    }
+    .posts-with-sidebar .posts-list {
+      float: left;
+      width: 75%;
+    }
+    .posts-with-sidebar .posts-sidebar {
+      float: right;
+      width: 20%;
+      margin-top: 60px;
+      padding-top: 24px;
+      padding-bottom: 24px;
+    }
+  }
+
+
+  /* Improve display for browsers without grid (IE/Edge <= 15) */
+
+  .downlevel {
+    line-height: 1.6em;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+    margin: 0;
+  }
+
+  .downlevel .d-title {
+    padding-top: 6rem;
+    padding-bottom: 1.5rem;
+  }
+
+  .downlevel .d-title h1 {
+    font-size: 50px;
+    font-weight: 700;
+    line-height: 1.1em;
+    margin: 0 0 0.5rem;
+  }
+
+  .downlevel .d-title p {
+    font-weight: 300;
+    font-size: 1.2rem;
+    line-height: 1.55em;
+    margin-top: 0;
+  }
+
+  .downlevel .d-byline {
+    padding-top: 0.8em;
+    padding-bottom: 0.8em;
+    font-size: 0.8rem;
+    line-height: 1.8em;
+  }
+
+  .downlevel .section-separator {
+    border: none;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .downlevel .d-article {
+    font-size: 1.06rem;
+    line-height: 1.7em;
+    padding-top: 1rem;
+    padding-bottom: 2rem;
+  }
+
+
+  .downlevel .d-appendix {
+    padding-left: 0;
+    padding-right: 0;
+    max-width: none;
+    font-size: 0.8em;
+    line-height: 1.7em;
+    margin-bottom: 0;
+    color: rgba(0,0,0,0.5);
+    padding-top: 40px;
+    padding-bottom: 48px;
+  }
+
+  .downlevel .footnotes ol {
+    padding-left: 13px;
+  }
+
+  .downlevel .base-grid,
+  .downlevel .distill-header,
+  .downlevel .d-title,
+  .downlevel .d-abstract,
+  .downlevel .d-article,
+  .downlevel .d-appendix,
+  .downlevel .distill-appendix,
+  .downlevel .d-byline,
+  .downlevel .d-footnote-list,
+  .downlevel .d-citation-list,
+  .downlevel .distill-footer,
+  .downlevel .appendix-bottom,
+  .downlevel .posts-container {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+
+  @media(min-width: 768px) {
+    .downlevel .base-grid,
+    .downlevel .distill-header,
+    .downlevel .d-title,
+    .downlevel .d-abstract,
+    .downlevel .d-article,
+    .downlevel .d-appendix,
+    .downlevel .distill-appendix,
+    .downlevel .d-byline,
+    .downlevel .d-footnote-list,
+    .downlevel .d-citation-list,
+    .downlevel .distill-footer,
+    .downlevel .appendix-bottom,
+    .downlevel .posts-container {
+    padding-left: 150px;
+    padding-right: 150px;
+    max-width: 900px;
+  }
+  }
+
+  .downlevel pre code {
+    display: block;
+    border-left: 2px solid rgba(0, 0, 0, .1);
+    padding: 0 0 0 20px;
+    font-size: 14px;
+  }
+
+  .downlevel code, .downlevel pre {
+    color: black;
+    background: none;
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    line-height: 1.5;
+
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+  }
+
+  .downlevel .posts-list .post-preview {
+    color: inherit;
+  }
+
+
+
+  </style>
+
+  <script type="application/javascript">
+
+  function is_downlevel_browser() {
+    if (bowser.isUnsupportedBrowser({ msie: "12", msedge: "16"},
+                                   window.navigator.userAgent)) {
+      return true;
+    } else {
+      return window.load_distill_framework === undefined;
+    }
+  }
+
+  // show body when load is complete
+  function on_load_complete() {
+
+    // add anchors
+    if (window.anchors) {
+      window.anchors.options.placement = 'left';
+      window.anchors.add('d-article > h2, d-article > h3, d-article > h4, d-article > h5');
+    }
+
+
+    // set body to visible
+    document.body.style.visibility = 'visible';
+
+    // force redraw for leaflet widgets
+    if (window.HTMLWidgets) {
+      var maps = window.HTMLWidgets.findAll(".leaflet");
+      $.each(maps, function(i, el) {
+        var map = this.getMap();
+        map.invalidateSize();
+        map.eachLayer(function(layer) {
+          if (layer instanceof L.TileLayer)
+            layer.redraw();
+        });
+      });
+    }
+
+    // trigger 'shown' so htmlwidgets resize
+    $('d-article').trigger('shown');
+  }
+
+  function init_distill() {
+
+    init_common();
+
+    // create front matter
+    var front_matter = $('<d-front-matter></d-front-matter>');
+    $('#distill-front-matter').wrap(front_matter);
+
+    // create d-title
+    $('.d-title').changeElementType('d-title');
+
+    // create d-byline
+    var byline = $('<d-byline></d-byline>');
+    $('.d-byline').replaceWith(byline);
+
+    // create d-article
+    var article = $('<d-article></d-article>');
+    $('.d-article').wrap(article).children().unwrap();
+
+    // move posts container into article
+    $('.posts-container').appendTo($('d-article'));
+
+    // create d-appendix
+    $('.d-appendix').changeElementType('d-appendix');
+
+    // flag indicating that we have appendix items
+    var appendix = $('.appendix-bottom').children('h3').length > 0;
+
+    // replace footnotes with <d-footnote>
+    $('.footnote-ref').each(function(i, val) {
+      appendix = true;
+      var href = $(this).attr('href');
+      var id = href.replace('#', '');
+      var fn = $('#' + id);
+      var fn_p = $('#' + id + '>p');
+      fn_p.find('.footnote-back').remove();
+      var text = fn_p.html();
+      var dtfn = $('<d-footnote></d-footnote>');
+      dtfn.html(text);
+      $(this).replaceWith(dtfn);
+    });
+    // remove footnotes
+    $('.footnotes').remove();
+
+    // move refs into #references-listing
+    $('#references-listing').replaceWith($('#refs'));
+
+    $('h1.appendix, h2.appendix').each(function(i, val) {
+      $(this).changeElementType('h3');
+    });
+    $('h3.appendix').each(function(i, val) {
+      var id = $(this).attr('id');
+      $('.d-contents a[href="#' + id + '"]').parent().remove();
+      appendix = true;
+      $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('d-appendix'));
+    });
+
+    // show d-appendix if we have appendix content
+    $("d-appendix").css('display', appendix ? 'grid' : 'none');
+
+    // localize layout chunks to just output
+    $('.layout-chunk').each(function(i, val) {
+
+      // capture layout
+      var layout = $(this).attr('data-layout');
+
+      // apply layout to markdown level block elements
+      var elements = $(this).children().not('details, div.sourceCode, pre, script');
+      elements.each(function(i, el) {
+        var layout_div = $('<div class="' + layout + '"></div>');
+        if (layout_div.hasClass('shaded')) {
+          var shaded_content = $('<div class="shaded-content"></div>');
+          $(this).wrap(shaded_content);
+          $(this).parent().wrap(layout_div);
+        } else {
+          $(this).wrap(layout_div);
+        }
+      });
+
+
+      // unwrap the layout-chunk div
+      $(this).children().unwrap();
+    });
+
+    // remove code block used to force  highlighting css
+    $('.distill-force-highlighting-css').parent().remove();
+
+    // remove empty line numbers inserted by pandoc when using a
+    // custom syntax highlighting theme
+    $('code.sourceCode a:empty').remove();
+
+    // load distill framework
+    load_distill_framework();
+
+    // wait for window.distillRunlevel == 4 to do post processing
+    function distill_post_process() {
+
+      if (!window.distillRunlevel || window.distillRunlevel < 4)
+        return;
+
+      // hide author/affiliations entirely if we have no authors
+      var front_matter = JSON.parse($("#distill-front-matter").html());
+      var have_authors = front_matter.authors && front_matter.authors.length > 0;
+      if (!have_authors)
+        $('d-byline').addClass('hidden');
+
+      // article with toc class
+      $('.d-contents').parent().addClass('d-article-with-toc');
+
+      // strip links that point to #
+      $('.authors-affiliations').find('a[href="#"]').removeAttr('href');
+
+      // add orcid ids
+      $('.authors-affiliations').find('.author').each(function(i, el) {
+        var orcid_id = front_matter.authors[i].orcidID;
+        if (orcid_id) {
+          var a = $('<a></a>');
+          a.attr('href', 'https://orcid.org/' + orcid_id);
+          var img = $('<img></img>');
+          img.addClass('orcid-id');
+          img.attr('alt', 'ORCID ID');
+          img.attr('src','data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg==');
+          a.append(img);
+          $(this).append(a);
+        }
+      });
+
+      // hide elements of author/affiliations grid that have no value
+      function hide_byline_column(caption) {
+        $('d-byline').find('h3:contains("' + caption + '")').parent().css('visibility', 'hidden');
+      }
+
+      // affiliations
+      var have_affiliations = false;
+      for (var i = 0; i<front_matter.authors.length; ++i) {
+        var author = front_matter.authors[i];
+        if (author.affiliation !== "&nbsp;") {
+          have_affiliations = true;
+          break;
+        }
+      }
+      if (!have_affiliations)
+        $('d-byline').find('h3:contains("Affiliations")').css('visibility', 'hidden');
+
+      // published date
+      if (!front_matter.publishedDate)
+        hide_byline_column("Published");
+
+      // document object identifier
+      var doi = $('d-byline').find('h3:contains("DOI")');
+      var doi_p = doi.next().empty();
+      if (!front_matter.doi) {
+        // if we have a citation and valid citationText then link to that
+        if ($('#citation').length > 0 && front_matter.citationText) {
+          doi.html('Citation');
+          $('<a href="#citation"></a>')
+            .text(front_matter.citationText)
+            .appendTo(doi_p);
+        } else {
+          hide_byline_column("DOI");
+        }
+      } else {
+        $('<a></a>')
+           .attr('href', "https://doi.org/" + front_matter.doi)
+           .html(front_matter.doi)
+           .appendTo(doi_p);
+      }
+
+       // change plural form of authors/affiliations
+      if (front_matter.authors.length === 1) {
+        var grid = $('.authors-affiliations');
+        grid.children('h3:contains("Authors")').text('Author');
+        grid.children('h3:contains("Affiliations")').text('Affiliation');
+      }
+
+      // remove d-appendix and d-footnote-list local styles
+      $('d-appendix > style:first-child').remove();
+      $('d-footnote-list > style:first-child').remove();
+
+      // move appendix-bottom entries to the bottom
+      $('.appendix-bottom').appendTo('d-appendix').children().unwrap();
+      $('.appendix-bottom').remove();
+
+      // hoverable references
+      $('span.citation[data-cites]').each(function() {
+        if ($(this).children()[0].nodeName == "D-FOOTNOTE") {
+          var fn = $(this).children()[0]
+          $(this).html(fn.shadowRoot.querySelector("sup"))
+          $(this).id = fn.id
+          fn.remove()
+        }
+        var refs = $(this).attr('data-cites').split(" ");
+        var refHtml = refs.map(function(ref) {
+          return "<p>" + $('#ref-' + ref).html() + "</p>";
+        }).join("\n");
+        window.tippy(this, {
+          allowHTML: true,
+          content: refHtml,
+          maxWidth: 500,
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'light-border',
+          placement: 'bottom-start'
+        });
+      });
+
+      // fix footnotes in tables (#411)
+      // replacing broken distill.pub feature
+      $('table d-footnote').each(function() {
+        // we replace internal showAtNode methode which is triggered when hovering a footnote
+        this.hoverBox.showAtNode = function(node) {
+          // ported from https://github.com/distillpub/template/pull/105/files
+          calcOffset = function(elem) {
+              let x = elem.offsetLeft;
+              let y = elem.offsetTop;
+              // Traverse upwards until an `absolute` element is found or `elem`
+              // becomes null.
+              while (elem = elem.offsetParent && elem.style.position != 'absolute') {
+                  x += elem.offsetLeft;
+                  y += elem.offsetTop;
+              }
+
+              return { left: x, top: y };
+          }
+          // https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/offsetTop
+          const bbox = node.getBoundingClientRect();
+          const offset = calcOffset(node);
+          this.show([offset.left + bbox.width, offset.top + bbox.height]);
+        }
+      })
+
+      // clear polling timer
+      clearInterval(tid);
+
+      // show body now that everything is ready
+      on_load_complete();
+    }
+
+    var tid = setInterval(distill_post_process, 50);
+    distill_post_process();
+
+  }
+
+  function init_downlevel() {
+
+    init_common();
+
+     // insert hr after d-title
+    $('.d-title').after($('<hr class="section-separator"/>'));
+
+    // check if we have authors
+    var front_matter = JSON.parse($("#distill-front-matter").html());
+    var have_authors = front_matter.authors && front_matter.authors.length > 0;
+
+    // manage byline/border
+    if (!have_authors)
+      $('.d-byline').remove();
+    $('.d-byline').after($('<hr class="section-separator"/>'));
+    $('.d-byline a').remove();
+
+    // remove toc
+    $('.d-contents').remove();
+
+    // move appendix elements
+    $('h1.appendix, h2.appendix').each(function(i, val) {
+      $(this).changeElementType('h3');
+    });
+    $('h3.appendix').each(function(i, val) {
+      $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('.d-appendix'));
+    });
+
+
+    // inject headers into references and footnotes
+    var refs_header = $('<h3></h3>');
+    refs_header.text('References');
+    $('#refs').prepend(refs_header);
+
+    var footnotes_header = $('<h3></h3');
+    footnotes_header.text('Footnotes');
+    $('.footnotes').children('hr').first().replaceWith(footnotes_header);
+
+    // move appendix-bottom entries to the bottom
+    $('.appendix-bottom').appendTo('.d-appendix').children().unwrap();
+    $('.appendix-bottom').remove();
+
+    // remove appendix if it's empty
+    if ($('.d-appendix').children().length === 0)
+      $('.d-appendix').remove();
+
+    // prepend separator above appendix
+    $('.d-appendix').before($('<hr class="section-separator" style="clear: both"/>'));
+
+    // trim code
+    $('pre>code').each(function(i, val) {
+      $(this).html($.trim($(this).html()));
+    });
+
+    // move posts-container right before article
+    $('.posts-container').insertBefore($('.d-article'));
+
+    $('body').addClass('downlevel');
+
+    on_load_complete();
+  }
+
+
+  function init_common() {
+
+    // jquery plugin to change element types
+    (function($) {
+      $.fn.changeElementType = function(newType) {
+        var attrs = {};
+
+        $.each(this[0].attributes, function(idx, attr) {
+          attrs[attr.nodeName] = attr.nodeValue;
+        });
+
+        this.replaceWith(function() {
+          return $("<" + newType + "/>", attrs).append($(this).contents());
+        });
+      };
+    })(jQuery);
+
+    // prevent underline for linked images
+    $('a > img').parent().css({'border-bottom' : 'none'});
+
+    // mark non-body figures created by knitr chunks as 100% width
+    $('.layout-chunk').each(function(i, val) {
+      var figures = $(this).find('img, .html-widget');
+      // ignore leaflet img layers (#106)
+      figures = figures.filter(':not(img[class*="leaflet"])')
+      if ($(this).attr('data-layout') !== "l-body") {
+        figures.css('width', '100%');
+      } else {
+        figures.css('max-width', '100%');
+        figures.filter("[width]").each(function(i, val) {
+          var fig = $(this);
+          fig.css('width', fig.attr('width') + 'px');
+        });
+
+      }
+    });
+
+    // auto-append index.html to post-preview links in file: protocol
+    // and in rstudio ide preview
+    $('.post-preview').each(function(i, val) {
+      if (window.location.protocol === "file:")
+        $(this).attr('href', $(this).attr('href') + "index.html");
+    });
+
+    // get rid of index.html references in header
+    if (window.location.protocol !== "file:") {
+      $('.distill-site-header a[href]').each(function(i,val) {
+        $(this).attr('href', $(this).attr('href').replace(/^index[.]html/, "./"));
+      });
+    }
+
+    // add class to pandoc style tables
+    $('tr.header').parent('thead').parent('table').addClass('pandoc-table');
+    $('.kable-table').children('table').addClass('pandoc-table');
+
+    // add figcaption style to table captions
+    $('caption').parent('table').addClass("figcaption");
+
+    // initialize posts list
+    if (window.init_posts_list)
+      window.init_posts_list();
+
+    // implmement disqus comment link
+    $('.disqus-comment-count').click(function() {
+      window.headroom_prevent_pin = true;
+      $('#disqus_thread').toggleClass('hidden');
+      if (!$('#disqus_thread').hasClass('hidden')) {
+        var offset = $(this).offset();
+        $(window).resize();
+        $('html, body').animate({
+          scrollTop: offset.top - 35
+        });
+      }
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    if (is_downlevel_browser())
+      init_downlevel();
+    else
+      window.addEventListener('WebComponentsReady', init_distill);
+  });
+
+  </script>
+
+  <!--/radix_placeholder_distill-->
+  <script src="sobrevivencia_files/header-attrs-2.14/header-attrs.js"></script>
+  <script src="sobrevivencia_files/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+  <script src="sobrevivencia_files/popper-2.6.0/popper.min.js"></script>
+  <link href="sobrevivencia_files/tippy-6.2.7/tippy.css" rel="stylesheet" />
+  <link href="sobrevivencia_files/tippy-6.2.7/tippy-light-border.css" rel="stylesheet" />
+  <script src="sobrevivencia_files/tippy-6.2.7/tippy.umd.min.js"></script>
+  <script src="sobrevivencia_files/anchor-4.2.2/anchor.min.js"></script>
+  <script src="sobrevivencia_files/bowser-1.9.3/bowser.min.js"></script>
+  <script src="sobrevivencia_files/webcomponents-2.0.0/webcomponents.js"></script>
+  <script src="sobrevivencia_files/distill-2.2.21/template.v2.js"></script>
+  <!--radix_placeholder_site_in_header-->
+  <!--/radix_placeholder_site_in_header-->
+
+
+</head>
+
+<body>
+
+<!--radix_placeholder_front_matter-->
+
+<script id="distill-front-matter" type="text/json">
+{"title":"O tempo do processo judicial","description":"Como calculo a duração do processo? Neste tutorial, introduzo uma metodologia própria para estimar o tempo desde a instauração até a apreciação do pedido. A análise de sobrevivência ou análise de duração compreende várias técnicas estatísticas para estimar a duração do processo.","authors":[{"author":"José de Jesus Filho","authorURL":"https://github.com/jjesusfilho","affiliation":"&nbsp;","affiliationURL":"#","orcidID":""}],"publishedDate":"2022-10-06T00:00:00.000-03:00","citationText":"Filho, 2022"}
+</script>
+
+<!--/radix_placeholder_front_matter-->
+<!--radix_placeholder_navigation_before_body-->
+<!--/radix_placeholder_navigation_before_body-->
+<!--radix_placeholder_site_before_body-->
+<!--/radix_placeholder_site_before_body-->
+
+<div class="d-title">
+<h1>O tempo do processo judicial</h1>
+<!--radix_placeholder_categories-->
+<!--/radix_placeholder_categories-->
+<p><p>Como calculo a duração do processo? Neste tutorial, introduzo uma
+metodologia própria para estimar o tempo desde a instauração até a
+apreciação do pedido. A análise de sobrevivência ou análise de duração
+compreende várias técnicas estatísticas para estimar a duração do
+processo.</p></p>
+</div>
+
+<div class="d-byline">
+  José de Jesus Filho <a href="https://github.com/jjesusfilho"
+class="uri">https://github.com/jjesusfilho</a> 
+  
+<br/>2022-10-06
+</div>
+
+<div class="d-article">
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<p>A jurimetria inclui uma variedade de temas, métodos e técnicas
+aplicadas ao direito. Duas delas, porém, sobressaem dentre as demais. O
+interesse no desfecho processual e o interesse no tempo do processo.
+Neste tutorial, abordaremos o segundo, que é o tempo do processo.</p>
+<p>Para análise do tempo do processo, há uma técnica conhecida como
+análise de sobrevivência, desenvolvida no âmbito da pesquisa em saúde,
+mas que é muito apropriada para entender a duração do processo desde o
+pedido até sua apreciação ou qualquer outro ato processual de interesse.
+Como estamos trabalhando no âmbito do direito, de agora em diante,
+falaremos em análise de duração, em vez de sobrevivência.</p>
+<p>A análise de duração é também conhecida como tempo para o evento
+(time-to-event). Basicamente, ela é composta por quatro elementos.</p>
+<ol type="1">
+<li>Sujeito. No presente caso, o processo judicial.</li>
+<li>Data da exposição. No presente caso, a data da distribuição da ação,
+da instauração do inquérito ou do recurso.</li>
+<li>Data do evento. Momento do ato processual.</li>
+<li>Duração. Tempo entre a data da exposição e a data do evento.</li>
+</ol>
+<p>O evento em si mesmo não é objeto da análise. Embora, como veremos
+adiante, a natureza do ato processual pode afetar significativamente o
+tempo do processo.</p>
+<h3 id="alguns-exemplos">Alguns exemplos</h3>
+<h2 id="exemplos">Exemplos</h2>
+<ol type="1">
+<li><p>Empresa (sujeito) inicia atividade (exposição) até (duração)
+falência (data do evento);</p></li>
+<li><p>Casal (sujeito) contrai matrimônio (exposição) até (duração) o
+divórcio (data do evento).</p></li>
+<li><p>Pessoa (sujeito) é diagnosticada com câncer (exposição) até
+(duração) sua morte (data do evento).</p></li>
+<li><p>Processo judicial (sujeito) é distribuído (exposição) até (tempo)
+sua extinção (data do evento).</p></li>
+</ol>
+<h2 id="conceitos-chave">Conceitos chave</h2>
+<p>Antes de mostrar como rodar uma análise de duração, é preciso ter
+familiaridade com alguns conceitos chave para este tipo de análise.</p>
+<h3 id="censura">Censura</h3>
+<p>Um aspecto chave na análise de duração é a censura de dados. Quando
+não se conhece o tempo até o evento para um indivíduo, diz-se que esse
+dado é censurado. Há três tipos de dados censurados.</p>
+<ol type="1">
+<li><p>Censura à esquerda: Tj &lt; x: O tempo para o evento é menor do
+que um valor particular. Esta é a situação em que o evento ocorre antes
+do momento da exposição. Por exemplo, quando há arquivamento de
+inquérito, termo de ajustamento de conduta ou acordo sem que processo
+tenha sido instaurado.</p></li>
+<li><p>Censura intervalar: x1 &lt; Tj &lt; x2 Sabemos que o tempo para o
+evento está entre dois momentos, mas não sabemos quando isso ocorreu.
+Por exemplo, sabemos quando a ação foi distribuída e sabemos quando ela
+foi julgada, mas não sabemos quando ocorreu a pronúncia, quando ocorreu
+a apreciação do pedido de antecipação de tutela.</p></li>
+<li><p>Censura à direita: Tj &gt; x: O tempo para um evento é maior que
+um valor particular. Esta é a situação mais comum. Sabemos quando o
+processo foi instaurado, mas não quando foi julgado o mérito ou
+apreciado o pedido de liminar, especialmente porque no momento de
+interesse esta informação não estava disponível. Exemplo, ao coletar
+dados sobre mandado de segurança, verificamos que o pedido de liminar
+não foi apreciado um mês após sua judicialização.</p></li>
+</ol>
+<p>A análise de duração leva em conta a censura de dados. Você verá mais
+adiante que incluiremos uma coluna em nossa tabela informando se o
+evento ocorreu ou se foi censurado. O tempo para o evento é sempre o
+menor valor entre o tempo de censura e o tempo para o evento.</p>
+<h3 id="funções-de-sobrevivência-e-de-risco">Funções de sobrevivência e
+de risco</h3>
+<p>Outro conceito importante é a probabilidade de que um processo
+judicial (sujeito) vai durar para além de um determinado tempo,
+calculada por meio da função de sobrevivência ou de duração <span
+class="math inline">\(S(t)\)</span>. Se formos adaptar a linguagem para
+o direito processual, podemos chamá-la de função de pendência e a
+correspondente probabilidade de pendência, vez que se estima a
+probabilidade de que um pedido se encontra pendente num determinado
+momento.</p>
+<p>Além dela, existe a função de risco (hazard function) <span
+class="math inline">\(h(t)\)</span>, a qual calcula a probabilidade de
+que um ato processual foi realizado no tempo t.</p>
+<p>Note que a primeira foca na probabilidade de não ter ocorrido o
+evento, enquanto que a segunda, de ter ocorrido.</p>
+<h3 id="método-kaplan-meier-km">Método Kaplan-Meier (KM)</h3>
+<p>Kaplan-meier é uma análise não paramétrica para estimar a
+probabilidade de duração S(t). Não paramétrica significa que estimamos
+parâmetros e não assumimos que os valores seguem uma distribuição
+probabilística específica, tal como a distribuição normal.</p>
+<p>Por este método, a função de duração S(t) é calculada da seguinte
+forma:</p>
+<p><span class="math display">\[ S(t_i) = S(t_i-1)(1 -
+\frac{d_i}{n_i})\]</span></p>
+<p>Em que:</p>
+<p><span class="math inline">\(S(t_i - 1)\)</span>= Probabilidade do
+pedido estar tramitando no tempo <span class="math inline">\(t_i -
+1\)</span>.<br />
+<span class="math inline">\(n_i\)</span> = Número de pedidos processuais
+tramitando imediatamente antes de <span
+class="math inline">\(t_i\)</span>.<br />
+<span class="math inline">\(d_i\)</span> = Número de eventos no tempo
+<span class="math inline">\(t_i\)</span>.<br />
+<span class="math inline">\(t_0 = 0, S(0) = 1\)</span></p>
+<p>A função de duração <span class="math inline">\(S(t)\)</span> apenas
+altera o valor no tempo de cada evento. É possível calcular o erro
+padrão e o intervalo de confiança da taxa de sobrevivência.</p>
+<p>Kaplan-Meier permite também avaliar como grupos, por exemplo,
+tribunais ou varas diferem diferem no tempo de processamento.</p>
+<p>Igualmente, permite verificar como cada um dos grupos experimenta as
+curvas de duração. Mais adiante, mostraremos como criar a curva
+Kaplan-Meier.</p>
+<p>Uma limitação do método Kaplan-Meier é que ele permite a inclusão de
+variáveis categóricas apenas. Para incluir variáveis contínuas, temos de
+recorrer ao risco proporcional <span class="math inline">\(h(t)\)</span>
+de Cox. No presente tutorial, não abordaremos o Risco Proporcional de
+Cox porque no exemplo oferecido não temos variáveis contínuas e, para
+não sobrecarregar muito o leitor, trataremos do tema e outro
+tutorial.</p>
+<h2 id="tempo-do-habeas-corpus">Tempo do Habeas Corpus</h2>
+<p>Para este tutorial, optamos por baixar pedidos de habeas corpus
+perante o Tribunal de Justiça de São Paulo contra atos de magistrados de
+primeira instância. Inicialmente, pensamos em analisar o tempo até a
+apreciação do pedido de liminar. No entanto, nem todos os HCs têm pedido
+de antecipação cautelar, muitas decisões concedem HC liminarmente
+independentemente de haver pedido de antecipação. Muitos HCs, mesmo com
+pedido de liminar, diferem o processamento até a apreciação de mérito.
+Dessa forma, optamos por observar o tempo entre a entrada no TJSP até a
+apreciação do mérito, independentemente se este foi decidido
+liminarmente ou não.</p>
+<p>Para esta análise, baixamos 3161 pedidos de HCs. Basicamente o que
+fizemos foi usar a função <code>cnj_sequencial</code> do pacote <a
+href="https://github.com/courtsbr/JurisMiner">JurisMiner</a> para criar
+duas sequências de números do CNJ. Uma que começa com 20, outra que
+começa com 00. Fizemos isso porque notamos que havia dois padrões de
+numeração. O primeiro, que começa com 20, corresponde a habeas corpus
+impetrados eletronicamente, geralmente por advogados, especialmente a
+Defensoria Pública. O segundo, que começa com 00, corresponde a HCs
+impetrados pelos próprios pacientes ou seus familiares, geralmente
+presos com pedidos no âmbito da execução penal.</p>
+<h3 id="coleta-dos-dados">Coleta dos dados</h3>
+<p>Adicionei esta seção, somente para documentação do procedimento de
+coleta. Você pode saltá-la e ir diretamente para a análise. Veja abaixo
+como eu fiz. Primeiramente, criei um diretório chamado cpopsg (Consulta
+de julgados de segundo grau). Depois criei cada uma das sequências e
+coloquei para baixar os processos.</p>
+<p>Note que, antes de usar essas funções, você tem de instalar os
+pacotes <a href="https://github.com/courtsbr/JurisMiner">JurisMiner</a>
+e <a href="https://github.com/jjesusfilho/tjsp">tjsp</a>:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">&quot;courtsbr/JurisMiner&quot;</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">&quot;jjesusfilho/tjsp&quot;</span>)</span></code></pre></div>
+<p>Vamos carregar os pacotes acima e também o tidyverse, pois este é
+nossa principal ferramenta de ciência de dados.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://tidyverse.tidyverse.org'>tidyverse</a></span><span class='op'>)</span></span>
+<span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/courtsbr/JurisMiner'>JurisMiner</a></span><span class='op'>)</span></span>
+<span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/jjesusfilho/tjsp'>tjsp</a></span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(<span class="st">&quot;cposg&quot;</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>sequencia <span class="ot">&lt;-</span> <span class="fu">cnj_sequencial</span>(<span class="at">inicio =</span> <span class="dv">2000001</span>, <span class="do">## início da sequência</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>                                           <span class="at">fim =</span> <span class="dv">2010000</span>, <span class="do">## fim da sequência</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>                                           <span class="at">ano =</span> <span class="dv">2022</span>,  <span class="do">## ano do processo</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>                                           <span class="at">segmento =</span> <span class="dv">8</span>, <span class="do">## Justiça estadual</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>                                           <span class="at">tribunal =</span> <span class="dv">26</span>, <span class="do">## TJSP</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>                                           <span class="at">distribuidor =</span> <span class="dv">0000</span> <span class="do">## Segunda instância.</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>                                           ) </span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="fu">tjsp_baixar_cposg</span>(sequencia, <span class="st">&quot;cposg&quot;</span>)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>sequencia <span class="ot">&lt;-</span> <span class="fu">cnj_sequencial</span>(<span class="at">inicio =</span> <span class="dv">0000001</span>,</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>                                           <span class="at">fim =</span> <span class="dv">0010000</span>,</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>                                           <span class="at">ano =</span> <span class="dv">2022</span>, </span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>                                           <span class="at">segmento =</span> <span class="dv">8</span>,</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>                                           <span class="at">tribunal =</span> <span class="dv">26</span>,</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>                                           <span class="at">distribuidor =</span> <span class="dv">0000</span>)</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>                                           </span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="fu">tjsp_baixar_cposg</span>(sequencia, <span class="at">diretorio =</span> <span class="st">&quot;cposg&quot;</span>)</span></code></pre></div>
+<p>Depois de baixar os htmls com os metadados processuais, a próxima
+etapa é ler os dados básicos, a movimentação e a decisão. O pacote <a
+href="https://github.com/jjesusfilho/tjsp">tjsp</a> possui funções para
+isso.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>arquivos <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="st">&quot;cposg&quot;</span>, full. <span class="at">names =</span> <span class="cn">TRUE</span>) <span class="do">## Lista o caminho de cada arquivo</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>dados <span class="ot">&lt;-</span> <span class="fu">tjsp_ler_dados_cposg</span>(arquivos) <span class="do">## importa para o R os dados básicos</span></span></code></pre></div>
+<p>Esses dados são todos os 20 mil primeiros processos instaurados na
+segunda instância do TJSP. Eles são, via de regra, ações autônomas.
+Antes de lermos a movimentação processual, bem como, as decisões,
+precisamos filtrar para somente aquele que são habeas corpus
+criminais.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>dados <span class="ot">&lt;-</span> dados <span class="sc">|&gt;</span> </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>     <span class="fu">filter</span>(classe <span class="sc">==</span> <span class="st">&quot;Habeas Corpus Criminal&quot;</span>) <span class="do">## Mantêm somente os habeas corpus.</span></span></code></pre></div>
+<p>Feito isso, vamos criar uma tabela com os arquivos e, a partir dela,
+criar uma coluna processo, extrair do nome do arquivo o número do
+processo para, então, filtrar somente aqueles que são HCs.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>tb <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">arquivo =</span> arquivos) <span class="sc">|&gt;</span> <span class="do">## Coloca o vetor de arquivos numa coluna de tibble</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="at">processo =</span> <span class="fu">str_extract</span>(arquivo,<span class="st">&quot;</span><span class="sc">\\</span><span class="st">d{20}&quot;</span>)) <span class="do">## extrai os números dos processos.</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>tb <span class="ot">&lt;-</span> tb <span class="sc">|&gt;</span> </span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>     <span class="fu">semi_join</span>(dados, <span class="at">by =</span> <span class="st">&quot;processo&quot;</span>) <span class="do">## Mantêm os arquivos cujos processos são HCs.</span></span></code></pre></div>
+<p>Agora podemos ler somente as decisões e movimentações dos processos
+que são HC.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>dispositivos <span class="ot">&lt;-</span> <span class="fu">tjsp_ler_dispositivo</span>(tb<span class="sc">$</span>arquivo)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>movimentacao <span class="ot">&lt;-</span> <span class="fu">tjsp_ler_movimentacao</span>(tb<span class="sc">$</span>arquivo)</span></code></pre></div>
+<p>Vamos visualizar a estrutura dos dados.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>dados <span class="sc">|&gt;</span> </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a> <span class="fu">sample_n</span>(<span class="dv">10</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a> <span class="fu">glimpse</span>()</span></code></pre></div>
+<div class="layout-chunk" data-layout="l-body">
+<pre><code>Rows: 10
+Columns: 21
+$ processo           &lt;chr&gt; &quot;00006152420228260000&quot;, &quot;0003933152022826…
+$ digital            &lt;lgl&gt; TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE,…
+$ situacao           &lt;chr&gt; &quot;Arquivado administrativamente&quot;, &quot;Arquiva…
+$ cd_processo        &lt;chr&gt; &quot;RI006Q23O0000&quot;, &quot;RI006R09C0000&quot;, &quot;RI006Q…
+$ v1                 &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA
+$ area               &lt;chr&gt; &quot;Criminal&quot;, &quot;Criminal&quot;, &quot;Criminal&quot;, &quot;Crim…
+$ assunto            &lt;chr&gt; &quot;DIREITO PENAL - Crimes contra o Patrimôn…
+$ classe             &lt;chr&gt; &quot; Habeas Corpus Criminal\n&quot;, &quot; Petição Cr…
+$ distribuicao       &lt;chr&gt; NA, &quot; \n&quot;, &quot; \n&quot;, NA, &quot; \n&quot;, &quot; \n&quot;, NA, &quot;…
+$ orgao_julgador     &lt;chr&gt; &quot; 9ª Câmara de Direito Criminal\n&quot;, NA, N…
+$ origem             &lt;chr&gt; &quot;Comarca de Marília / Foro de Marília / V…
+$ outros_numeros     &lt;chr&gt; &quot;\n                            \n        …
+$ processo_principal &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA
+$ recebido_em        &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA
+$ recurso            &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA
+$ relator            &lt;chr&gt; &quot;CÉSAR AUGUSTO ANDRADE DE CASTRO&quot;, NA, NA…
+$ revisor            &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA
+$ secao              &lt;chr&gt; &quot; Direito Criminal\n&quot;, &quot; Direito Criminal…
+$ ultima_carga       &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA
+$ valor_da_acao      &lt;chr&gt; NA, NA, NA, &quot;1.200,00&quot;, NA, NA, &quot;1.000,00…
+$ volume_apenso      &lt;chr&gt; &quot;1 / 0&quot;, &quot;1 / 0&quot;, &quot;1 / 0&quot;, &quot;1 / 0&quot;, &quot;1 / …</code></pre>
+</div>
+<p>Desses dados, nós preservaremos somente o número do processo e o
+órgão julgador. Além disso, iremos manter somente as câmaras de direito
+criminal, ajustar sua descrição e convertê-las em fator ordenado.</p>
+<p>Igualmente, iremos criar uma nova coluna com a informação de que o
+processo é originalmente físico, protocolado pelo preso, ou eletrônico
+desde o início. Para tanto, basta verificar o início do processo. Se
+começa com 20 é totalmente eletrônico, com 00 é inicialmente físico, ou
+seja, o pedido foi possivelmente escrito a mão por um pessoa privada de
+liberdade.</p>
+<p>Não iremos usar a informação sobre o crime, mas assim mesmo, vamos
+reter a informação sobre o crime do assunto. Os casos em que não há
+informação do crime parecem ser execução penal. Vamos converter esses
+casos, sem informação sobre o crime, em execução penal.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>ordenar_camaras <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>stringr<span class="sc">::</span><span class="fu">str_remove_all</span>(x, <span class="st">&quot;(</span><span class="sc">\\</span><span class="st">s|[:lower:]+)&quot;</span>) <span class="sc">%&gt;%</span> <span class="fu">factor</span>(.,<span class="at">levels =</span> stringr<span class="sc">::</span><span class="fu">str_sort</span>(<span class="fu">unique</span>(.),</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="at">numeric =</span> T))</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>dados <span class="ot">&lt;-</span> dados <span class="sc">|&gt;</span> </span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>     <span class="fu">mutate</span>(<span class="at">crime =</span> <span class="fu">str_extract</span>(assunto, <span class="st">&quot;(?&lt;=-)[^-]+$&quot;</span>), <span class="at">.after =</span> assunto) <span class="do">## extrai tudo que depois do último hífen.</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>     <span class="fu">mutate</span>(<span class="at">crime =</span> <span class="fu">str_squish</span>(crime)) <span class="sc">|&gt;</span> <span class="do">## remove espaços extra.</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>     <span class="fu">mutate</span>(<span class="at">crime =</span> <span class="fu">ifelse</span>(assunto <span class="sc">==</span> <span class="st">&quot;DIREITO PENAL&quot;</span>, <span class="st">&quot;Execução penal&quot;</span>, crime)) <span class="do">## Se houver só a expressão DIREITO PENAL penal no assunto, converte o crime em Execução penal.</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>      <span class="fu">select</span>(processo, orgao_julgador, crime) <span class="sc">|&gt;</span> </span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="at">camara =</span> <span class="fu">ordenar_camaras</span>(orgao_julgador)) <span class="sc">|&gt;</span> </span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="at">fisico =</span> <span class="fu">ifelse</span>(<span class="fu">str_detect</span>(processo, <span class="st">&quot;^0&quot;</span>), <span class="st">&quot;sim&quot;</span>, <span class="st">&quot;não&quot;</span>))</span></code></pre></div>
+<p>A base dispositivos possui três colunas, processo, data e
+dispositivo. Além disso, nem todos os processos contêm a informação da
+decisão. Na verdade, ao examinar a base é possível saber que houve
+decisão e é até possível extraí-la da movimentação, mas vamos manter sem
+essa informação por razões pedagógicas a fim de ilustrar como dados
+censurados são incorporados na análise.</p>
+<p>No código abaixo, usamos a função <code>tjsp_classificar_writ</code>
+para extrair do dispositivo o teor da decisão. Não usaremos essa
+informação, mas manteremos na base por sua eventual utilidade.
+Igualmente, extraímos a informação de que a concessão foi em caráter
+liminar ou não.</p>
+<pre><code>dispositivos &lt;- dispositivos |&gt; 
+           mutate(decisao = tjsp_classificar_writ(dispositivo)) |&gt; 
+          mutate(liminar = case_when(
+         str_detect(dispositivo,&quot;(?i)\\blimin&quot;) ~ &quot;sim&quot;,
+         TRUE ~ &quot;não&quot;
+       ))</code></pre>
+<p>Vamos extrair da movimentação a primeira movimentação de cada
+processo, que pode ser interpretada como a distribuição do HC.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>distribuicao <span class="ot">&lt;-</span> movimentacao <span class="sc">|&gt;</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>           <span class="fu">group_by</span>(processo) <span class="sc">|&gt;</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>           <span class="fu">filter</span>(data<span class="sc">==</span> <span class="fu">min</span>(data)) <span class="sc">|&gt;</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>           <span class="fu">slice</span>(<span class="dv">1</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>           <span class="fu">select</span>(processo, <span class="at">data_distribuicao =</span> data)</span></code></pre></div>
+<p>Por fim, vamos juntar essas três bases e criar uma nova coluna
+chamada duração, que é a diferença entre a data da distribuição e a data
+da decisão. O pacote tjsp tem uma função chamada lapso, que serve para
+isso. Iremos colocar a duração em dias porque a movimentação não informa
+a hora. Iremos também adicionar uma coluna informando o status da
+informação, se foi censurada terá valor 0, se não, valor 1.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>base <span class="ot">&lt;-</span> dispositivos <span class="sc">|&gt;</span> </span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>        <span class="fu">select</span>(processo, liminar, <span class="at">data_decisao =</span> data, decisao) <span class="sc">|&gt;</span> </span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>        <span class="fu">inner_join</span>(dados, <span class="at">by =</span> <span class="st">&quot;processo&quot;</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>        <span class="fu">inner_join</span>(dispositivos, <span class="at">by =</span> <span class="st">&quot;processo&quot;</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>        <span class="fu">mutate</span>(<span class="at">duracao =</span> <span class="fu">lapso</span>(<span class="at">inicio =</span> data_distribuicao, </span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>                               <span class="at">fim =</span> data_decisao, </span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>                               <span class="at">unidade =</span> <span class="st">&quot;dia&quot;</span>)</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>                               ) <span class="sc">|&gt;</span> </span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>       <span class="fu">mutate</span>(<span class="at">status =</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(duracao),<span class="dv">0</span>, <span class="dv">1</span>))</span></code></pre></div>
+<p>Por fim, vamos ordenar as colunas e converter as variáveis
+independentes em fatores</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>base <span class="ot">&lt;-</span> base <span class="sc">|&gt;</span> </span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">select</span>(processo, duracao, status, data_distribuicao, data_decisao,  status, camara,crime, liminar, fisico, decisao) <span class="sc">|&gt;</span> </span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(<span class="fu">across</span>(crime<span class="sc">:</span>decisao, as.factor))</span></code></pre></div>
+<h2 id="análise">Análise</h2>
+<p>Estamos em condições de aplicar a análise de duração. Antes, porém,
+vamos visualizar os dados. São 3174 pedidos julgados. No entanto, há 587
+casos censurados porque “não sabemos” quando foram decididos. Sabemos,
+porém que foram julgados porque todos foram extintos.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://pillar.r-lib.org/reference/glimpse.html'>glimpse</a></span><span class='op'>(</span><span class='va'>base</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>Rows: 3,174
+Columns: 10
+$ processo          &lt;chr&gt; &quot;00100009320228260000&quot;, &quot;00099948620228260…
+$ duracao           &lt;dbl&gt; 28, 30, 30, 1000, 44, 9, 65, 20, 14, 61, 7…
+$ status            &lt;dbl&gt; 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …
+$ data_distribuicao &lt;date&gt; 2022-03-30, 2022-03-30, 2022-03-30, 2022-…
+$ data_decisao      &lt;date&gt; 2022-04-27, 2022-04-29, 2022-04-29, NA, 2…
+$ camara            &lt;fct&gt; 15CDC, 10CDC, 13CDC, 14CDC, 2CDC, 7CDC, 12…
+$ crime             &lt;fct&gt; &quot;Furto Qualificado&quot;, &quot;Receptação Qualifica…
+$ liminar           &lt;fct&gt; não, não, não, não, não, não, não, não, si…
+$ formato           &lt;fct&gt; físico, físico, físico, físico, físico, fí…
+$ decisao           &lt;fct&gt; prejudicado/extinto, denegado, não conheci…</code></pre>
+</div>
+<p>Para a análise, iremos usar dois pacotes, o <code>survival</code> que
+já vem instalado com o R e <code>survminer</code>, que serve para gerar
+gráficos usando o ggplot2.</p>
+<p>Instale o <code>surviminer</code>:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;survminer&quot;</span>)</span></code></pre></div>
+<p>Carregue os dois pacotes:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/therneau/survival'>survival</a></span><span class='op'>)</span></span>
+<span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://rpkgs.datanovia.com/survminer/index.html'>survminer</a></span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
+<p>Do pacote survival, usaremos duas funções, Surv e survfit. A primeira
+cria um objeto “survival” com informações sobre o tempo, o status e o
+tipo de censura. A segunda roda o modelo Kaplan-Meier com seus
+respectivos estimadores.</p>
+<p>Inicialmente, vamos rodar o modelo sem as variáveis categóricas. Note
+que eu crio, com a função Surv o objeto. Nela eu coloquei o tempo
+(duração) e o status. Além disso, está subentendido o tipo de censura,
+que é à direita.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>km_fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/survival/man/survfit.html'>survfit</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/pkg/survival/man/Surv.html'>Surv</a></span><span class='op'>(</span><span class='va'>duracao</span>, <span class='va'>status</span><span class='op'>)</span> <span class='op'>~</span> <span class='fl'>1</span>, data <span class='op'>=</span> <span class='va'>base</span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
+<p>Os resultados mostram que de 3.174 pedidos, tivemos 2.604 decisões
+conhecidas. As demais foram censuradas. A mediana é de 40 dias. A
+mediana é mais apropriada que a média em análise de duração porque a
+distribuição das decisões é mais concentrada nos primeiros momentos, com
+poucos casos, mas importantes, com alta duração.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>km_fit</span></span></code></pre>
+</div>
+<pre><code>Call: survfit(formula = Surv(duracao, status) ~ 1, data = base)
+
+        n events median 0.95LCL 0.95UCL
+[1,] 3174   2604     40      39      42</code></pre>
+</div>
+<p>Para visualizar os resultados em mais detalhes, vamos usar a função
+<code>surv_summary</code> do pacote <code>survminer</code>. Vamos também
+renomear as colunas para nomes mais amigáveis em termos de
+compreensão.</p>
+<p>Mostraremos somente as 15 primeiras linhas e as 11 últimas para caber
+na página.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>sumario</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/survminer/man/surv_summary.html'>surv_summary</a></span><span class='op'>(</span><span class='va'>km_fit</span><span class='op'>)</span> <span class='op'>|&gt;</span> </span>
+<span>        <span class='fu'><a href='https://rdrr.io/r/stats/setNames.html'>setNames</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"tempo_em_dias"</span>,<span class='st'>"pedidos_pendentes"</span>,<span class='st'>"pedidos_decididos"</span>,</span>
+<span>        <span class='st'>"n_censurados"</span>,<span class='st'>"prob_duracao"</span>,<span class='st'>"erro"</span>,<span class='st'>"ic_inferior"</span>,<span class='st'>"ic_superior"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>|&gt;</span> </span>
+<span>   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>15</span>, <span class='fl'>120</span><span class='op'>:</span><span class='fl'>130</span><span class='op'>)</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>sumario</span></span></code></pre>
+</div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<table>
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 9%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: right;">tempo_em_dias</th>
+<th style="text-align: right;">pedidos_pendentes</th>
+<th style="text-align: right;">pedidos_decididos</th>
+<th style="text-align: right;">n_censurados</th>
+<th style="text-align: right;">prob_duracao</th>
+<th style="text-align: right;">erro</th>
+<th style="text-align: right;">ic_inferior</th>
+<th style="text-align: right;">ic_superior</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">3174</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.9990548</td>
+<td style="text-align: right;">0.0005460</td>
+<td style="text-align: right;">1.0000000</td>
+<td style="text-align: right;">0.9979863</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3171</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.9965343</td>
+<td style="text-align: right;">0.0010468</td>
+<td style="text-align: right;">0.9985809</td>
+<td style="text-align: right;">0.9944920</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">3163</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.9952741</td>
+<td style="text-align: right;">0.0012231</td>
+<td style="text-align: right;">0.9976629</td>
+<td style="text-align: right;">0.9928910</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">3159</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.9927536</td>
+<td style="text-align: right;">0.0015165</td>
+<td style="text-align: right;">0.9957087</td>
+<td style="text-align: right;">0.9898073</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">3151</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.9870825</td>
+<td style="text-align: right;">0.0020305</td>
+<td style="text-align: right;">0.9910187</td>
+<td style="text-align: right;">0.9831620</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">3133</td>
+<td style="text-align: right;">31</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.9773157</td>
+<td style="text-align: right;">0.0027042</td>
+<td style="text-align: right;">0.9825094</td>
+<td style="text-align: right;">0.9721495</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">3102</td>
+<td style="text-align: right;">34</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.9666037</td>
+<td style="text-align: right;">0.0032993</td>
+<td style="text-align: right;">0.9728745</td>
+<td style="text-align: right;">0.9603733</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">3068</td>
+<td style="text-align: right;">31</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.9568368</td>
+<td style="text-align: right;">0.0037699</td>
+<td style="text-align: right;">0.9639330</td>
+<td style="text-align: right;">0.9497928</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">3037</td>
+<td style="text-align: right;">23</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.9495904</td>
+<td style="text-align: right;">0.0040896</td>
+<td style="text-align: right;">0.9572325</td>
+<td style="text-align: right;">0.9420094</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">3014</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.9426591</td>
+<td style="text-align: right;">0.0043778</td>
+<td style="text-align: right;">0.9507821</td>
+<td style="text-align: right;">0.9346055</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">2992</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.9382483</td>
+<td style="text-align: right;">0.0045537</td>
+<td style="text-align: right;">0.9466597</td>
+<td style="text-align: right;">0.9299116</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">2978</td>
+<td style="text-align: right;">35</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.9272212</td>
+<td style="text-align: right;">0.0049729</td>
+<td style="text-align: right;">0.9363027</td>
+<td style="text-align: right;">0.9182278</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">2943</td>
+<td style="text-align: right;">32</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.9171393</td>
+<td style="text-align: right;">0.0053352</td>
+<td style="text-align: right;">0.9267800</td>
+<td style="text-align: right;">0.9075988</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">2911</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.9089477</td>
+<td style="text-align: right;">0.0056179</td>
+<td style="text-align: right;">0.9190113</td>
+<td style="text-align: right;">0.8989943</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">2885</td>
+<td style="text-align: right;">38</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.8969754</td>
+<td style="text-align: right;">0.0060156</td>
+<td style="text-align: right;">0.9076136</td>
+<td style="text-align: right;">0.8864619</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">144</td>
+<td style="text-align: right;">581</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.1827347</td>
+<td style="text-align: right;">0.0375377</td>
+<td style="text-align: right;">0.1966859</td>
+<td style="text-align: right;">0.1697731</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">148</td>
+<td style="text-align: right;">580</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.1824197</td>
+<td style="text-align: right;">0.0375773</td>
+<td style="text-align: right;">0.1963620</td>
+<td style="text-align: right;">0.1694672</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">152</td>
+<td style="text-align: right;">579</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.1821046</td>
+<td style="text-align: right;">0.0376171</td>
+<td style="text-align: right;">0.1960382</td>
+<td style="text-align: right;">0.1691614</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">161</td>
+<td style="text-align: right;">578</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.1817895</td>
+<td style="text-align: right;">0.0376569</td>
+<td style="text-align: right;">0.1957143</td>
+<td style="text-align: right;">0.1688555</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">167</td>
+<td style="text-align: right;">577</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.1814745</td>
+<td style="text-align: right;">0.0376968</td>
+<td style="text-align: right;">0.1953904</td>
+<td style="text-align: right;">0.1685497</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">168</td>
+<td style="text-align: right;">576</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.1811594</td>
+<td style="text-align: right;">0.0377369</td>
+<td style="text-align: right;">0.1950665</td>
+<td style="text-align: right;">0.1682439</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">173</td>
+<td style="text-align: right;">575</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.1808444</td>
+<td style="text-align: right;">0.0377770</td>
+<td style="text-align: right;">0.1947425</td>
+<td style="text-align: right;">0.1679381</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">190</td>
+<td style="text-align: right;">574</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.1805293</td>
+<td style="text-align: right;">0.0378172</td>
+<td style="text-align: right;">0.1944186</td>
+<td style="text-align: right;">0.1676323</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">227</td>
+<td style="text-align: right;">573</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.1802142</td>
+<td style="text-align: right;">0.0378575</td>
+<td style="text-align: right;">0.1940946</td>
+<td style="text-align: right;">0.1673265</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">234</td>
+<td style="text-align: right;">572</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.1798992</td>
+<td style="text-align: right;">0.0378979</td>
+<td style="text-align: right;">0.1937706</td>
+<td style="text-align: right;">0.1670207</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">237</td>
+<td style="text-align: right;">571</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.1795841</td>
+<td style="text-align: right;">0.0379385</td>
+<td style="text-align: right;">0.1934466</td>
+<td style="text-align: right;">0.1667150</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Veja que o primeiro tempo é dois dias, ou seja, depois de dois dias,
+havia 3174 casos, sendo que três casos foram julgados. Depois de três
+dias, oito casos foram julgados. A tabela também mostra o número de
+pedidos pendentes depois de um certo número de dias. Também mostra a
+probabilidade de pendência, ou seja, a probabilidade de o pedido não ter
+sido apreciado a cada momento.</p>
+<p>A curva de Kaplan-Meier é ilustrativa, veja abaixo. Limitamos no
+gráfico para 180 dias e colocamos intervalos de dez dias para facilitar
+a visualização.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/pkg/survminer/man/ggsurvplot.html'>ggsurvplot</a></span><span class='op'>(</span><span class='va'>km_fit</span>,</span>
+<span>           xlim <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>180</span><span class='op'>)</span>,</span>
+<span>           break.time.by <span class='op'>=</span> <span class='fl'>10</span>,</span>
+<span>           ylab <span class='op'>=</span> <span class='st'>"Probabilidade de pendência"</span>,</span>
+<span>           xlab <span class='op'>=</span> <span class='st'>"Tempo em dias"</span>,</span>
+<span>           legend.title <span class='op'>=</span> <span class='st'>"Tempo para apreciar pedidos de habeas corpus"</span>,</span>
+<span>           ggtheme <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggtheme.html'>theme_light</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span>           <span class='op'>)</span></span></code></pre>
+</div>
+<p><img src="sobrevivencia_files/figure-html5/unnamed-chunk-10-1.png" width="624" /></p>
+</div>
+<p>Veja que a curva mostra a probabilidade de pendência ou duração ao
+longo do tempo. Isto é, no tempo zero, 100% está pendente. Conforme o
+tempo passa, a taxa de pendência vai caindo.</p>
+<h2 id="duração-por-câmara">Duração por câmara</h2>
+<p>Vamos agora observar como ficam os tempos quando condicionamos por
+câmara de direito criminal.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>km_fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/survival/man/survfit.html'>survfit</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/pkg/survival/man/Surv.html'>Surv</a></span><span class='op'>(</span><span class='va'>duracao</span>, <span class='va'>status</span><span class='op'>)</span> <span class='op'>~</span> <span class='va'>camara</span>, data <span class='op'>=</span> <span class='va'>base</span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
+<p>Você pode visualizar os resultados com
+<code>surv_summary(km_fit)</code>. Aqui iremos apenas gerar os gráficos
+das curvas de Kaplan-Meier para cada câmara de direito criminal.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>curva</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/survminer/man/ggsurvplot.html'>ggsurvplot</a></span><span class='op'>(</span><span class='va'>km_fit</span>,</span>
+<span>                    data <span class='op'>=</span> <span class='va'>base</span>,</span>
+<span>                    break.time.by <span class='op'>=</span> <span class='fl'>15</span> ,</span>
+<span>                    xlim <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>120</span><span class='op'>)</span>,</span>
+<span>                    ylab <span class='op'>=</span> <span class='st'>"Probabilidade de pendência"</span>,</span>
+<span>                    xlab <span class='op'>=</span> <span class='st'>"Tempo em dias"</span>,</span>
+<span>                    ggtheme <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggtheme.html'>theme_light</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span>                    <span class='op'>)</span></span>
+<span></span>
+<span></span>
+<span><span class='va'>ajusta_etiqueta</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='fu'>stringr</span><span class='fu'>::</span><span class='fu'><a href='https://stringr.tidyverse.org/reference/str_remove.html'>str_remove</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='st'>"camara="</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>curva</span><span class='op'>$</span><span class='va'>plot</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/facet_wrap.html'>facet_wrap</a></span><span class='op'>(</span><span class='op'>~</span><span class='va'>strata</span>, labeller <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/as_labeller.html'>as_labeller</a></span><span class='op'>(</span><span class='va'>ajusta_etiqueta</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/theme.html'>theme</a></span><span class='op'>(</span>legend.position<span class='op'>=</span><span class='st'>"none"</span><span class='op'>)</span></span></code></pre>
+</div>
+<p><img src="sobrevivencia_files/figure-html5/unnamed-chunk-12-1.png" width="624" /></p>
+</div>
+<p>As curvas sugerem diferenças entre as câmaras criminais. Algumas,
+como a quinta e a oitava câmaras decidem um número relevante de casos
+logo nos primeiros dias. Por su vez, a 10ª e a 15ª demoram um pouco
+mais, mas suas curvas mostram uma redução relevante de casos depois de
+um certo período.</p>
+<h2 id="teste-logrank">Teste Logrank</h2>
+<p>Para saber se essas curvas são realmente diferentes, há um teste
+chamado logrank. Por meio dele, verifica-se de os grupos (câmaras de
+direito criminal) experimentam diferenças nas curvas, i.e., dado um
+momento, e.g., 5 dias após o pedido, o número de decisões é o mesmo para
+cada um, ou difere significativamente. Basicamente o teste compara o
+número de decisões observadas e o número de decisões esperadas para cada
+momento e apresenta a soma deles. O teste logrank adotado pelo R é uma
+aproximação ao teste do Chi Quadrado. Se você não tem familiaridade com
+o teste do Chi Quadrado, <a
+href="https://www.youtube.com/watch?v=NTHA9Qa81R8">esse vídeo</a> pode
+lhe ajudar.</p>
+<p>Para realizar o teste, há uma função específica:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>surv_diff</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/survival/man/survdiff.html'>survdiff</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/pkg/survival/man/Surv.html'>Surv</a></span><span class='op'>(</span><span class='va'>duracao</span>, <span class='va'>status</span><span class='op'>)</span> <span class='op'>~</span> <span class='va'>camara</span>, data <span class='op'>=</span> <span class='va'>base</span><span class='op'>)</span></span>
+<span><span class='va'>surv_diff</span></span></code></pre>
+</div>
+<pre><code>Call:
+survdiff(formula = Surv(duracao, status) ~ camara, data = base)
+
+               N Observed Expected (O-E)^2/E (O-E)^2/V
+camara=1CDC  191      162    149.2   1.09465   1.18900
+camara=2CDC  165      144    106.4  13.26440  14.16525
+camara=3CDC  192      142    196.8  15.26736  16.93715
+camara=4CDC  225      187    231.1   8.40432   9.45539
+camara=5CDC  164      149     98.6  25.74522  27.39508
+camara=6CDC  231      142    200.6  17.11896  19.10198
+camara=7CDC  216      191    183.1   0.34045   0.37579
+camara=8CDC  306      290    210.2  30.26589  33.76487
+camara=9CDC  190      190    105.4  67.79794  72.79231
+camara=10CDC 133      110    128.7   2.71341   2.92378
+camara=11CDC 190      176    115.6  31.59349  33.88838
+camara=12CDC 153      138    137.6   0.00136   0.00148
+camara=13CDC 186      126    178.6  15.48205  17.02984
+camara=14CDC 204      143    194.1  13.45849  14.89480
+camara=15CDC 224      157    204.1  10.86918  12.08055
+camara=16CDC 204      157    163.8   0.28635   0.31276
+
+ Chisq= 264  on 15 degrees of freedom, p= &lt;2e-16 </code></pre>
+</div>
+<p>Como se pode observar dos resultados, há diferenças significativas
+entre as câmaras, p-valor &lt; 0.05. Algumas decidiram mais hebeas
+corpus do que o esperado a cada momento, outras ficaram aquém do
+esperado.</p>
+<h2 id="duração-com-múltiplas-variáveis.">Duração com múltiplas
+variáveis.</h2>
+<p>Vamos agora incluir o formato entre as variáveis condicionantes do
+tempo para julgar um HC e ver os resultados grafivamente.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>km_fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/survival/man/survfit.html'>survfit</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/pkg/survival/man/Surv.html'>Surv</a></span><span class='op'>(</span><span class='va'>duracao</span>, <span class='va'>status</span><span class='op'>)</span> <span class='op'>~</span> <span class='va'>camara</span> <span class='op'>+</span> <span class='va'>formato</span>, data <span class='op'>=</span> <span class='va'>base</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>curva</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/survminer/man/ggsurvplot.html'>ggsurvplot</a></span><span class='op'>(</span><span class='va'>km_fit</span>,</span>
+<span>                    data <span class='op'>=</span> <span class='va'>base</span>,</span>
+<span>                    break.time.by <span class='op'>=</span> <span class='fl'>20</span> ,</span>
+<span>                    xlim <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>120</span><span class='op'>)</span>,</span>
+<span>                    ylab <span class='op'>=</span> <span class='st'>"Probabilidade de pendência"</span>,</span>
+<span>                    xlab <span class='op'>=</span> <span class='st'>"Tempo em dias"</span>,</span>
+<span>                    ggtheme <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggtheme.html'>theme_light</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span>                    <span class='op'>)</span></span>
+<span></span>
+<span></span>
+<span><span class='va'>remove_nome</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='fu'>stringr</span><span class='fu'>::</span><span class='fu'><a href='https://stringr.tidyverse.org/reference/str_remove.html'>str_remove_all</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='st'>"\\w+="</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>curva</span><span class='op'>$</span><span class='va'>plot</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/facet_wrap.html'>facet_wrap</a></span><span class='op'>(</span><span class='op'>~</span><span class='va'>strata</span>, labeller <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/as_labeller.html'>as_labeller</a></span><span class='op'>(</span><span class='va'>remove_nome</span><span class='op'>)</span><span class='op'>)</span><span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/theme.html'>theme</a></span><span class='op'>(</span>legend.position<span class='op'>=</span><span class='st'>"none"</span><span class='op'>)</span></span></code></pre>
+</div>
+<p><img src="sobrevivencia_files/figure-html5/unnamed-chunk-14-1.png" width="624" /></p>
+</div>
+<p>Quando olhamos para algumas câmaras, como a 13ª e a 15ª, os processos
+eletrônicos são julgados muito mais rapidamente e, pior, a maioria dos
+pedidos físicos nem sequer foram julgados no tempo de 120 dias mostrado
+no gráfico.</p>
+<h2 id="indo-além">Indo além</h2>
+<p>Esse tutorial quis ilustrar o potencial da análise de duração para a
+jurimetria. Nem sequer exploramos o tema profundamente. Há muito mais
+questões que podem ser exploradas, como saber se decisões quem tendem a
+negar o HC saem mais rapidamente ou não. Igualmente, decisões liminares
+estão sujeitas ao fumus boni iuris e ao periculum in mora.
+Possivelmente, os tempos se invertem quando deferir uma liminar
+supostamente gera um perigo (HC) ou quando a o indeferimento gera perigo
+(medidas protetivas.)</p>
+<p>A base está disponível para você analisá-la e explorar esses outros
+aspectos.</p>
+<div class="sourceCode" id="cb18"><pre
+class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<!--radix_placeholder_article_footer-->
+<!--/radix_placeholder_article_footer-->
+</div>
+
+<div class="d-appendix">
+</div>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+<!--radix_placeholder_site_after_body-->
+<!--/radix_placeholder_site_after_body-->
+<!--radix_placeholder_appendices-->
+<div class="appendix-bottom"></div>
+<!--/radix_placeholder_appendices-->
+<!--radix_placeholder_navigation_after_body-->
+<!--/radix_placeholder_navigation_after_body-->
+
+</body>
+
+</html>

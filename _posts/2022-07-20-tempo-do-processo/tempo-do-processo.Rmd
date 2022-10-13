@@ -1,0 +1,25 @@
+---
+title: "Tempo do processo"
+description: |
+  O tempo do processo judicial
+author:
+  - name: José de Jesus Filho
+    url: https://github.com/jjesusfilho
+date: 2022-07-20
+output:
+  distill::distill_article:
+    self_contained: false
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+Neste tutorial, irei mostrar uma nas frentes de análise mais importantes da jurimetria, a duração do processo. O método mais comumente usado é uma técnica estatística conhecida como análise de sobrevivência, a qual, substituiremos por análise de duração.
+
+O tempo talvez seja um dos aspectos mais importantes do processo judicial, tanto que o legislador constituinte inseriu no  capítulo dos direito e garantias fundamentais, artigo 5º, LXXVIII, a disposição de que "a todos, no âmbito judicial e administrativo, são assegurados a razoável duração do processo e os meios que garantam a celeridade de sua tramitação".
+
+Dentre as frases mais conhecidas no âmbito do direito, está aquela dita por Rui Barbosa em Oração aos Moços: "A justiça atrasada não é justiça, senão injustiça qualificada e manifesta".
+
+

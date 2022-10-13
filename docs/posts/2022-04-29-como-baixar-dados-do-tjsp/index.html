@@ -50,16 +50,17 @@ pre.numberSource code > span > a:first-child::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {   }
+  { color: #00769e; background-color: #f1f3f5; }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
+code span { color: #00769e; } /* Normal */
 code span.al { color: #ad0000; } /* Alert */
 code span.an { color: #5e5e5e; } /* Annotation */
-code span.at { } /* Attribute */
+code span.at { color: #657422; } /* Attribute */
 code span.bn { color: #ad0000; } /* BaseN */
 code span.bu { } /* BuiltIn */
-code span.cf { color: #007ba5; } /* ControlFlow */
+code span.cf { color: #00769e; } /* ControlFlow */
 code span.ch { color: #20794d; } /* Char */
 code span.cn { color: #8f5902; } /* Constant */
 code span.co { color: #5e5e5e; } /* Comment */
@@ -73,9 +74,9 @@ code span.fl { color: #ad0000; } /* Float */
 code span.fu { color: #4758ab; } /* Function */
 code span.im { } /* Import */
 code span.in { color: #5e5e5e; } /* Information */
-code span.kw { color: #007ba5; } /* Keyword */
+code span.kw { color: #00769e; } /* Keyword */
 code span.op { color: #5e5e5e; } /* Operator */
-code span.ot { color: #007ba5; } /* Other */
+code span.ot { color: #00769e; } /* Other */
 code span.pp { color: #ad0000; } /* Preprocessor */
 code span.sc { color: #5e5e5e; } /* SpecialChar */
 code span.ss { color: #20794d; } /* SpecialString */
@@ -1053,10 +1054,6 @@ figure img.external {
   margin-top: 1.5em;
 }
 
-.figure img {
-  width: 100%;
-}
-
 .figure .caption {
   color: rgba(0, 0, 0, 0.6);
   font-size: 12px;
@@ -1886,6 +1883,12 @@ function init_distill() {
 
     // hoverable references
     $('span.citation[data-cites]').each(function() {
+      if ($(this).children()[0].nodeName == "D-FOOTNOTE") {
+        var fn = $(this).children()[0]
+        $(this).html(fn.shadowRoot.querySelector("sup"))
+        $(this).id = fn.id
+        fn.remove()
+      }
       var refs = $(this).attr('data-cites').split(" ");
       var refHtml = refs.map(function(ref) {
         return "<p>" + $('#ref-' + ref).html() + "</p>";
@@ -1900,6 +1903,31 @@ function init_distill() {
         placement: 'bottom-start'
       });
     });
+
+    // fix footnotes in tables (#411)
+    // replacing broken distill.pub feature
+    $('table d-footnote').each(function() {
+      // we replace internal showAtNode methode which is triggered when hovering a footnote
+      this.hoverBox.showAtNode = function(node) {
+        // ported from https://github.com/distillpub/template/pull/105/files
+        calcOffset = function(elem) {
+            let x = elem.offsetLeft;
+            let y = elem.offsetTop;
+            // Traverse upwards until an `absolute` element is found or `elem`
+            // becomes null.
+            while (elem = elem.offsetParent && elem.style.position != 'absolute') {
+                x += elem.offsetLeft;
+                y += elem.offsetTop;
+            }
+
+            return { left: x, top: y };
+        }
+        // https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/offsetTop
+        const bbox = node.getBoundingClientRect();
+        const offset = calcOffset(node);
+        this.show([offset.left + bbox.width, offset.top + bbox.height]);
+      }
+    })
 
     // clear polling timer
     clearInterval(tid);
@@ -1999,6 +2027,8 @@ function init_common() {
   // mark non-body figures created by knitr chunks as 100% width
   $('.layout-chunk').each(function(i, val) {
     var figures = $(this).find('img, .html-widget');
+    // ignore leaflet img layers (#106)
+    figures = figures.filter(':not(img[class*="leaflet"])')
     if ($(this).attr('data-layout') !== "l-body") {
       figures.css('width', '100%');
     } else {
@@ -2021,7 +2051,7 @@ function init_common() {
   // get rid of index.html references in header
   if (window.location.protocol !== "file:") {
     $('.distill-site-header a[href]').each(function(i,val) {
-      $(this).attr('href', $(this).attr('href').replace("index.html", "./"));
+      $(this).attr('href', $(this).attr('href').replace(/^index[.]html/, "./"));
     });
   }
 
@@ -2060,7 +2090,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 <!--/radix_placeholder_distill-->
-  <script src="../../site_libs/header-attrs-2.13/header-attrs.js"></script>
+  <script src="../../site_libs/header-attrs-2.14/header-attrs.js"></script>
   <script src="../../site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
   <script src="../../site_libs/popper-2.6.0/popper.min.js"></script>
   <link href="../../site_libs/tippy-6.2.7/tippy.css" rel="stylesheet" />
@@ -2107,31 +2137,67 @@ document.addEventListener('DOMContentLoaded', function() {
 <h1>Como baixar dados do TJSP</h1>
 <!--radix_placeholder_categories-->
 <!--/radix_placeholder_categories-->
-<p><p>Nesta primeira postagem do blog, falaremos sobre como baixar e estruturar dados do Tribunal de Justiça de São Paulo. Nas próximas, veremos como agregar valor a esses dados e como aplicar técnicas de machine learning e métodos estatísticos para analisar e fazer predições.</p></p>
+<p><p>Nesta primeira postagem do blog, falaremos sobre como baixar e
+estruturar dados do Tribunal de Justiça de São Paulo. Nas próximas,
+veremos como agregar valor a esses dados e como aplicar técnicas de
+machine learning e métodos estatísticos para analisar e fazer
+predições.</p></p>
 </div>
 
 <div class="d-byline">
-  José de Jesus Filho <a href="https://github.com/jjesusfilho" class="uri">https://github.com/jjesusfilho</a> 
+  José de Jesus Filho <a href="https://github.com/jjesusfilho"
+class="uri">https://github.com/jjesusfilho</a> 
   
 <br/>2022-04-29
 </div>
 
 <div class="d-article">
-<p>O texto inaugural mostra como baixar dados processuais do Tribunal de Justiça de São Paulo (TJSP), bem como, estruturá-los e deixá-los prontos para análise.</p>
-<p>O único pré-requisito é ter noções básicas de programação em <a href="https://www.r-project.org/">R</a>.</p>
-<p>Se você não sabe R e quiser aprender para aplicar à jurimetria, eu mantenho um <a href="jurimetria.consudata.com.br">curso Jurimetria Aplicada</a>.</p>
-<p>Inicialmente, vamos instalar o pacote <a href="https://tjsp.consudata.com.br">tjsp</a>, o qual tem todas as ferramentas que você necessita para baixar e organizar os dados do TJSP. Para instalar o pacote tjsp, você deve ter o pacote <code>remotes</code> instalado.</p>
+<p>O texto inaugural mostra como baixar dados processuais do Tribunal de
+Justiça de São Paulo (TJSP), bem como, estruturá-los e deixá-los prontos
+para análise.</p>
+<p>O único pré-requisito é ter noções básicas de programação em <a
+href="https://www.r-project.org/">R</a>.</p>
+<p>Se você não sabe R e quiser aprender para aplicar à jurimetria, eu
+mantenho um <a href="jurimetria.consudata.com.br">curso Jurimetria
+Aplicada</a>.</p>
+<p>Inicialmente, vamos instalar o pacote <a
+href="https://tjsp.consudata.com.br">tjsp</a>, o qual tem todas as
+ferramentas que você necessita para baixar e organizar os dados do TJSP.
+Para instalar o pacote tjsp, você deve ter o pacote <code>remotes</code>
+instalado.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_package</span>(<span class="st">&quot;jjesusfilho/tjsp&quot;</span>)</span></code></pre></div>
-<p>O pacote tjsp possui muitas funções para baixar e organizar os dados do TJSP. Ele segue uma sintaxe simples. A maioria das funções começa com tjsp_, seguido do verbo indicador da ação, e.g., baixar, seguido da sigla do repositório. Basicamente, o sistema esaj, responsável por disponibilizar os dados processuais do TJSP em meio eletrônico, usa quatro siglas:</p>
+<p>O pacote tjsp possui muitas funções para baixar e organizar os dados
+do TJSP. Ele segue uma sintaxe simples. A maioria das funções começa com
+tjsp_, seguido do verbo indicador da ação, e.g., baixar, seguido da
+sigla do repositório. Basicamente, o sistema esaj, responsável por
+disponibilizar os dados processuais do TJSP em meio eletrônico, usa
+quatro siglas:</p>
 <ul>
-<li><p>cjsg para consulta de julgados de segundo grau (busca jurisprudencia), <a href="https://esaj.tjsp.jus.br/cjsg/resultadoCompleta.do">nesta página</a>.</p></li>
-<li><p>cjpg para consulta de julgados de primeiro grau, <a href="https://esaj.tjsp.jus.br/cjpg/">nesta página</a>.</p></li>
-<li><p>cposg para consulta dos dados processuais de segundo grau (dados de capa) e movimentação processual, <a href="https://esaj.tjsp.jus.br/cposg/open.do">nesta página</a>.</p></li>
-<li><p>cpopg para consulta dos dados processuais de primeiro grau (dados de capa ) mais movimentação processual, <a href="https://esaj.tjsp.jus.br/cpopg/open.do">nesta página</a>.</p></li>
+<li><p>cjsg para consulta de julgados de segundo grau (busca
+jurisprudencia), <a
+href="https://esaj.tjsp.jus.br/cjsg/resultadoCompleta.do">nesta
+página</a>.</p></li>
+<li><p>cjpg para consulta de julgados de primeiro grau, <a
+href="https://esaj.tjsp.jus.br/cjpg/">nesta página</a>.</p></li>
+<li><p>cposg para consulta dos dados processuais de segundo grau (dados
+de capa) e movimentação processual, <a
+href="https://esaj.tjsp.jus.br/cposg/open.do">nesta página</a>.</p></li>
+<li><p>cpopg para consulta dos dados processuais de primeiro grau (dados
+de capa ) mais movimentação processual, <a
+href="https://esaj.tjsp.jus.br/cpopg/open.do">nesta página</a>.</p></li>
 </ul>
-<p>Dessa forma, para baixar um consulta jurisprudencial, você usa a função <code>tjsp_baixar_cjsg()</code>. Para baixar os dados de capa de um processo de primeiro grau, você usa a função <code>tjsp_baixar_cpopg()</code>. Dentro delas, você vai informar os mesmos dados que você informaria na consulta diretamente àquelas páginas.</p>
+<p>Dessa forma, para baixar um consulta jurisprudencial, você usa a
+função <code>tjsp_baixar_cjsg()</code>. Para baixar os dados de capa de
+um processo de primeiro grau, você usa a função
+<code>tjsp_baixar_cpopg()</code>. Dentro delas, você vai informar os
+mesmos dados que você informaria na consulta diretamente àquelas
+páginas.</p>
 <h2 id="consulta-jurisprudencial">Consulta jurisprudencial</h2>
-<p>A título de exemplo, vamos baixar alguns julgados de segundo grau. Se você consultar a ajuda da função <code>tjsp_baixar_cjsg()</code>, verá que ela tem quase os mesmos parâmetros que você usaria na <a href="https://esaj.tjsp.jus.br/cjsg/consultaCompleta.do">página do TJSP</a>:</p>
+<p>A título de exemplo, vamos baixar alguns julgados de segundo grau. Se
+você consultar a ajuda da função <code>tjsp_baixar_cjsg()</code>, verá
+que ela tem quase os mesmos parâmetros que você usaria na <a
+href="https://esaj.tjsp.jus.br/cjsg/consultaCompleta.do">página do
+TJSP</a>:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tjsp)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>?tjsp_baixar_cjsg</span></code></pre></div>
@@ -2149,16 +2215,27 @@ document.addEventListener('DOMContentLoaded', function() {
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">n =</span> <span class="cn">NULL</span>,</span>
 <span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">diretorio =</span> <span class="st">&quot;.&quot;</span></span>
 <span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
-<p>O primeiro argumento da função chama-se livre, o qual corresponde à “Pesquisa livre` na página referida. Há outros argumentos, como a especificação do assunto ou da classe processual. Hoje usaremos somente a busca livre e o argumento n, o qual indica o número de páginas. Além deles, indicaremos, no argumento diretorio, onde queremos baixar as consultas:</p>
-<p>Vamos fazer um experimento com a palavra “feminicídio”. Vamos criar um diretório chamado feminicidio (sem acento) e, dentro dele, um outro chamado cjsg.</p>
+<p>O primeiro argumento da função chama-se livre, o qual corresponde à
+“Pesquisa livre` na página referida. Há outros argumentos, como a
+especificação do assunto ou da classe processual. Hoje usaremos somente
+a busca livre e o argumento n, o qual indica o número de páginas. Além
+deles, indicaremos, no argumento diretorio, onde queremos baixar as
+consultas:</p>
+<p>Vamos fazer um experimento com a palavra “feminicídio”. Vamos criar
+um diretório chamado feminicidio (sem acento) e, dentro dele, um outro
+chamado cjsg.</p>
 <pre><code>dir.create(&quot;feminicidio&quot;)
 
 dir.create(&quot;feminicidio/cjsg&quot;)</code></pre>
-<p>A consulta por feminicídio resultou em mais de 2500 julgados de segundo grau. Vamos baixar apenas as primeiras 10 páginas da consulta. Veja abaixo como ficará a consulta.</p>
+<p>A consulta por feminicídio resultou em mais de 2500 julgados de
+segundo grau. Vamos baixar apenas as primeiras 10 páginas da consulta.
+Veja abaixo como ficará a consulta.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tjsp_baixar_cjsg</span>(<span class="at">livre =</span> <span class="st">&quot;feminicídio&quot;</span>,</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">n  =</span> <span class="dv">10</span>,</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">diretorio =</span> <span class="st">&quot;feminicidio/cjsg&quot;</span>)</span></code></pre></div>
-<p>Foram baixados os htmls. Agora vamos ler esses htmls a fim de visualizá-los. O único argumento que você precisa informar é o diretorio onde foram salvos os htmls.</p>
+<p>Foram baixados os htmls. Agora vamos ler esses htmls a fim de
+visualizá-los. O único argumento que você precisa informar é o diretorio
+onde foram salvos os htmls.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>cjsg <span class="ot">&lt;-</span> <span class="fu">tjsp_ler_cjsg</span>(<span class="at">diretorio =</span> <span class="st">&quot;feminicidio/cjsg&quot;</span>)</span></code></pre></div>
 <p>O resultado é a criação de um dataframe como na imagem abaixo.</p>
 <div class="layout-chunk" data-layout="l-body-outset">
@@ -2180,14 +2257,27 @@ $ ementa          &lt;chr&gt; &quot;HABEAS CORPUS. Pretendida revogação da pri
 $ cdacordao       &lt;chr&gt; &quot;15617778&quot;, &quot;15617979&quot;, &quot;15618448&quot;, &quot;1561631…</code></pre>
 </div>
 <h2 id="consulta-processual">Consulta processual</h2>
-<p>O próximo passo é consultar os dados de capa desses processos. No entanto, para automatizar a coleta de dados processuais, é necessário <a href="https://esaj.tjsp.jus.br/sajcas/login">identificar-se</a> antes com CPF e senha. Se você está cadastrada no esaj, use a função abaixo. Ela irá abrir um caixa para você incluir seu cpf e senha.</p>
+<p>O próximo passo é consultar os dados de capa desses processos. No
+entanto, para automatizar a coleta de dados processuais, é necessário <a
+href="https://esaj.tjsp.jus.br/sajcas/login">identificar-se</a> antes
+com CPF e senha. Se você está cadastrada no esaj, use a função abaixo.
+Ela irá abrir um caixa para você incluir seu cpf e senha.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tjsp_autenticar</span>()</span></code></pre></div>
-<p>Vamos criar um diretório chamado “cposg” dentro do diretório “feminicidio”.</p>
+<p>Vamos criar um diretório chamado “cposg” dentro do diretório
+“feminicidio”.</p>
 <pre><code>dir.create(&quot;feminicidio/cposg&quot;)</code></pre>
-<p>Agora vamos baixar os processos para a pasta criada. Iremos usar a coluna processo do dataframe cjsg. Para usá-la, basta colocar o cifrão entre o nome do dataframe e o nome da coluna.</p>
+<p>Agora vamos baixar os processos para a pasta criada. Iremos usar a
+coluna processo do dataframe cjsg. Para usá-la, basta colocar o cifrão
+entre o nome do dataframe e o nome da coluna.</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tjsp_baixar_cposg</span>(cjsg<span class="sc">$</span>processo, <span class="at">diretorio =</span> <span class="st">&quot;feminicidio/cposg&quot;</span>)</span></code></pre></div>
-<p>A leitura dos htmls contendo as informações ocorre em quatro etapas. Iniciamos, nós lemos os dados de capa propriamente ditos, número do processo, magistrado, comarca, vara etc. Em seguida, lemos os dados das partes. Depois lemos a movimentação processual e, por fim, lemos o dispositivo do acórdão.</p>
-<p>Para isso, primeiramente listamos todos os arquivos, para então usar o caminho dos arquivos para “parsear” cada um dos grupos de dados mencionados acima. A função abaixo lista todos os htmls.</p>
+<p>A leitura dos htmls contendo as informações ocorre em quatro etapas.
+Inicialmente, nós lemos os dados de capa propriamente ditos, número do
+processo, magistrado, comarca, vara etc. Em seguida, lemos os dados das
+partes. Depois lemos a movimentação processual e, por fim, lemos o
+dispositivo do acórdão.</p>
+<p>Para isso, primeiramente listamos todos os arquivos, para então usar
+o caminho dos arquivos para “parsear” cada um dos grupos de dados
+mencionados acima. A função abaixo lista todos os htmls.</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>arquivos <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="st">&quot;feminicidio/cposg&quot;</span>,<span class="at">full.names =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <h3 id="dados-de-capa">Dados de capa</h3>
 <p>Agora vamos usar esses arquivos para ler os dados de capa.</p>
@@ -2244,9 +2334,13 @@ $ processo    &lt;chr&gt; &quot;00000417220218260408&quot;, &quot;00000433520128
 $ data        &lt;date&gt; 2022-04-12, 2022-04-08, 2022-03-18, 2022-02-17,…
 $ dispositivo &lt;chr&gt; &quot;Negaram provimento ao recurso. V. U. Sustentou …</code></pre>
 </div>
-<p>Neste tutorial, vimos apenas como baixar e estruturar esses dados em dataframes. Nos próximos, veremos como agregar valor a esses dados. Por exemplo, podemos classificar as decisões se procedentes ou improcedentes. Podemos analisar o tempo do processo.</p>
+<p>Neste tutorial, vimos apenas como baixar e estruturar esses dados em
+dataframes. Nos próximos, veremos como agregar valor a esses dados. Por
+exemplo, podemos classificar as decisões se procedentes ou
+improcedentes. Podemos analisar o tempo do processo.</p>
 <p>Há muito mais pela frente. Aguarde os próximos tutoriais.</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="sourceCode" id="cb20"><pre
+class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
