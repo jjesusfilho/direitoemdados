@@ -1542,8 +1542,7 @@ da instauração do inquérito ou do recurso.</li>
 <p>O evento em si mesmo não é objeto da análise. Embora, como veremos
 adiante, a natureza do ato processual pode afetar significativamente o
 tempo do processo.</p>
-<h3 id="alguns-exemplos">Alguns exemplos</h3>
-<h2 id="exemplos">Exemplos</h2>
+<h3 id="exemplos">Exemplos</h3>
 <ol type="1">
 <li><p>Empresa (sujeito) inicia atividade (exposição) até (duração)
 falência (data do evento);</p></li>
@@ -1644,8 +1643,10 @@ pedido de liminar, diferem o processamento até a apreciação de mérito.
 Dessa forma, optamos por observar o tempo entre a entrada no TJSP até a
 apreciação do mérito, independentemente se este foi decidido
 liminarmente ou não.</p>
-<p>Para esta análise, baixamos 3161 pedidos de HCs. Basicamente o que
-fizemos foi usar a função <code>cnj_sequencial</code> do pacote <a
+<p>Para esta análise, baixamos <a
+href="https://github.com/jjesusfilho/direitoemdados/blob/master/_posts/2022-10-06-sobrevivencia/base.rds">3174
+pedidos</a> de HCs. Basicamente o que fizemos foi usar a função
+<code>cnj_sequencial</code> do pacote <a
 href="https://github.com/courtsbr/JurisMiner">JurisMiner</a> para criar
 duas sequências de números do CNJ. Uma que começa com 20, outra que
 começa com 00. Fizemos isso porque notamos que havia dois padrões de
@@ -1656,10 +1657,12 @@ impetrados pelos próprios pacientes ou seus familiares, geralmente
 presos com pedidos no âmbito da execução penal.</p>
 <h3 id="coleta-dos-dados">Coleta dos dados</h3>
 <p>Adicionei esta seção, somente para documentação do procedimento de
-coleta. Você pode saltá-la e ir diretamente para a análise. Veja abaixo
-como eu fiz. Primeiramente, criei um diretório chamado cpopsg (Consulta
-de julgados de segundo grau). Depois criei cada uma das sequências e
-coloquei para baixar os processos.</p>
+coleta. Você pode saltá-la e ir diretamente para a análise. A base
+utilizada se encontra <a
+href="https://github.com/jjesusfilho/direitoemdados/blob/master/_posts/2022-10-06-sobrevivencia/base.rds">aqui</a>.
+Veja abaixo como eu fiz. Primeiramente, criei um diretório chamado
+cpopsg (Consulta de julgados de segundo grau). Depois criei cada uma das
+sequências e coloquei para baixar os processos.</p>
 <p>Note que, antes de usar essas funções, você tem de instalar os
 pacotes <a href="https://github.com/courtsbr/JurisMiner">JurisMiner</a>
 e <a href="https://github.com/jjesusfilho/tjsp">tjsp</a>:</p>
@@ -2330,8 +2333,9 @@ estão sujeitas ao fumus boni iuris e ao periculum in mora.
 Possivelmente, os tempos se invertem quando deferir uma liminar
 supostamente gera um perigo (HC) ou quando a o indeferimento gera perigo
 (medidas protetivas.)</p>
-<p>A base está disponível para você analisá-la e explorar esses outros
-aspectos.</p>
+<p>A base está <a
+href="https://github.com/jjesusfilho/direitoemdados/blob/master/_posts/2022-10-06-sobrevivencia/base.rds">disponível</a>
+para você analisá-la e explorar esses outros aspectos.</p>
 <div class="sourceCode" id="cb18"><pre
 class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->

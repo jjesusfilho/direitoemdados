@@ -34,9 +34,7 @@ A análise de duração é também conhecida como tempo para o evento (time-to-e
 
 O evento em si mesmo não é objeto da análise. Embora, como veremos adiante, a natureza do ato processual pode afetar significativamente o tempo do processo. 
 
-### Alguns exemplos
-
-## Exemplos
+### Exemplos
 
 1. Empresa (sujeito) inicia atividade (exposição) até (duração) falência (data do evento);
 
@@ -99,11 +97,11 @@ Uma limitação do método Kaplan-Meier é que ele permite a inclusão de variá
 
 Para este tutorial, optamos por baixar pedidos de habeas corpus perante o Tribunal de Justiça de São Paulo contra atos de magistrados de primeira instância. Inicialmente, pensamos em analisar o tempo até a apreciação do pedido de liminar. No entanto, nem todos os HCs têm  pedido de antecipação cautelar, muitas decisões concedem HC liminarmente independentemente de haver pedido de antecipação. Muitos HCs, mesmo com pedido de liminar, diferem o processamento até a apreciação de mérito. Dessa forma, optamos por observar o tempo entre a entrada no TJSP até a apreciação do mérito, independentemente se este foi decidido liminarmente ou não.
 
-Para esta análise, baixamos 3161 pedidos de HCs. Basicamente o que fizemos foi usar a função `cnj_sequencial` do pacote [JurisMiner](https://github.com/courtsbr/JurisMiner) para criar duas sequências de números do CNJ. Uma que começa com 20, outra que começa com 00. Fizemos isso porque notamos que havia dois padrões de numeração. O primeiro, que começa com 20, corresponde a habeas corpus impetrados eletronicamente, geralmente por advogados, especialmente a Defensoria Pública. O segundo, que começa com 00, corresponde a HCs impetrados pelos próprios pacientes ou seus familiares, geralmente presos com pedidos no âmbito da execução penal.
+Para esta análise, baixamos [3174 pedidos](https://github.com/jjesusfilho/direitoemdados/blob/master/_posts/2022-10-06-sobrevivencia/base.rds) de HCs. Basicamente o que fizemos foi usar a função `cnj_sequencial` do pacote [JurisMiner](https://github.com/courtsbr/JurisMiner) para criar duas sequências de números do CNJ. Uma que começa com 20, outra que começa com 00. Fizemos isso porque notamos que havia dois padrões de numeração. O primeiro, que começa com 20, corresponde a habeas corpus impetrados eletronicamente, geralmente por advogados, especialmente a Defensoria Pública. O segundo, que começa com 00, corresponde a HCs impetrados pelos próprios pacientes ou seus familiares, geralmente presos com pedidos no âmbito da execução penal.
 
 ### Coleta dos dados
 
-Adicionei esta seção, somente para documentação do procedimento de coleta. Você pode saltá-la e ir diretamente para a análise. Veja abaixo como eu fiz. Primeiramente, criei um diretório chamado cpopsg (Consulta de julgados de segundo grau).  Depois criei cada uma das sequências e coloquei para baixar os processos.
+Adicionei esta seção, somente para documentação do procedimento de coleta. Você pode saltá-la e ir diretamente para a análise. A base utilizada se encontra [aqui](https://github.com/jjesusfilho/direitoemdados/blob/master/_posts/2022-10-06-sobrevivencia/base.rds). Veja abaixo como eu fiz. Primeiramente, criei um diretório chamado cpopsg (Consulta de julgados de segundo grau).  Depois criei cada uma das sequências e coloquei para baixar os processos.
 
 Note que, antes de usar essas funções, você tem de instalar os pacotes [JurisMiner](https://github.com/courtsbr/JurisMiner) e [tjsp](https://github.com/jjesusfilho/tjsp):
 
@@ -417,7 +415,7 @@ Quando olhamos para algumas câmaras, como a 13ª e a 15ª, os processos eletrô
 
 Esse tutorial quis ilustrar o potencial da análise de duração para a jurimetria. Nem sequer exploramos o tema profundamente. Há muito mais questões que podem ser exploradas, como saber se decisões quem tendem a negar o HC saem mais rapidamente ou não. Igualmente, decisões liminares estão sujeitas ao fumus boni iuris e ao periculum in mora. Possivelmente, os tempos se invertem quando deferir uma liminar supostamente gera um perigo (HC) ou quando a o indeferimento gera perigo (medidas protetivas.)
 
-A base está disponível para você analisá-la e explorar esses outros aspectos.
+A base está [disponível](https://github.com/jjesusfilho/direitoemdados/blob/master/_posts/2022-10-06-sobrevivencia/base.rds) para você analisá-la e explorar esses outros aspectos.
 
 
 
