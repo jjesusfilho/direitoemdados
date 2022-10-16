@@ -1,0 +1,266 @@
+---
+title: "Objetos no R"
+description: |
+  Neste tutorial, mostramos o que são objetos no R e como
+  manuseá-los.
+author:
+  - name: José de Jesus Filho
+    url: https://github.com/jjesusfilho
+date: 2022-10-15
+output:
+  distill::distill_article:
+    self_contained: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Objetos no R
+
+Objetos são valores nomeados. Quando falamos de valores no R, estamos nos referindo a algo que ocupa espaço na memória ram do cumputador. Pode ser um número, um texto ou um conjunto de números ou de textos.
+
+Esses valores podem ser submetidos a operações matemáticas, no caso de números, ou transformados para gerar outros valores. Por exemplo, "Maria" pode se transformar em "MARIA".
+
+### Criando objetos
+
+Para criar objetos no R, você deve atribuir um valor a um nome. Exemplos:
+
+```{r}
+numero <- 2
+
+nome <- "Maria"
+numero
+nome
+```
+
+Perceba que usamos o operador `<-` para atribuir o valor a um nome. No R, você sempre usa esse operador para atribuir. Há um outro operador, o `=`, que também pode ser usado, mas este possui usos mais específicos e falaremos dele no momento oportuno.
+
+Dar nomes a objetos é como dar nome a filhos, alguns são proibidos, outros podem causar muitos problemas no futuro. Se você quiser chamar seu filho de "Esfiha", o cartório irá recusar  o registro. Se você usar certos nomes, o R retornará um erro. Veja os exemplos abaixo, nomes têm de começar com letra e não podem ter operadores.
+
+```r
+3 <- 2 
+4m <- 4
+_x <- 'Mário' 
+bem-te-vi <- "pássaro" ## O hífen é um operador matemático.
+```
+
+É aconselhável usar nomes sugestivos dos valores contidos neles, em letra minúscula e separados por `_`.
+
+```{r}
+idade <- c(25,29,40,57)
+endereco_residencial <- "Rua José Mario Pereira, 43"
+```
+
+
+### Vetores
+
+Quando concatenamos um conjunto de valores da mesma natureza, chamamos esse objeto de vetor atômico. Exemplos:
+
+```{r}
+numeros <- c(2,5,9,20)
+numeros 
+nomes <- c("Maria", "Flávia","Roberto", "Pedro")
+nomes
+```
+
+Observe que para criar esses objetos, colocamos eles dentro da letra c com parênteses, que significa **c**oncatenar valores.
+
+Os vetores atômicos são assim chamados porque só podem conter um tipo de valor. Se você tentar concatenar texto com número, este último será convertido em texto e você perderá a capacidade de realizar operações matemáticas com ele.
+
+```{r}
+x <- c("Mário", 3)
+x
+```
+
+## Tipos e classes de objetos
+
+Os objetos podem ter tipos e classes. Os tipos correspondem à natureza mesma do objeto, as classes dizem respeito ao comportamento.
+
+### Inteiros
+
+Você define um inteiro no R, colocando um L depois do número:
+
+```{r}
+inteiro <- 4L
+typeof(inteiro)
+```
+
+Note que usamos a função `typeof()` para saber qual a natureza do objeto. 
+
+### Double
+
+Double ou precisão dupla são formatos numéricos que ocupam 64 bits da memória do computador, em contraste precisão singular, que ocupam 32. São usados para referir a números com casas decimais, tanto racionais quanto irracionais.
+
+```{r}
+x <- 2.3
+y <- pi
+
+typeof(x)
+typeof(y)
+```
+
+## Character
+
+Character é o formato texto, ou string, em outras linguagens. Você  usa ele para criar valores que não serão usados para operações matématicas. Para criar character, você precisa usar aspas simples ou duplas. 
+
+```{r}
+nome <- "Flaviana"
+cpf <- "123.456.768-10"
+```
+
+Se você colocar aspas nos números, eles serão tratados como characteres. Se você tentar realizar operações, o R retornará um erro.
+
+```{r error = T}
+n1 <- "2"
+n2 <- "3"
+
+n1 + n2
+```
+
+## Mesmos tipos, diferentes comportamentos (classes)
+
+Em programação, além dos tipos, existe uma outro conceito chamado classe, o qual diz respeito ao comportamento dos objetos. Os tipos básicos que vimos acima, podem ser representados em diferentes classes. Duas delas são especialmente importantes: datas e fatores
+
+### Datas
+
+Datas são do tipo numérico (double), mas visualizadas no seguinte formato: "aaaa-mm-dd", ou seja, mês, dia, ano. Esse formato segue o padrão internacional ISO-8601. O ano vem sempre com quatro dígitos e a ordem segue do maior para o menor.
+
+Para criar datas, precisamos de uma função do R chamas `as.Date()`. 
+
+```{r}
+d1 <- as.Date("2022-02-15")
+d1
+```
+
+Veja que ela foi impressa entre aspas, mas na verdade ela é um double:
+
+```{r}
+typeof(d1)
+```
+
+Isso ocorre porque, dessa forma, você pode realizar operações matemáticas com datas:
+
+```{r}
+d1 <- as.Date("2022-02-15")
+d2 <- as.Date("2022-03-16")
+
+d2 - d1
+```
+
+Como a data é um número, é possível convertê-la para o formato double, usando a função `as.numeric()`:
+
+```{r}
+as.numeric(d1)
+```
+
+Esse número, 19038, é o número de dias desde 01 de janeiro de 1970. Datas anteriores a esta data são representadas negativamente:
+
+```{r}
+n3 <- as.Date("1950-04-03")
+as.numeric(n3)
+```
+
+## Fatores
+
+Suponha que você realize uma pesquisa entre seus colegas de trabalho com perguntas como: Qual o seu primeiro nome e qual a sua religião e obtenha as seguintes respostas:
+
+```{r}
+primeiro_nome <- c("Fábio","Maria","Maria","José", "Catarina","José")
+
+primeiro_nome
+
+```
+
+
+```{r}
+religiao <- c("cristão","espírita","budista", "cristão","espírita", "cristão")
+religiao
+
+```
+
+
+Parece natural que alguns nomes e algumas religões vão se repetir nas respostas. Quando isso acontece, é preferível pedir ao R para armazenar essas respostas como números e associar etiquetas a esses números, correspondentes às respostas. Esse tipo de dados é chamado de categórico porque os possíveis valores que ele assume são conhecidos e limitados.
+
+Existe uma função no R própria para tratar de dados categóricos.
+
+```{r}
+primeiro_nome <- factor(primeiro_nome)
+primeiro_nome
+```
+
+```{r}
+religiao <- factor(religiao)
+religiao
+```
+
+Ao chamar o função `factor()`, o R associa cada categoria a um número e etiqueta cada uma delas com os nomes originais. Essas etiquetas são atributos chamados níveis (levels). Note que os `levels` estão em ordem alfabética e são únicos.
+
+Religião agora é do tipo numérico, mas de classe fator. Sua natureza é numérica, mas seu comportamento é de categoria. Você visualiza como se fosse texto, mas, na verdade, é um número.
+
+Se você converter o fator para inteiro, ele retorna os números correspondentes. 
+
+```{r}
+as.integer(religiao)
+```
+
+
+Há duas vantagens em usar fatores. A primeira é que os dados serão armazenados como inteiros, o que reduz o uso da memória. A segunda é que análises estatísticas realizam operações com matrizes numéricas.
+
+## Matrizes
+
+Matrizes são vetores atômicos com duas dimensões. Vamos criar um vetor de quinze números sequenciais. No R, você faz isso usando : (dois pontos) entre o primeiro e o último:
+
+```{r}
+x <- 1:15
+x
+```
+
+Agora vamos converter para uma matriz de duas três colunas e cinco linhas:
+
+```{r}
+matrix(x, nrow = 5) # É suficiente informar o número de linhas
+```
+
+Você pode criar uma matriz de textos também. Vamos criar um vetor com as dezesseis primeiras letras do alfabeto. O R já tem um objeto chamado letters, vamos simplesmente obter um subconjunto delas. Para tanto, usamos colchetes.
+
+```{r}
+x <- letters[1:16]
+x
+```
+
+
+
+```{r}
+matrix(x, ncol = 4)
+```
+
+Uma característica das matrizes é que elas são atômicas, i.e, todos os elementos têm de ser do mesmo tipo.
+
+## Dataframes
+
+Semelhante às planilhas do excel ou as tabelas de SQL, o R possui dataframes, que são nada menos que um emparelhamento de vetores do mesmo tamanho.
+
+Para criar dataframes, você usa a função `data.frame()`. Vamos criar um dataframe com os nomes e respectivas religiões acima criados.
+
+
+```{r}
+df <- data.frame(primeir_nome = primeiro_nome,
+                 religiao = religiao)
+df
+```
+
+Há uma classe especial de dataframe chamada tibble, que é praticamente idêntica a dataframe, mas um pouco mais segura para operar.
+
+## Listas
+
+Por fim, o R possui um tipo de objeto chamado `list`. Listas podem conter todos os demais tipois de objetos. Elas geralmente são usados para conter objetos de diferentes tipos e tamanhos. Podemos criar uma lista com alguns dos objetos já criados.
+
+```{r}
+lista <- list(religiao, x, df)
+lista
+```
+
+
+
+

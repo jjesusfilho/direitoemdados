@@ -7,7 +7,16 @@
     <description>Ciência de Dados Aplicada ao Direito
 </description>
     <generator>Distill</generator>
-    <lastBuildDate>Thu, 06 Oct 2022 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 15 Oct 2022 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>Objetos no R</title>
+      <dc:creator>José de Jesus Filho</dc:creator>
+      <link>https://direitoemdados.consudata.com.br/posts/2022-10-15-objetos</link>
+      <description>Neste tutorial, mostramos o que são objetos no R e como
+manuseá-los.</description>
+      <guid>https://direitoemdados.consudata.com.br/posts/2022-10-15-objetos</guid>
+      <pubDate>Sat, 15 Oct 2022 00:00:00 +0000</pubDate>
+    </item>
     <item>
       <title>O tempo do processo judicial</title>
       <dc:creator>José de Jesus Filho</dc:creator>
