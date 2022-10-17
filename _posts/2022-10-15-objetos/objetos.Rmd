@@ -45,6 +45,15 @@ _x <- 'Mário'
 bem-te-vi <- "pássaro" ## O hífen é um operador matemático.
 ```
 
+Em todos os casos acima, o R recusará a criação do objeto. Assim mesmo, caso queira insistir na nomeação não convencional, o R aceitará se você usar o acento grave como demarcador:
+
+```{r}
+`3` <- 2 
+`3`
+```
+
+Se você fizer isso, as chances de encontrar problemas no futuro são altas.
+
 É aconselhável usar nomes sugestivos dos valores contidos neles, em letra minúscula e separados por `_`.
 
 ```{r}
@@ -261,6 +270,56 @@ lista <- list(religiao, x, df)
 lista
 ```
 
+Os dataframes são, a rigor, listas também, em que cada coluna constitui um elemento. Eles são listas com a classe dataframe. Isso significa que o comportamento dos dataframes será diferente das demais listas. Vamos perguntar ao R qual o tipo e qual a classe do objeto df acima criado.
+
+```{r}
+typeof(df)
+```
+
+```{r}
+class(df)
+```
 
 
+## Indexação e subconjuntos
 
+Diferentemente de outras linguagens, como Python, que começam a contar do zero, o R começa a contar os elementos de um vetor ou de uma lista, a partir  do 1 (um) até o tamanho do vetor. 
+
+Para extrair um elemento de um vetor ou de uma lista, use colchetes com o índice. Por exemplo, se quiser obter a segunda letra do alfabeto:
+
+```{r}
+letters[2]
+```
+
+Para obter da segunda até a quarta letra:
+
+```{r}
+letters[2:4]
+```
+
+Se você quiser excluir uma delas, use o sinal de menos na frente do número:
+
+```{r}
+letters[-1]
+```
+
+Por outro lado, se você quiser obter valores contando do final, use a função `length()` dentro dos colchetes:
+
+```{r}
+letters[length(letters)]
+```
+
+Há também uma função chamada `tail()`, que é mais lenta, mas é mais flexível:
+
+```{r}
+tail(letters,1)
+```
+
+
+Se quiser obter os três últimos valores:
+
+```{r}
+tail(letters,3)
+```
+
+Essas mesmas regras valem para listas em geral. Para dataframes, há um pacote chamado `dplyr()`, o qual possui funções próprias para isso. 

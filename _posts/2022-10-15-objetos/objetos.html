@@ -1550,6 +1550,18 @@ de começar com letra e não podem ter operadores.</p>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>4m <span class="ot">&lt;-</span> <span class="dv">4</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>_x <span class="ot">&lt;-</span> <span class="st">&#39;Mário&#39;</span> </span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>bem<span class="sc">-</span>te<span class="sc">-</span>vi <span class="ot">&lt;-</span> <span class="st">&quot;pássaro&quot;</span> <span class="do">## O hífen é um operador matemático.</span></span></code></pre></div>
+<p>Em todos os casos acima, o R recusará a criação do objeto. Assim
+mesmo, caso queira insistir na nomeação não convencional, o R aceitará
+se você usar o acento grave como demarcador:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>`3`</span> <span class='op'>&lt;-</span> <span class='fl'>2</span> </span>
+<span><span class='va'>`3`</span></span></code></pre>
+</div>
+<pre><code>[1] 2</code></pre>
+</div>
+<p>Se você fizer isso, as chances de encontrar problemas no futuro são
+altas.</p>
 <p>É aconselhável usar nomes sugestivos dos valores contidos neles, em
 letra minúscula e separados por <code>_</code>.</p>
 <div class="layout-chunk" data-layout="l-body">
@@ -1855,7 +1867,79 @@ Levels: budista cristão espírita
 5     Catarina espírita
 6         José  cristão</code></pre>
 </div>
-<div class="sourceCode" id="cb27"><pre
+<p>Os dataframes são, a rigor, listas também, em que cada coluna
+constitui um elemento. Eles são listas com a classe dataframe. Isso
+significa que o comportamento dos dataframes será diferente das demais
+listas. Vamos perguntar ao R qual o tipo e qual a classe do objeto df
+acima criado.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/base/typeof.html'>typeof</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>[1] &quot;list&quot;</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>[1] &quot;data.frame&quot;</code></pre>
+</div>
+<h2 id="indexação-e-subconjuntos">Indexação e subconjuntos</h2>
+<p>Diferentemente de outras linguagens, como Python, que começam a
+contar do zero, o R começa a contar os elementos de um vetor ou de uma
+lista, a partir do 1 (um) até o tamanho do vetor.</p>
+<p>Para extrair um elemento de um vetor ou de uma lista, use colchetes
+com o índice. Por exemplo, se quiser obter a segunda letra do
+alfabeto:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>letters</span><span class='op'>[</span><span class='fl'>2</span><span class='op'>]</span></span></code></pre>
+</div>
+<pre><code>[1] &quot;b&quot;</code></pre>
+</div>
+<p>Para obter da segunda até a quarta letra:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>letters</span><span class='op'>[</span><span class='fl'>2</span><span class='op'>:</span><span class='fl'>4</span><span class='op'>]</span></span></code></pre>
+</div>
+<pre><code>[1] &quot;b&quot; &quot;c&quot; &quot;d&quot;</code></pre>
+</div>
+<p>Se você quiser excluir uma delas, use o sinal de menos na frente do
+número:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>letters</span><span class='op'>[</span><span class='op'>-</span><span class='fl'>1</span><span class='op'>]</span></span></code></pre>
+</div>
+<pre><code> [1] &quot;b&quot; &quot;c&quot; &quot;d&quot; &quot;e&quot; &quot;f&quot; &quot;g&quot; &quot;h&quot; &quot;i&quot; &quot;j&quot; &quot;k&quot; &quot;l&quot; &quot;m&quot; &quot;n&quot; &quot;o&quot; &quot;p&quot; &quot;q&quot;
+[17] &quot;r&quot; &quot;s&quot; &quot;t&quot; &quot;u&quot; &quot;v&quot; &quot;w&quot; &quot;x&quot; &quot;y&quot; &quot;z&quot;</code></pre>
+</div>
+<p>Por outro lado, se você quiser obter valores contando do final, use a
+função <code>length()</code> dentro dos colchetes:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>letters</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>letters</span><span class='op'>)</span><span class='op'>]</span></span></code></pre>
+</div>
+<pre><code>[1] &quot;z&quot;</code></pre>
+</div>
+<p>Há também uma função chamada <code>tail()</code>, que é mais lenta,
+mas é mais flexível:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>tail</a></span><span class='op'>(</span><span class='va'>letters</span>,<span class='fl'>1</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>[1] &quot;z&quot;</code></pre>
+</div>
+<p>Se quiser obter os três últimos valores:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>tail</a></span><span class='op'>(</span><span class='va'>letters</span>,<span class='fl'>3</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>[1] &quot;x&quot; &quot;y&quot; &quot;z&quot;</code></pre>
+</div>
+<p>Essas mesmas regras valem para listas em geral. Para dataframes, há
+um pacote chamado <code>dplyr()</code>, o qual possui funções próprias
+para isso.</p>
+<div class="sourceCode" id="cb36"><pre
 class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
