@@ -1,0 +1,229 @@
+---
+title: "Json no R - Parte 1"
+description: |
+  Este é o primeiro tutorial de dois sobre JSON no R. Nesta primeira parte, mostro como usar o pacote `jsonlite` para converter de JSON para R e vice-versa. Na próxima postagem, trato de como trabalhar com JSON como JSON mesmo no R, sem convertê-lo para lista ou dataframe.
+author:
+  - name: José de Jesus Filho
+    url: https://github.com/jjesusfilho
+date: 2022-12-26
+output:
+  distill::distill_article:
+    self_contained: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Um dos formatos de arquivos que eu mais gosto de trabalhar é JSON (JavaScript Object Notation). A graça de JSON é ser um formato amigável para seres humanos e para máquinas. Coloco abaixo o exemplo de parte de um currículo. 
+
+```r
+{
+    "id": 2,
+    "data": "2022-01-01",
+    "nome": {
+        "primeiro_nome": "José",
+        "sobrenome": "de Jesus Filho"
+    },
+    "cpf": "123.456.789-34",
+    "disponivel": true,
+    "educacao": [
+        {
+            "escola": "EMPG Milton Campos",
+            "ensino": "Fundamental",
+            "inicio": 1982,
+            "fim": 1989
+        },
+        {
+            "escola": "Derville Allegretti",
+            "ensino": "medio",
+            "inicio": 1990,
+            "fim": 1992
+        }
+    ],
+    "experiencia_profissional": [
+        {
+            "empresa": "Companhia Brasileria de Distribuição",
+            "cargo": "empacotador",
+            "inicio": 1986,
+            "fim": 1988
+        },
+        {
+            "empresa": "Compneus",
+            "cargo": "gerente",
+            "inicio": 1990,
+            "fim": 1992
+        },
+        {
+            "empresa": "Varias",
+            "cargo": "muitos",
+            "inicio": 1992,
+            "fim": 2021
+        },
+        {
+            "empresa": "MPSP",
+            "cargo": "Jurimetrista",
+            "inicio": 2022,
+            "fim": null
+        }
+    ]
+}
+
+```
+
+Diferentemente de XML, JSON é simples e fácil de manipular. No entanto, essa simplicidade vem com um custo. JSON carece de namespace, o que facilmente pode gerar conflitos e perda de integridade dos dados. Se você quer entender para que serve namespace, carregue o pacote dplyr e busque  a ajuda para a função `filter`, você notará que há duas funções distintas com o mesmo nome, porém uma no namespace dplyr e outra no stats. Pacotes são namespaces, schemas em SQL são namespaces e XML também usa namespaces. Namespaces asseguram unicidade nos nomes dos objetos.
+
+Ademais, JSON só reconhece quatro (4) tipos/classes de dados (texto, número, boleano e nulo). Datas e dados categóricos (fatores ou enum) não são reconhecidos. Além disso, JSON têm duas estruturas universais:
+
+JSON objeto: Uma coleção desordenada de pares chave/valor. Esses valores podem ser aqueles acima mencionados: texto (string), número (number), boleano (boolean) e nulo, bem como os próprios objetos JSON e arrays.
+
+JSON array: Uma coleção ordenada de valores.
+
+Note acima que o JSON está dentro de chaves {...}, indicando que se trata de um objeto JSON. Nele há vários objetos: id, data, nome, cpf, disponivel,  educacao e experiencia_profissional. O id é numérico, data, nome e cpf são textos e disponível é lógico (boleano). Por sua vez, educacao e experiencia_profissional são arrays. Arrays estão sempre entre colchetes. 
+
+Perceba também que as chaves ou nomes (keys) estão sempre entre aspas e os valores, quando textos também entre aspas, números, boleanos e nulos (último ítem "fim" da experiência profissional), sem aspas.
+
+O exemplo acima é simples e fácil de entender, mas JSON pode ser complexo, com profundos aninhamentos de objetos e arrays, o que torna a conversão de um JSON para um objeto nativo do R e vice-versa um desafio e sujeita a erros de toda sorte.
+
+Neste tutorial, mostraremos como trabalhar como pacote jsonlite, o qual converte JSON em objetos do R e vice-versa. No próximo, falaremos do pacote jqr, o qual manuseia JSON como JSON mesmo, sem convertê-lo para lista ou data.frame.
+
+## O pacote jsonlite
+
+O pacote jsonlite permite ler, escrever e validar JSONs. Vamos tratar do exemplo acima:
+
+```{r}
+x <- '{
+    "id": 2,
+    "data": "2022-01-01",
+    "nome": {
+        "primeiro_nome": "José",
+        "sobrenome": "de Jesus Filho"
+    },
+    "cpf": "123.456.789-34",
+    "disponivel": true,
+    "educacao": [
+        {
+            "escola": "EMPG Milton Campos",
+            "ensino": "Fundamental",
+            "inicio": 1982,
+            "fim": 1989
+        },
+        {
+            "escola": "Derville Allegretti",
+            "ensino": "medio",
+            "inicio": 1990,
+            "fim": 1992
+        }
+    ],
+    "experiencia_profissional": [
+        {
+            "empresa": "Companhia Brasileria de Distribuição",
+            "cargo": "empacotador",
+            "inicio": 1986,
+            "fim": 1988
+        },
+        {
+            "empresa": "Compneus",
+            "cargo": "gerente",
+            "inicio": 1990,
+            "fim": 1992
+        },
+        {
+            "empresa": "Varias",
+            "cargo": "muitos",
+            "inicio": 1992,
+            "fim": 2021
+        },
+        {
+            "empresa": "MPSP",
+            "cargo": "Jurimetrista",
+            "inicio": 2022,
+            "fim": null
+        }
+    ]
+}'
+```
+
+o pacote `jsonlite` possui um função para converter JSON para objeto do R chamada `fromJSON`:
+
+```{r}
+library(jsonlite)
+obj <- fromJSON(x)
+
+obj
+```
+
+A vantagem do `jsonlite` é que ele opera um excelente mapeamento entre JSON e objetos do R. O JSON foi convertido numa lista de sete elementos, dos quais alguns vetores de um único elemento, nome é uma lista,  e educacao e experiencia_profissional  são dataframes. Além disso, os textos foram convertidos para characters, números tornaram-se integers, true foi propriamente convertido para TRUE e null para NA.
+
+A data foi mantida como character porque JSON não tem especificação para datas. 
+
+O pacote `jsonlite` possibilita o caminho reverso por meio da função `toJSON`:
+
+```{r results = 'asis'}
+toJSON(obj)
+```
+
+A primeira observação é que JSON não está nada elegante nem formatado para facilitar a leitura humana. Igualmente, percebe-se que os vetores de um único elemento foram todos convertidos em arrays. Por fim, a chave-valor fim do último cargo, que era NA no R simplesmente desapareceu.
+
+A função `toJSON` possui argumentos para reverter isso.
+
+```{r}
+toJSON(obj, 
+      pretty = T, ## Tornar amigável ao usuário
+      na = "null", ## converte NA para nulo
+      auto_unbox = TRUE) ## retira os colchetes dos elementos únicos.
+
+```
+
+Se você quiser salvar um objeto do R como JSON, use a função `write_JSON` com os mesmos argumentos da `toJSON` adicionados do argumento `path`:
+
+```r
+write_JSON(obj,
+          path = "curriculo.JSON",
+          pretty = TRUE,
+          na = "JSON",
+          auto_unbox = TRUE)
+```
+
+### Preservando atributos de objetos R
+
+Por vezes, você quer converter um objeto R para JSON e revertê-lo posteriormente para R. A título de exemplo, vamos criar simples tibble e convertê-la para JSON.
+
+```{r}
+df <- tibble::tibble(a = 1:5, b = letters[1:5])
+
+JSON <- toJSON(df, pretty = TRUE)
+
+JSON
+```
+
+Se quisermos nossa tibble de volta, o resultado pode ser frustrante:
+
+```{r}
+tb <- fromJSON(JSON)
+
+class(tb)
+```
+
+O pacote `jsonlite` oferece duas alternativas a `toJSON` e `fromJSON`, as quais preservam os atributos originais:
+
+```{r}
+sJSON <- serializeJSON(df, pretty = T)
+sJSON
+```
+
+O JSON resultante é mais verboso, mas assegura o retorno ao objeto R original:
+
+```{r}
+utb <- unserializeJSON(sJSON)
+class(utb)
+```
+
+Se quisermos imprimir a tibble:
+
+```{r}
+utb
+```
+
+Há outros recursos no pacote, como imprimir objetos json de forma bonita (prettify), mas creio que o essencial foi falado. Não se esqueça de ler o tutorial 2, nele mostramos uma infinidade de recursos para trabalhar com JSON.
+

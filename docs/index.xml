@@ -7,7 +7,31 @@
     <description>Ciência de Dados Aplicada ao Direito
 </description>
     <generator>Distill</generator>
-    <lastBuildDate>Sat, 15 Oct 2022 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 26 Dec 2022 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>Json no R - Parte 1</title>
+      <dc:creator>José de Jesus Filho</dc:creator>
+      <link>https://direitoemdados.consudata.com.br/posts/2022-12-26-json-no-rparte1</link>
+      <description>Este é o primeiro tutorial de dois sobre JSON no R. Nesta primeira parte, mostro como usar o pacote `jsonlite` para converter de JSON para R e vice-versa. Na próxima postagem, trato de como trabalhar com JSON como JSON mesmo no R, sem convertê-lo para lista ou dataframe.</description>
+      <guid>https://direitoemdados.consudata.com.br/posts/2022-12-26-json-no-rparte1</guid>
+      <pubDate>Mon, 26 Dec 2022 00:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>Json no R_parte2</title>
+      <dc:creator>José de Jesus Filho</dc:creator>
+      <link>https://direitoemdados.consudata.com.br/posts/2022-12-26-json-no-rparte2</link>
+      <description>Este é o segundo tutorial sobre JSON no R. Na (primeira parte)[]</description>
+      <guid>https://direitoemdados.consudata.com.br/posts/2022-12-26-json-no-rparte2</guid>
+      <pubDate>Mon, 26 Dec 2022 00:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>Json no R</title>
+      <dc:creator>José de Jesus Filho</dc:creator>
+      <link>https://direitoemdados.consudata.com.br/posts/2022-12-23-json-no-r</link>
+      <description>Nesta postagem eu mostro duas formas de trabalhar com json no R. A primeira e mais conhecida que é usar o pacote jsonlite, o qual converte o json num objeto do R e a segunda, que não converte json em lista do R e permite seu manuseio enquanto json mesmo.</description>
+      <guid>https://direitoemdados.consudata.com.br/posts/2022-12-23-json-no-r</guid>
+      <pubDate>Fri, 23 Dec 2022 00:00:00 +0000</pubDate>
+    </item>
     <item>
       <title>Objetos no R</title>
       <dc:creator>José de Jesus Filho</dc:creator>

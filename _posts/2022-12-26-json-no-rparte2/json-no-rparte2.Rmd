@@ -1,0 +1,94 @@
+---
+title: "Json no R_parte2"
+description: |
+  Este é o segundo tutorial sobre JSON no R. Na (primeira parte)[]
+author:
+  - name: José de Jesus Filho
+    url: https://github.com/jjesusfilho
+date: 2022-12-26
+output:
+  distill::distill_article:
+    self_contained: false
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+## Pacote jqr
+
+Diferentemente do `JSONlite`, o `jqr` opera com JSON como JSON mesmo. Ele é uma implementação da biblioteca jq: (http://stedolan.github.io/jq/) no R. Há duas interfaces, uma de baixo nível, que emula o `jq` via linha de comando, ou de alto nível que adota funções do R. Em ambas, você precisa saber um pouco de JSON path
+
+### Alto nível
+
+#### Extração 
+
+Suponha que você queira extrair do currículo acima o cpf. Basta chamar a função `jq()` e colocar dentro de aspas o elemento precedido por ponto.
+
+```{r}
+library(jqr)
+
+x |> 
+  jq(".cpf")
+
+```
+
+Você pode usar essa mesma sintaxe para obter subelementos.
+
+```{r}
+x |> 
+  jq(".nome.sobrenome")
+```
+
+Se quiser obter o primeiro elemento do array educacao, use colchetes:
+
+```{r}
+x |> 
+  jq(".educacao[0]")
+```
+
+Note que JSON começa a contar do zero.
+
+Se quiser a escola do segundo elemento de educacao:
+
+```{r}
+x |> 
+  jq(".educacao[1].escola")
+```
+
+#### Com pipe do R:
+
+```{r}
+x |> 
+   jq(".nome") |> 
+   jq(".primeiro_nome")
+```
+
+E se você quiser algo que não existe:
+
+```{r}
+s <- x |> 
+  jq(".idade")
+```
+Nada bom, mas você pode pedir que retorne null: 
+
+```{r}
+s <- x |> 
+  jq(".idade?")
+```
+
+
+#### Substituição
+
+Substituição é tão simples quanto. Vamo substituir "José" por "João" no primeiro_nome:
+
+```{r}
+x |> 
+  jq('.nome.primeiro_nome = "João"')
+```
+
+Repare que precisei colocar tudo entre aspas simples porque primeiro_nome é texto e, por isso, precisei usar aspas duplas em "João".
+
+
