@@ -2154,7 +2154,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <p>Para instalar os binários no Mac e no Windows, basta chamar:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;jqr&quot;</span>)</span></code></pre></div>
 <p>No Linux, você tem de instalar o biblioteca a <code>libjq-dev</code> antes.</p>
-<h3 id="baixo-nível">Baixo nível</h3>
+<h2 id="baixo-nível">Baixo nível</h2>
 <p>No baixo nível, você tem apenas de chamar a função <code>jq</code> e colocar entre aspas aquilo que você escreveria se estivesse usando <code>jq</code> no terminal. A biblioteca <code>jq</code> tem um playground para você testar: (<a href="https://jqplay.org/" class="uri">https://jqplay.org/</a>).</p>
 <p>Vamos retomar currículo criado no <a href="https://direitoemdados.consudata.com.br/posts/2022-12-26-json-no-rparte1/">primeiro tutorial</a>:</p>
 <div class="layout-chunk" data-layout="l-body">
@@ -2211,7 +2211,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <span><span class='st'>}'</span></span></code></pre>
 </div>
 </div>
-<h4 id="extração">Extração</h4>
+<h3 id="extração">Extração</h3>
 <p>Suponha que você queira extrair do currículo acima o cpf. Basta chamar a função <code>jq()</code> e colocar dentro de aspas o elemento precedido por ponto.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -2455,6 +2455,21 @@ document.addEventListener('DOMContentLoaded', function() {
 </div>
 <pre><code>true</code></pre>
 </div>
+<p>Ou prefira raw strings:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>arg</span> <span class='op'>&lt;-</span> <span class='st'>r"(.experiencia_profissional[].empresa | test("(?i)com\\w+"))"</span></span>
+<span></span>
+<span><span class='va'>x</span> <span class='op'>|&gt;</span> </span>
+<span>   <span class='fu'><a href='https://docs.ropensci.org/jqr/reference/jq.html'>jq</a></span><span class='op'>(</span><span class='va'>arg</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>[
+    true,
+    true,
+    false,
+    false
+]</code></pre>
+</div>
 <p>Você pode usar flags:</p>
 <pre><code>g - Pesquisa global (encontrar todas as correspondências, não apenas a primeira)
 i - Não diferencia maiúsculas de minúsculas
@@ -2488,7 +2503,7 @@ x - Formato regex estendido (ignora espaços em branco e comentários)</code></p
 ]</code></pre>
 </div>
 <p>Este tutorial apenas tocou no pacote <code>jqr</code>. Há uma uma multiplicidade de funções e recursos avançados os quais podem ser explorados sem sair do R. Aproveite para ler o manul: (<a href="https://stedolan.github.io/jq/manual" class="uri">https://stedolan.github.io/jq/manual</a>)</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>

@@ -32,7 +32,7 @@ install.packages("jqr")
 No Linux, você tem de instalar o biblioteca a `libjq-dev` antes.
 
 
-### Baixo nível
+## Baixo nível
 
 No baixo nível, você tem apenas de chamar a função `jq` e colocar entre aspas aquilo que você escreveria se estivesse usando `jq` no terminal. A biblioteca `jq` tem um playground para você testar: (https://jqplay.org/).
 
@@ -92,7 +92,7 @@ x <- '{
 ```
 
 
-#### Extração 
+### Extração 
 
 Suponha que você queira extrair do currículo acima o cpf. Basta chamar a função `jq()` e colocar dentro de aspas o elemento precedido por ponto.
 
@@ -292,6 +292,16 @@ x |>
   jq('.cpf | test("\\\\d")')
 ```
 
+Ou prefira raw strings:
+
+```{r}
+arg <- r"(.experiencia_profissional[].empresa | test("(?i)com\\w+"))"
+
+x |> 
+   jq(arg)
+```
+
+
 Você pode usar flags:
 
 
@@ -320,6 +330,7 @@ Você pode extrair texto com base em regex usando `capture`, mas você tem de in
 ```{r}
 '{"cep": ["05077-902", "02598154"]}' |> 
    jq('.cep[] | capture("(?<codigo_postal>[0-9]+-?[0-9]+)")')
+
 ```
 
 
