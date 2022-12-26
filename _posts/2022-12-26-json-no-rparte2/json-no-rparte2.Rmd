@@ -333,5 +333,38 @@ Você pode extrair texto com base em regex usando `capture`, mas você tem de in
 
 ```
 
+#### Match
+
+Outra função é `match`, que retorna um objeto json com quatro campos: 
+
+offset: posição inicial do padrão
+length: tamanho do padrão
+string: o padrão encontrado
+captures: array de objectos com os grupos de captura. Estes, por sua vez, com os seguintes campos: offset, length, string, name. Abaixo não aparecem porque não usamos grupos de captura.
+
+Vejamos:
+
+```{r}
+
+arg <- r"(.educacao[].escola | match("\\w+ll\\w*"; "g"))"
+
+x |> 
+   jq(arg)
+
+
+```
+
+
+Se quiser preservar somente o padrão:
+
+```{r}
+arg <- r"(.educacao[].escola | match("\\w+ll\\w*"; "g") | .string)"
+
+x |> 
+   jq(arg)
+
+
+```
+
 
 Este tutorial apenas tocou no pacote `jqr`. Há uma uma multiplicidade de funções e recursos avançados os quais podem ser explorados sem sair do R. Aproveite para ler o manul: (https://stedolan.github.io/jq/manual)

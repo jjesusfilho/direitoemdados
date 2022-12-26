@@ -2502,8 +2502,54 @@ x - Formato regex estendido (ignora espaços em branco e comentários)</code></p
     }
 ]</code></pre>
 </div>
+<h4 id="match">Match</h4>
+<p>Outra função é <code>match</code>, que retorna um objeto json com quatro campos:</p>
+<p>offset: posição inicial do padrão
+length: tamanho do padrão
+string: o padrão encontrado
+captures: array de objectos com os grupos de captura. Estes, por sua vez, com os seguintes campos: offset, length, string, name.</p>
+<p>Vejamos:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>arg</span> <span class='op'>&lt;-</span> <span class='st'>r"(.educacao[].escola | match("\\w+ll\\w*"; "g"))"</span></span>
+<span></span>
+<span><span class='va'>x</span> <span class='op'>|&gt;</span> </span>
+<span>   <span class='fu'><a href='https://docs.ropensci.org/jqr/reference/jq.html'>jq</a></span><span class='op'>(</span><span class='va'>arg</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>[
+    {
+        &quot;offset&quot;: 0,
+        &quot;length&quot;: 8,
+        &quot;string&quot;: &quot;Derville&quot;,
+        &quot;captures&quot;: [
+
+        ]
+    },
+    {
+        &quot;offset&quot;: 9,
+        &quot;length&quot;: 10,
+        &quot;string&quot;: &quot;Allegretti&quot;,
+        &quot;captures&quot;: [
+
+        ]
+    }
+]</code></pre>
+</div>
+<p>Se quiser preservar somente o padrão:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>arg</span> <span class='op'>&lt;-</span> <span class='st'>r"(.educacao[].escola | match("\\w+ll\\w*"; "g") | .string)"</span></span>
+<span></span>
+<span><span class='va'>x</span> <span class='op'>|&gt;</span> </span>
+<span>   <span class='fu'><a href='https://docs.ropensci.org/jqr/reference/jq.html'>jq</a></span><span class='op'>(</span><span class='va'>arg</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>[
+    &quot;Derville&quot;,
+    &quot;Allegretti&quot;
+]</code></pre>
+</div>
 <p>Este tutorial apenas tocou no pacote <code>jqr</code>. Há uma uma multiplicidade de funções e recursos avançados os quais podem ser explorados sem sair do R. Aproveite para ler o manul: (<a href="https://stedolan.github.io/jq/manual" class="uri">https://stedolan.github.io/jq/manual</a>)</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
