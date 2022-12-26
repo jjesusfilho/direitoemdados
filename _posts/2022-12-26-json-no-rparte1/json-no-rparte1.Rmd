@@ -1,7 +1,7 @@
 ---
 title: "Json no R - Parte 1"
 description: |
-  Este é o primeiro tutorial de dois sobre JSON no R. Nesta primeira parte, mostro como usar o pacote `jsonlite` para converter de JSON para R e vice-versa. Na próxima postagem, trato de como trabalhar com JSON como JSON mesmo no R, sem convertê-lo para lista ou dataframe.
+  Este é o primeiro tutorial de dois sobre JSON no R. Nesta primeira parte, mostro como usar o pacote `jsonlite` para converter de JSON para R e vice-versa. Na [segunda parte](https://direitoemdados.consudata.com.br/posts/2022-12-26-json-no-rparte2/), trato de como trabalhar com JSON como JSON mesmo no R, sem convertê-lo para lista ou dataframe.
 author:
   - name: José de Jesus Filho
     url: https://github.com/jjesusfilho
@@ -225,5 +225,5 @@ Se quisermos imprimir a tibble:
 utb
 ```
 
-Há outros recursos no pacote, como imprimir objetos json de forma bonita (prettify), mas creio que o essencial foi falado. Não se esqueça de ler o tutorial 2, nele mostramos uma infinidade de recursos para trabalhar com JSON.
+Há outros recursos no pacote, como imprimir objetos json de forma bonita (prettify), mas creio que o essencial foi falado. Não se esqueça de ler o [tutorial 2](https://direitoemdados.consudata.com.br/posts/2022-12-26-json-no-rparte2/), nele mostramos uma infinidade de recursos para trabalhar com JSON.
 
