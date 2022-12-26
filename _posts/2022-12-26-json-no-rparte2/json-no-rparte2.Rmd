@@ -1,7 +1,7 @@
 ---
 title: "Json no R_parte2"
 description: |
-  Este é o segundo tutorial sobre JSON no R. Na (primeira parte)[]
+  Este é o segundo tutorial sobre JSON no R. Na [primeira parte](https://direitoemdados.consudata.com.br/posts/2022-12-26-json-no-rparte1/), trabalhamos com o pacote `jsonlite`, que converte json para R. Neste, trabalhamos com o pacote `jqr`, o qual manuseia o json por ele mesmo. 
 author:
   - name: José de Jesus Filho
     url: https://github.com/jjesusfilho
@@ -13,15 +13,84 @@ output:
 
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(echo = TRUE)
 ```
 
 
 ## Pacote jqr
 
-Diferentemente do `JSONlite`, o `jqr` opera com JSON como JSON mesmo. Ele é uma implementação da biblioteca jq: (http://stedolan.github.io/jq/) no R. Há duas interfaces, uma de baixo nível, que emula o `jq` via linha de comando, ou de alto nível que adota funções do R. Em ambas, você precisa saber um pouco de JSON path
+Diferentemente do `jsonlite`, o `jqr` opera com JSON como JSON mesmo. Ele é uma implementação da biblioteca jq: (http://stedolan.github.io/jq/) no R. Há duas interfaces, uma de baixo nível, que emula o `jq` via linha de comando, ou de alto nível que adota funções do R. Primeiramente, mostraremos como o baixo nível porque ele é rico em recursos e uma vez que o conhece, você pode usá-lo inclusive na linha de comando.
 
-### Alto nível
+## Instalação
+
+Para instalar os binários no Mac e no Windows, basta chamar:
+
+```r
+install.packages("jqr")
+```
+
+No Linux, você tem de instalar o biblioteca a `libjq-dev` antes.
+
+
+### Baixo nível
+
+No baixo nível, você tem apenas de chamar a função `jq` e colocar entre aspas aquilo que você escreveria se estivesse usando `jq` no terminal. A biblioteca `jq` tem um playground para você testar: (https://jqplay.org/).
+
+Vamos retomar currículo criado no [primeiro tutorial](https://direitoemdados.consudata.com.br/posts/2022-12-26-json-no-rparte1/):
+
+```{r}
+x <- '{
+    "id": 2,
+    "data": "2022-01-01",
+    "nome": {
+        "primeiro_nome": "José",
+        "sobrenome": "de Jesus Filho"
+    },
+    "cpf": "123.456.789-34",
+    "disponivel": true,
+    "educacao": [
+        {
+            "escola": "EMPG Milton Campos",
+            "ensino": "Fundamental",
+            "inicio": 1982,
+            "fim": 1989
+        },
+        {
+            "escola": "Derville Allegretti",
+            "ensino": "medio",
+            "inicio": 1990,
+            "fim": 1992
+        }
+    ],
+    "experiencia_profissional": [
+        {
+            "empresa": "Companhia Brasileria de Distribuição",
+            "cargo": "empacotador",
+            "inicio": 1986,
+            "fim": 1988
+        },
+        {
+            "empresa": "Compneus",
+            "cargo": "gerente",
+            "inicio": 1990,
+            "fim": 1992
+        },
+        {
+            "empresa": "Varias",
+            "cargo": "muitos",
+            "inicio": 1992,
+            "fim": 2021
+        },
+        {
+            "empresa": "MPSP",
+            "cargo": "Jurimetrista",
+            "inicio": 2022,
+            "fim": null
+        }
+    ]
+}'
+```
+
 
 #### Extração 
 
@@ -66,29 +135,191 @@ x |>
    jq(".primeiro_nome")
 ```
 
+#### com pipe do `qr`:
+
+```{r}
+x |> 
+   jq(".nome|.primeiro_nome")
+```
+
+#### Objeto faltante
+
 E se você quiser algo que não existe:
 
 ```{r}
-s <- x |> 
+x |> 
   jq(".idade")
 ```
-Nada bom, mas você pode pedir que retorne null: 
+
+A sintaxe acima funciona bem quando a chave (key) é simples, começa com uma letra e contêm somente dígitos e sublinhado. Isso aqui não funciona:
+
+```{r error = TRUE}
+'{"1a": 4, "&b": 6}' |> 
+  jq('.1a')
+```
+
+Mas se você colocar a chave entre colchetes, funciona porque esta é a forma segura:
 
 ```{r}
-s <- x |> 
-  jq(".idade?")
+'{"1a": 4, "&b": 6}' |> 
+  jq('.["1a"]')
 ```
 
 
-#### Substituição
+#### Vírgula
+
+Se você separar os filtros por vírgula, ele roda cada um deles e retorna um array:
+
+```{r}
+'{"primeiro_nome": "José","sobrenome": "de Jesus Filho"}' |> 
+  jq('.primeiro_nome, .sobrenome')
+```
+
+
+#### Fatiamento
+
+Se o seu JSON é um array, você pode fatiá-lo. No entanto, ele começa a contar do zero e, assim como em Python, o último índice não entra. Isso pode parecer estranho para usuários de R, mas com o tempo você se acostuma.
+
+```{r}
+'["a", "b", "c", "d", "e"]' |> 
+  jq(".[2:4]")
+```
+
+#### Vários valores com `getpath`:
+
+```{r}
+x |> 
+  jq('getpath(["nome", "primeiro_nome"], ["nome","sobrenome"])')
+```
+
+
+
+### Substituição
 
 Substituição é tão simples quanto. Vamo substituir "José" por "João" no primeiro_nome:
 
 ```{r}
-x |> 
-  jq('.nome.primeiro_nome = "João"')
+'{"primeiro_nome": "José","sobrenome": "de Jesus Filho"}' |> 
+  jq('.primeiro_nome = "João"')
 ```
 
 Repare que precisei colocar tudo entre aspas simples porque primeiro_nome é texto e, por isso, precisei usar aspas duplas em "João".
 
+### Remoção de valores
 
+A função `del` remove uma chave e seu correspondente valor:
+
+```{r}
+'{"primeiro_nome": "José","sobrenome": "de Jesus Filho"}' |> 
+  jq("del(.primeiro_nome)")
+```
+
+
+### Operadores
+
+Você pode usar operadores para somar números:
+
+```{r}
+'{"a": 3, "b": 5}' |> 
+jq(".a + 3")
+```
+
+```{r}
+'{"a": 3, "b": 5}' |> 
+jq(".a * .b")
+```
+
+Porém, quando se trata de texto:
+
+```{r}
+'{"a": "arroz ", "b": "e ", "c": "feijão"}' |> 
+  jq(".a + .b + .c")
+```
+
+
+
+#### Somente as chaves
+
+Chaves na ordem em que aparecem:
+
+```{r}
+x |> 
+  jq(". | keys_unsorted")
+```
+
+Chaves ordenadas alfabeticamente:
+
+```{r}
+x |> 
+  jq(". | keys")
+```
+
+A chave existe?
+
+```{r}
+x |> 
+   jq('has("nome")')
+```
+
+#### Operadores map e map_values
+
+Você usa map para operar em cada elemento e uma array:
+
+```{r}
+'[2,6,8]' |> 
+  jq("map(. + 1)")
+```
+
+Usa `map_values` para objetos:
+
+```{r}
+'{"a": 2, "b": 3, "c": 4}' |> 
+   jq("map_values(. *4)")
+```
+
+
+### Expressões regulares
+
+Se você sabe expressões regulares, pode usar, mas ao usar "\\", você tem de dar escape duas vezes:
+
+### Detecta 
+
+Verifica se no cpf há números:
+
+```{r}
+
+x |> 
+  jq('.cpf | test("\\\\d")')
+```
+
+Você pode usar flags:
+
+
+    g - Pesquisa global (encontrar todas as correspondências, não apenas a primeira)
+    i - Não diferencia maiúsculas de minúsculas
+    m - Modo de várias linhas ('.' ignora quebra de linhas)
+    n - Ignora correspondências vazias
+    p - Ambos os modos s e m estão ativados
+    s - Modo de linha única ('^' -> '\A', '$' -> '\Z')
+    l - Encontre correspondências mais longas possíveis
+    x - Formato regex estendido (ignora espaços em branco e comentários)
+
+
+```{r}
+x |> 
+  jq('.nome.primeiro_nome | test("","i")')
+
+```
+
+
+#### Captura
+
+Você pode extrair texto com base em regex usando `capture`, mas você tem de informar a nova chave (key). Veja na sintaxe que eu começo com interrogação seguido da nova chave dentro de <...>:
+
+```{r}
+'{"cep": ["05077-902", "02598154"]}' |> 
+   jq('.cep[] | capture("(?<codigo_postal>[0-9]+-?[0-9]+)")')
+```
+
+
+Este tutorial apenas tocou no pacote `jqr`. Há uma uma multiplicidade de funções e recursos avançados os quais podem ser explorados sem sair do R. Aproveite para ler o manul: (https://stedolan.github.io/jq/manual)

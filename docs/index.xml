@@ -20,17 +20,9 @@
       <title>Json no R_parte2</title>
       <dc:creator>José de Jesus Filho</dc:creator>
       <link>https://direitoemdados.consudata.com.br/posts/2022-12-26-json-no-rparte2</link>
-      <description>Este é o segundo tutorial sobre JSON no R. Na (primeira parte)[]</description>
+      <description>Este é o segundo tutorial sobre JSON no R. Na [primeira parte](https://direitoemdados.consudata.com.br/posts/2022-12-26-json-no-rparte1/), trabalhamos com o pacote `jsonlite`, que converte json para R. Neste, trabalhamos com o pacote `jqr`, o qual manuseia o json por ele mesmo.</description>
       <guid>https://direitoemdados.consudata.com.br/posts/2022-12-26-json-no-rparte2</guid>
       <pubDate>Mon, 26 Dec 2022 00:00:00 +0000</pubDate>
-    </item>
-    <item>
-      <title>Json no R</title>
-      <dc:creator>José de Jesus Filho</dc:creator>
-      <link>https://direitoemdados.consudata.com.br/posts/2022-12-23-json-no-r</link>
-      <description>Nesta postagem eu mostro duas formas de trabalhar com json no R. A primeira e mais conhecida que é usar o pacote jsonlite, o qual converte o json num objeto do R e a segunda, que não converte json em lista do R e permite seu manuseio enquanto json mesmo.</description>
-      <guid>https://direitoemdados.consudata.com.br/posts/2022-12-23-json-no-r</guid>
-      <pubDate>Fri, 23 Dec 2022 00:00:00 +0000</pubDate>
     </item>
     <item>
       <title>Objetos no R</title>
