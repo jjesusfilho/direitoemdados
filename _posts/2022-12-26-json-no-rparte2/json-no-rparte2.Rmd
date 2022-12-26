@@ -1,5 +1,5 @@
 ---
-title: "Json no R_parte2"
+title: "Json no R - Parte 2"
 description: |
   Este é o segundo tutorial sobre JSON no R. Na [primeira parte](https://direitoemdados.consudata.com.br/posts/2022-12-26-json-no-rparte1/), trabalhamos com o pacote `jsonlite`, que converte json para R. Neste, trabalhamos com o pacote `jqr`, o qual manuseia o json por ele mesmo. 
 author:
