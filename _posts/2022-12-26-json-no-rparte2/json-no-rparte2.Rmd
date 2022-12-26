@@ -305,9 +305,10 @@ Você pode usar flags:
     x - Formato regex estendido (ignora espaços em branco e comentários)
 
 
+
 ```{r}
 x |> 
-  jq('.nome.primeiro_nome | test("","i")')
+  jq('.nome.primeiro_nome | test("josé"; "i")')
 
 ```
 

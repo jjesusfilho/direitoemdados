@@ -1838,12 +1838,9 @@ x - Formato regex estendido (ignora espaços em branco e comentários)</code></p
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>x</span> <span class='op'>|&gt;</span> </span>
-<span>  <span class='fu'><a href='https://docs.ropensci.org/jqr/reference/jq.html'>jq</a></span><span class='op'>(</span><span class='st'>'.nome.primeiro_nome | test("","i")'</span><span class='op'>)</span></span></code></pre>
+<span>  <span class='fu'><a href='https://docs.ropensci.org/jqr/reference/jq.html'>jq</a></span><span class='op'>(</span><span class='st'>'.nome.primeiro_nome | test("josé"; "i")'</span><span class='op'>)</span></span></code></pre>
 </div>
-<pre><code>[
-    true,
-    false
-]</code></pre>
+<pre><code>true</code></pre>
 </div>
 <h4 id="captura">Captura</h4>
 <p>Você pode extrair texto com base em regex usando <code>capture</code>, mas você tem de informar a nova chave (key). Veja na sintaxe que eu começo com interrogação seguido da nova chave dentro de &lt;…&gt;:</p>
