@@ -17,9 +17,9 @@ Neste tutorial veremos como usar xpath para extrair dados de um html. Ele faz pa
 
 ### Exemplo de html
 
-```{r results = "asis", echo = FALSE}
-x <- '
-<html>
+
+```{r}
+x  <- '<html>
      <head>
          <meta charset="utf-8">
      </head>
@@ -38,9 +38,7 @@ x <- '
             <div class="classe processual">Procedimento Comum Cível</div>
          </div>
       </body>
-  </html>
-'
-cat(x)
+  </html>'
 ```
 
 O exemplo acima, o qual chamaremos de documento, inicia com o elemento ou tag \<html\> e termina com\</html\>. Essa é a sintaxe básica. O mesmo elemento que abre, fecha. Por vezes o encerramento é dispensável, quando entre os dois não vai nada. Por exemplo,\<br\> indica apenas quebra de linha.

@@ -2151,28 +2151,50 @@ document.addEventListener('DOMContentLoaded', function() {
 <h2 id="introdução">Introdução</h2>
 <p>Neste tutorial veremos como usar xpath para extrair dados de um html. Ele faz parte de uma série de tutorias voltados à raspagem de dados de tribuanis com R. Assim como expressões regulares, xpath requer tempo para dominá-lo. Para iniciar, falaremos de html, pois ele é a base sobre a qual xpath opera. Veja o exemplo abaixo.</p>
 <h3 id="exemplo-de-html">Exemplo de html</h3>
+<div class="sourceCode" id="cb1"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;html&gt;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>     <span class="kw">&lt;head&gt;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>         <span class="kw">&lt;meta</span> <span class="er">charset</span><span class="ot">=</span><span class="st">&quot;utf-8&quot;</span><span class="kw">&gt;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>     <span class="kw">&lt;/head&gt;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>     <span class="kw">&lt;body&gt;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>         <span class="kw">&lt;div</span> <span class="er">class</span><span class="ot">=</span><span class="st">&quot;julgado&quot;</span><span class="kw">&gt;</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>             <span class="kw">&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">&quot;https://link_para_documento&quot;</span><span class="kw">&gt;&lt;/a&gt;</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>            <span class="kw">&lt;div</span> <span class="er">class</span><span class="ot">=</span><span class="st">&quot;processo&quot;</span><span class="kw">&gt;</span>1234567-23.2022.8.26.0000<span class="kw">&lt;/div&gt;</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>            <span class="kw">&lt;div</span> <span class="er">class</span><span class="ot">=</span><span class="st">&quot;assunto&quot;</span><span class="kw">&gt;</span>Dano moral<span class="kw">&lt;/div&gt;</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>            <span class="kw">&lt;div</span> <span class="er">class</span><span class="ot">=</span><span class="st">&quot;colegiado&quot;</span><span class="kw">&gt;</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>                  Relator: fulano de tal</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>                  <span class="kw">&lt;br&gt;</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>                  Revisor: Sicrano</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>                  <span class="kw">&lt;br&gt;</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>                  Presidente: Beltrano</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>            <span class="kw">&lt;/div&gt;</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>            <span class="kw">&lt;div</span> <span class="er">class</span><span class="ot">=</span><span class="st">&quot;classe processual&quot;</span><span class="kw">&gt;</span>Procedimento Comum Cível<span class="kw">&lt;/div&gt;</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>         <span class="kw">&lt;/div&gt;</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>      <span class="kw">&lt;/body&gt;</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  <span class="kw">&lt;/html&gt;</span></span></code></pre></div>
+<p>Vamos incluí-lo num objeto x:</p>
 <div class="layout-chunk" data-layout="l-body">
-
-<html>
-<head>
-<meta charset="utf-8">
-</head>
-<body>
-<div class="julgado">
-<pre><code>         &lt;a href=&quot;https://link_para_documento&quot;&gt;&lt;/a&gt;
-        &lt;div class=&quot;processo&quot;&gt;1234567-23.2022.8.26.0000&lt;/div&gt;
-        &lt;div class=&quot;assunto&quot;&gt;Dano moral&lt;/div&gt;
-        &lt;div class=&quot;colegiado&quot;&gt;
-              Relator: fulano de tal
-              &lt;br&gt;
-              Revisor: Sicrano
-              &lt;br&gt;
-              Presidente: Beltrano
-        &lt;/div&gt;
-        &lt;div class=&quot;classe processual&quot;&gt;Procedimento Comum Cível&lt;/div&gt;
-     &lt;/div&gt;
-  &lt;/body&gt;</code></pre>
-</html>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>x</span>  <span class='op'>&lt;-</span> <span class='st'>'&lt;html&gt;</span></span>
+<span><span class='st'>     &lt;head&gt;</span></span>
+<span><span class='st'>         &lt;meta charset="utf-8"&gt;</span></span>
+<span><span class='st'>     &lt;/head&gt;</span></span>
+<span><span class='st'>     &lt;body&gt;</span></span>
+<span><span class='st'>         &lt;div class="julgado"&gt;</span></span>
+<span><span class='st'>             &lt;a href="https://link_para_documento"&gt;&lt;/a&gt;</span></span>
+<span><span class='st'>            &lt;div class="processo"&gt;1234567-23.2022.8.26.0000&lt;/div&gt;</span></span>
+<span><span class='st'>            &lt;div class="assunto"&gt;Dano moral&lt;/div&gt;</span></span>
+<span><span class='st'>            &lt;div class="colegiado"&gt;</span></span>
+<span><span class='st'>                  Relator: fulano de tal</span></span>
+<span><span class='st'>                  &lt;br&gt;</span></span>
+<span><span class='st'>                  Revisor: Sicrano</span></span>
+<span><span class='st'>                  &lt;br&gt;</span></span>
+<span><span class='st'>                  Presidente: Beltrano</span></span>
+<span><span class='st'>            &lt;/div&gt;</span></span>
+<span><span class='st'>            &lt;div class="classe processual"&gt;Procedimento Comum Cível&lt;/div&gt;</span></span>
+<span><span class='st'>         &lt;/div&gt;</span></span>
+<span><span class='st'>      &lt;/body&gt;</span></span>
+<span><span class='st'>  &lt;/html&gt;'</span></span></code></pre>
+</div>
 </div>
 <p>O exemplo acima, o qual chamaremos de documento, inicia com o elemento ou tag &lt;html&gt; e termina com&lt;/html&gt;. Essa é a sintaxe básica. O mesmo elemento que abre, fecha. Por vezes o encerramento é dispensável, quando entre os dois não vai nada. Por exemplo,&lt;br&gt; indica apenas quebra de linha.</p>
 <p>Logo após o &lt;html&gt;, há outra tag &lt;head&gt; e dentro desta, outra tag. No mesmo nível do &lt;head&gt;, há a tag &lt;body&gt; e dentro desta pode haver um número indefinido de tags filhas. Toda tag que contêm outras é chamada de tag mãe ou pai e a tag contida chamada de filha. Uma tag pode ser mãe e filha.</p>
