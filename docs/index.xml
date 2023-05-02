@@ -7,7 +7,23 @@
     <description>Ciência de Dados Aplicada ao Direito
 </description>
     <generator>Distill</generator>
-    <lastBuildDate>Wed, 26 Apr 2023 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 02 May 2023 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>Raspagem de tribunais - Parte 4: iteração com purrr</title>
+      <dc:creator>José de Jesus Filho</dc:creator>
+      <link>https://direitoemdados.consudata.com.br/posts/2023-05-02-webscraping-iterao-com-purrr</link>
+      <description>Este tutorial ensina como iterar sobre várias páginas de consulta em tribunais para coletar e organizar dados de processos judiciais.</description>
+      <guid>https://direitoemdados.consudata.com.br/posts/2023-05-02-webscraping-iterao-com-purrr</guid>
+      <pubDate>Tue, 02 May 2023 00:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>Raspagem nos tribunais - Parte 3: extração com XPATH</title>
+      <dc:creator>José de Jesus Filho</dc:creator>
+      <link>https://direitoemdados.consudata.com.br/posts/2023-05-02-extracaocomxpath</link>
+      <description>Neste terceiro tutorial, eu mostro como extrair dados de páginas web baixadas dos tribunais usando uma ferramenta poderosa como xpath.</description>
+      <guid>https://direitoemdados.consudata.com.br/posts/2023-05-02-extracaocomxpath</guid>
+      <pubDate>Tue, 02 May 2023 00:00:00 +0000</pubDate>
+    </item>
     <item>
       <title>Raspagem de tribunais: requisição http.</title>
       <dc:creator>José de Jesus Filho</dc:creator>

@@ -1,0 +1,386 @@
+---
+title: "Raspagem de tribunais - Parte 4: iteração com purrr"
+description: |
+  Este tutorial ensina como iterar sobre várias páginas de consulta em tribunais para coletar e organizar dados de processos judiciais.
+author:
+  - name: José de Jesus Filho
+    url: https://github.com/jjesusfilho
+date: 2023-05-02
+output:
+  distill::distill_article:
+    self_contained: false
+---
+
+
+## Introdução
+
+Neste tutorial, iremos aprender como iterar em webscraping, ou seja, como realizar múltiplas requisições em páginas de tribunais, quando a consulta retorna mais de uma página. Igualmente, iremos aprender a realizar extrações nas várias páginas baixadas e agregar os resultados.
+
+## Iteração no R
+
+Iteração talvez seja uma das tarefas mais elementares e importantes em pragramação. Todas as linguagens de programação permitem iterar por meio de laços de repetição. No R não é diferente e há mais de uma forma de fazer isso. A mais básica delas é vetorização. Por exemplo, se eu tenho um vetor de valores e multiplico este vetor por algum número, estou realizando uma iteração, conhecida como vetorização:
+
+```{r}
+1:5*2
+```
+
+Veja que eu multipliquei os números de 1 a 5 por 2 e cada um dos valores foi multiplicado. Por trás disso, ocorreu um laço de repetição, mas escrito em linguagem C, que é mais rápida. Você poderia escrever um laço de repetição no R para chegar ao mesmo resultado. No entanto, isso seria mais lento e mais verboso:
+
+```{r}
+
+for (i in 1:5){
+  
+  print(2*i)
+  
+}
+
+```
+
+Note acima que eu usei `for` seguido de parênteses e dentro deles coloquei a letra i, a qual assumirá os valores de um a cinco a cada laço. Depois dos parênteses, eu abro chaves `{}` e dentro delas eu coloco tudo o que eu quero que o R faça com o i para alcançar o resultado desejado.
+
+Além do `for`, existe o `while`, o qual informa o R para realizar uma operação enquanto a condição estabelecida for verdadeira:
+
+```{r}
+x <- 1 ## Valor inicial de x
+y <- 0 ## Pode ser qualquer valor. Apenas para que o R saiba que o y existe e é um número.
+
+while (y < 20) {  ## Informa o R que a operação deve ser realizada enquanto o y for menor que 20.
+  
+  y <- x^2 ## Altera y a cada laço.
+  
+  print(y) ## Imprime o y alterado.
+  
+  x <- x + 1 ## Adiciona 1 a x para ser usado na próxima iteração.
+}
+```
+
+## Iteração com purrr
+
+No tidyverse usamos as funções do pacote purrr para iteração sobre objetos. Há dois grupos de funções, o grupo map e o grupo walk. O primeiro retorna um objeto R, o segundo não retorna objeto algum e é útil para efeitos colaterais, como salvar arquivos ou gerar gráficos de forma interativa. Carregue o tidyverse, o httr e o xml2.
+
+```{r}
+library(tidyverse)
+library(httr)
+library(xml2)
+```
+
+### Sintaxe básica do map
+
+Basicamente, o primeiro argumento do map é o objeto, que pode ser um vetor ou uma lista de elementos. O segundo é uma função anônima, criada com  ~ (til), `\(x)` ou function(x), a qual será aplicada sobre cada objeto e, dentro dela, .x (ponto x). Este representa cada elemento do objeto:
+
+```r
+map(objeto, ~funcao(.x, ...)) # As reticências (ellipsis) indicam eventais outros argumentos.
+```
+
+### Outras sintaxes:
+
+Você também pode chamar o map e colocar a função, ou um codigo dentro de chaves:
+
+```r
+map(objeto, ~{
+  funcao(.x,...)
+})
+```
+
+Você pode chamar uma função anônima de forma ainda mais explícita:
+
+```r
+map(objeto, function(x)(funcao(.x)))
+```
+Alguns exemplos:
+
+```{r}
+map(c(4,9,16,25), ~sqrt(.x))
+```
+
+```{r}
+map(c(4,9,16,25), ~{ 
+  sqrt(.x)
+  })
+```
+
+```{r}
+map(c(4,9,16,25), function(x) sqrt(x))
+
+```
+
+```{r}
+map(c(4,9,16,25), ~.x |> sqrt())
+
+```
+
+Quanto é uma função só, o til (~) e o .x são dispensáveis:
+
+```{r}
+map(c(4,9,16,25), sqrt)
+
+```
+
+
+Você também pode usar a nova notação do r `\(x)`
+
+```{r}
+map(c(4,9,16,25), \(x) sqrt(x))
+
+```
+
+### Variações do map
+
+Nos exemplos acima, o map gerou uma lista. No entanto, nem sempre queremos uma lista. Se quisermos um vetor, temos de especificar o tipo de retorno com as variações do map. São elas:
+
+- map_chr: retorna um vetor de caracteres
+- map_dbl: retorna um vetor de flutuantes (doubles)
+- map_int: retorna um vetor de inteiros
+- map_lgl: retorna um vetor de valores lógicos 
+- map_dfr: retorna um dataframe resultado do empilhamento (junção vertical) de outros dataframes.
+- map_dfc: retorna uma dataframe resultado de emparalhamento (junção horizontal) de outros dataframes
+
+No exemplo acima, melhor seria se utilizássemos `map_dbl`:
+
+```{r}
+map_dbl(c(4,9,16,25), sqrt)
+
+```
+
+Em jurimetria, nós usamos muito a funcão `map_dfr` para juntar os dataframes gerados a partir da extração dos dados de cada página baixada numa busca. Cada página de busca em tribunal, geralmente contêm 10, 15 ou 20 julgados. Isso significa que cada página gerará um dataframe com esses respectivos números de linhas. A função `map_dfr` junta todos esses dataframes em um, após a iteração, ou seja, ela itera e junta tudo de uma vez só.
+
+### Walk
+
+Walk tem a mesma sintaxe, mas não retorna objetos. Ele é útil quando queremos baixar várias páginas no disco. Se você tentar fazer o mesmo com walk, veja o que acontece, ou melhor, o que não acontece:
+
+```{r}
+walk(c(4,9,16,25), ~sqrt(.x))
+
+```
+
+Mas você pode salvar em disco. Tente reproduzir o exemplo abaixo e verificar que nada foi gerado na área de trabalho, nem no console, mas foram salvos cinco arquivos no seu diretório atual.
+
+```r
+walk(c(4,9,16,25), ~sqrt(.x) |> cat(file = paste0("raiz_de_", .x, ".txt")))
+```
+
+### Mais variações de map e de walk
+
+Há uma segunda versão para todos verbos acima: map2, map2_chr, map2_dbl, map2_int, map2_lgl, map2_dfr, map2_dfc e walk2. Elas permitem iterar sobre dois objetos do mesmo tamanho. Vejamos um exemplo:
+
+```{r}
+map2_chr(1:5, letters[1:5], ~paste(.x, .y)) # O primeiro objeto é representado em cada iteração por .x e o segundo por .y
+```
+
+#### Mais variações: múltiplos objetos: pmap e pwalk.
+
+Quando precisar iterar em mais de dois objetos, você coloca p antes de qualquer desses verbos. No entanto você precisa colocar o objeto em uma lista e usar function(x,y, z, w, ...) ou os nomes de cada elemento da lista. Vejamos:
+
+```{r}
+lista <- list(x = 1:5, y = letters[1:5], z = c("I","II","III","IV","V"))
+
+pmap_chr(lista, function(x,y, z) paste(x,y,z, sep = "-"))
+```
+
+### Iterando requisições
+
+Agora que aprendemos como fazer iterações com purrr, vamos realizar várias iterações sobre uma consulta de primeiro grau no TJSP. Abaixo  o passo a passo:
+
+- Realizar a consulta diretamente na  página.
+- Copiar a url e, se necessário, o corpo e os  headers.
+- Criar objetos para  a url e para os headers.
+- Fazer a primeira requisição.
+- Verificar o número total de registos e quantos por página.
+- Criar o xpath para extrair o total de registros.
+- Clicar na próxima página para ver se a query, em caso de GET, ou corpo, quando for POST, são alterados. Criar um objeto no R com essas alterações.
+- Usar walk para realizar tantas requisições quantas necessárias.
+- Salvar cada requisição em um arquivo diferente.
+
+#### Consulta à página
+
+Entre na página de consulta de primeiro grau do tjsp, [aqui](https://esaj.tjsp.jus.br/cjpg/) e faça uma consulta qualquer. Eu irei consultar a a palavra "escafandro", simplesmente porque ela retornou, no momento da consulta, apenas 24 registros contidos em três páginas.
+
+#### Copiar a url e criar um objeto
+Copie a url da barra de endereços do navegador ou a partir do cabeçalho geral e cole no seu script como eu fiz abaixo. Lembre-se de clicar com o botão direito do mouse, selecionar inspect e refazer a consulta.
+
+```{r}
+url <- "https://esaj.tjsp.jus.br/cjpg/pesquisar.do?conversationId=&dadosConsulta.pesquisaLivre=escafandro&tipoNumero=UNIFICADO&numeroDigitoAnoUnificado=&foroNumeroUnificado=&dadosConsulta.nuProcesso=&dadosConsulta.nuProcessoAntigo=&classeTreeSelection.values=&classeTreeSelection.text=&assuntoTreeSelection.values=&assuntoTreeSelection.text=&agenteSelectedEntitiesList=&contadoragente=0&contadorMaioragente=0&cdAgente=&nmAgente=&dadosConsulta.dtInicio=&dadosConsulta.dtFim=30%2F04%2F2023&varasTreeSelection.values=&varasTreeSelection.text=&dadosConsulta.ordenacao=DESC"
+
+```
+
+
+#### Primeira requisição
+
+Realize a primeira requisição e verifique se a resposta está ok.
+
+```{r}
+r1 <- GET(url)
+r1
+```
+
+Se para você apareceu status 200, siga adiante. Se não, verifique se seguiu os passos corretamente.
+
+#### Extração do número de registro.
+
+O próximo passo é extrair o número de registro da página obtida. Para tanto, usamos XPATH. 
+```{r}
+registros <- r1 |> 
+           content() |> 
+           xml_find_first("//tr[@height='20']/td") |> 
+           xml_text(trim = T) |> 
+          stringr::str_extract("\\d+$")
+```
+
+Para saber sobre quantas páginas iterar, basta dividir por 10 e arredondar para cima:
+
+```{r}
+dividir <- `/`
+paginas <- registros |> 
+       as.integer() |> 
+       dividir(10) |> 
+       ceiling()
+```
+
+#### Próximas páginas
+
+Retorne à consulta e clique em próxima página, com o inspector aberto. Copie a url. Note abaixo que na url, há o número da página, mas os demais parâmetros, inclusive a consulta, não aparecem. De fato, não precisamos porque na consulta anterior, recebemos também um cookie, que mantêm a memória da requisição.
+
+```{r}
+url2 <- "https://esaj.tjsp.jus.br/cjpg/trocarDePagina.do?pagina=2&conversationId="
+```
+
+Como temos de iterar sobre as páginas, a url acima deve ser reescrita a cada requisição. A função vem a calhar. Podemos já criar todas as urls ou deixar para criar uma a uma dentro da função walk. As urls ficarão assim:
+
+```{r}
+urls <- paste0("https://esaj.tjsp.jus.br/cjpg/trocarDePagina.do?pagina=",1:paginas,"&conversationId=")
+urls
+```
+No entanto, é melhor colocar no walk os números das páginas, assim usamos esses números para montar as urls e para gerar os nomes dos arquivos.
+
+Pronto, podemos colocar tudo dentro de um walk. Só não podemos esquecer de gerar um arquivo para cada requisição. Não se esqueça de realizar novamente a requisição inicial, pois a sessão já expirou.
+
+```r
+r1 <- GET(url) 
+walk(1:paginas,~{
+  
+  arquivo <- paste0("cjpg_pagina_", .x, ".html")
+  
+  url <- paste0("https://esaj.tjsp.jus.br/cjpg/trocarDePagina.do?pagina=",.x,"&conversationId=")
+  
+  GET(url, write_disk(arquivo, overwrite = T))
+  
+})
+```
+
+Verifique no diretório que todas as páginas foram salvas. Terminamos o processo. No entanto, precisamos organizar tudo isso dentro de uma função para que o próprio usuário forneça os termos de busca.  Vamos parsear a url para ver quais argumentos os usuários deverão fornecer.
+
+```{r}
+parse_url(url)
+```
+
+Além da busca livre, é possível buscar por número do processo, pela data, pelo assunto, pela vara e pela classe processual. Não utilizaremos o número do processo, pois se sabemos ele, não faz sentido prencher os demais nem realizar várias requisições, a menos que sejam fornecidos vários números de processo. Montaremos a função com os demais argumentos.
+
+Quando usamos chamamos funções de pacotes dentro de nossa função, devemos qualificá-las com o nome do pacote: pacote::funcao. Isso é mais seguro, informativo e não é nada recomendável você carregar pacotes inteiros dentro de uma função.
+
+```r
+
+baixar_cjpg <- function(
+                       ## Todos os argumentos serão como default vazios, a menos que o usuário forneça o valor 
+                        livre = "",
+                        classe = "",
+                        assunto = "",
+                        dt_inicio = "",
+                        dt_fim = "",
+                        vara = ""
+                        diretorio = "." ### O diretório será ".", i.e, baixa no diretório atual, a menos que você especifique.
+                        ){
+
+### Usei a funcão parse_url do pacote httr para converter a url em lista. Assim, posso alocar os valores de busca em cada elemento da lista. Confira abaixo.
+
+url_parseda1 <-  
+  structure(list(
+    scheme = "https",
+    hostname = "esaj.tjsp.jus.br",
+    port = NULL,
+    path = "cjpg/pesquisar.do",
+    query = list(
+      conversationId = "",
+      dadosConsulta.pesquisaLivre =  livre,
+      tipoNumero = "UNIFICADO",
+      numeroDigitoAnoUnificado = "",
+      foroNumeroUnificado = "",
+      dadosConsulta.nuProcesso = "",
+      dadosConsulta.nuProcessoAntigo = "",
+      classeTreeSelection.values = classe,
+      classeTreeSelection.text = "",
+      assuntoTreeSelection.values = assunto,
+      assuntoTreeSelection.text = "",
+      agenteSelectedEntitiesList = "",
+      contadoragente = "0",
+      contadorMaioragente = "0",
+      cdAgente = "",
+      nmAgente = "",
+      dadosConsulta.dtInicio = dt_inicio,
+      dadosConsulta.dtFim = dt_fim,
+      varasTreeSelection.values = vara,
+      varasTreeSelection.text = "",
+      dadosConsulta.ordenacao = "DESC"
+    ),
+    params = NULL,
+    fragment = NULL,
+    username = NULL,
+    password = NULL
+  ),
+  class = "url"
+)
+
+### Parseei a url de busca por páginas também. Coloquei "" em pagina.
+
+url_parseda2 <- structure(
+  list(
+    scheme = "https",
+    hostname = "esaj.tjsp.jus.br",
+    port = NULL,
+    path = "cjpg/trocarDePagina.do",
+    query = 
+    list(
+         pagina = "",
+         conversationId = ""
+         ),
+    params = NULL,
+    fragment = NULL,
+    username = NULL,
+    password = NULL
+  ),
+  class = "url"
+)
+
+### O pipe do R base não aceita infix (/). Precisamos convertê-lo em função.
+
+dividir <- `/`
+
+### Agora é só fazer a requisição, extrair o número de registros e dividir por 10.
+paginas <- url_parseada |> 
+          httr::build_url() |> ## reconstrói a 
+          httr::GET() |> 
+          httr::content() |> 
+          httr::xml_find_first("//tr[@height='20']/td") |> 
+          httr::xml_text(trim = T) |> 
+          stringr::str_extract("\\d+$") |> 
+          as.integer() |> 
+          dividir(10) |> 
+          ceiling()
+          
+### Podemos, enfim, iterar, ou seja, realizar a requisição por página.
+
+purrr::walk(1:paginas, ~{
+
+url_parseada2$query$pagina <- .x
+
+url <- httr::build_url(url_parseada2)
+
+arquivo <- file.path(diretorio, paste0("cjpg_pagina_", .x,".html"))
+
+url |> 
+   httr::GET(httr::write_disk(arquivo, overwrite = TRUE))
+
+})
+
+} 
+```
+
