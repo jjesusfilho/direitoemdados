@@ -1,0 +1,160 @@
+---
+title: "Resumindo decisões judiciais com o GPT"
+description: |
+  Mostra como usar o GPT para resumir inteiro teor de decisões judiciais.
+author:
+  - name: José de Jesus Filho
+    url: https://github.com/jjesusfilho
+date: 2023-06-20
+output:
+  distill::distill_article:
+    self_contained: false
+---
+
+
+
+```{css, echo=FALSE}
+pre code {
+  white-space: pre-wrap;
+}
+```
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+## Introdução
+
+Há uma infinidade de possibilidades para o direito quando se trata de transformers, que são o estado da arte em processamento de linguagem natural. O GPT da [Openai](https://openai.com/) é, sem dúvida alguma, o modelo mais bem elaborado de que temos à disposição.
+
+Quando comecei a tratar do assunto com meus alunos, a primeira reação de muitos foi: "Mas o chatGPT mente...". Sim, o chatGPT viaja (alucina) às vezes, especialmente quando você pede informações acerca dos dados sobre os quais ele foi treinado.
+
+No entanto, muitas das tarefas dos juristas estão relacionadas à extração de dados de peças processuais ou geração de peças com base informações fornecidas ad-hoc. Com efeito, na minha experiência, quando restringimos o GPT a trabalhar com dados fornecidos ad-hoc, ele desempenha muito bem e realiza tarefas relevantes, as quais os humanos detestam fazer. Uma delas é resumir o inteiro teor de decisões judiciais.
+
+Isso, porém, não lhe dispensa de validar resultados. Geralmente, eu coleto uma amostra dos resultados e verifico se realmente a extração ou resumo são confiáveis.
+
+## API da Openai
+
+Para esse tutorial, usaremos a API da Openai e um dos pacotes do R que a implementa, o pacote [openai](https://github.com/irudnyts/openai)
+
+A primeira coisa a fazer é criar uma conta na  [Openai](https://openai.com/) e, em seguida, criar uma [chave](https://platform.openai.com/account/api-keys). Quando você cria uma conta, a OPENAI oferece U$5.00 para testar. Use esses créditos nesse tutorial. 
+
+Além disso, você tem de criar uma variável de ambiente para armazenar a chave que você criou. Para tanto, use a função `edit_r_environ()` do pacote `usethis`:
+
+```
+usethis::edit_r_environ()
+```
+
+Adicione a chave:
+
+```
+OPENAI_API_KEY="sk-...."
+```
+salve o arquivo e reinicie o R.
+
+## Instalação dos pacotes necessários
+
+Para chamar a API, você pode usar o pacote `openai`:
+
+```r
+install.packages("openai")
+```
+
+No entanto, para este tutorial, vou pedir que você instale o pacate `JurisMiner`, o qual contêm uma função, a qual chama a api da OPENAI para resumir inteiro teor de decisões:
+
+```
+install.packages('remotes'). ## Se já não tiver instalado.
+remotes::install_github("courtsbr/JurisMiner")
+```
+Além disso, instale o pacote `tjsp` para baixar algumas decisões judiciais a fim de testarmos.
+
+```r
+remotes::install_github("jjesusfilho/tjsp")
+```
+
+## Mãos à obra
+
+Carregue os pacotes:
+
+```r
+library(tidyverse)
+library(tjsp)
+library(JurisMiner)
+```
+
+Iremos baixar apenas dez decisões de primeira instância. As primeiras que aparecerem da [busca de julgados de primeiro grau(cjpg)](http://esaj.tjsp.jus.br/cjpg/):
+
+```r
+dir.create("cjpg")
+busca <- r"("danos morais" OU "dano moral")"
+tjsp_baixar_cjpg(livre= busca,
+paginas = 1,
+diretorio = "cjpg")
+```
+
+Depois disso, leia os dados para o R:
+
+```r
+cjpg <- tjsp_ler_cjpg(diretorio = "cjpg")
+```
+
+```{r echo = FALSE}
+cjpg <- readRDS("cjpg.rds")
+```
+
+Basicamente, esses são os dados retornados:
+
+```{r}
+tibble::glimpse(cjpg)
+```
+
+Nossa tarefa será criar uma nova coluna com o resumo dos julgados. Antes disso, porém, vamos resumir o primeiro julgado. Seguramente, o seu será diferente do meu:
+
+```{r}
+cjpg$julgado[1]
+```
+
+
+## Criando o resumo
+Chamaremos a função `resumir_inteiro_teor` do pacote `JurisMiner` para ver como fica o resumo.
+
+```r
+resumir_inteiro_teor(cjpg$julgado[1]) |> 
+cat()
+```
+
+```{r echo = FALSE}
+resumo <- readRDS("resumo.rds")
+cat(resumo)
+```
+
+Nada mal, hein?
+
+## Resumindo múltiplos julgados
+
+Podemos agora chamar a função sobre todo o dataframe:
+
+```r
+cjpg <- cjpg |> 
+   mutate(resumo = resumir_inteiro_teor(julgado), .before = julgado)
+glimpse(cjpg)
+```
+
+```{r echo = FALSE}
+cjpg1 <- readRDS("cjpg1.rds")
+tibble::glimpse(cjpg1)
+```
+
+### Visualizando os resumos
+
+Para finalizar, vamos visualizar os resumos. Eu adicionei os números dos processos, caso você queira comparar o resumo com o inteiro teor.
+
+```r
+paste("Processo: ",cjpg1$processo,"Resumo:\n", cjpg1$resumo)
+```
+```{r, echo = FALSE}
+paste("Processo: ",cjpg1$processo,"Resumo:", cjpg1$resumo, sep ="\n") |> 
+  cat(sep = "\n\n")
+```
+
