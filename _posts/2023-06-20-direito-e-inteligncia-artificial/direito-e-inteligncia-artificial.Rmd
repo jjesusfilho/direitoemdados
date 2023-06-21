@@ -148,7 +148,7 @@ tibble::glimpse(cjpg1)
 
 ### Visualizando os resumos
 
-Para finalizar, vamos visualizar os resumos. Eu adicionei os números dos processos, caso você queira comparar o resumo com o inteiro teor.
+Para finalizar, vamos visualizar os resumos. Eu adicionei os números dos processos, caso você queira comparar o resumo com o inteiro teor. Note que, a segunda chamada da função resultou em um resumo diferente para o primeiro julgado resumido acima.
 
 ```r
 paste("Processo: ",cjpg1$processo,"Resumo:\n", cjpg1$resumo)

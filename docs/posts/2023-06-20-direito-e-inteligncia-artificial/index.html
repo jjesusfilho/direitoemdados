@@ -2246,7 +2246,7 @@ $ julgado          &lt;chr&gt; &quot;TRIBUNAL DE JUSTIÇA DO ESTADO DE SÃO PAUL
 $ cd_doc           &lt;chr&gt; &quot;080018O4B0000-8-PG5REG-147016273&quot;, &quot;B40005…</code></pre>
 </div>
 <h3 id="visualizando-os-resumos">Visualizando os resumos</h3>
-<p>Para finalizar, vamos visualizar os resumos. Eu adicionei os números dos processos, caso você queira comparar o resumo com o inteiro teor.</p>
+<p>Para finalizar, vamos visualizar os resumos. Eu adicionei os números dos processos, caso você queira comparar o resumo com o inteiro teor. Note que, a segunda chamada da função resultou em um resumo diferente para o primeiro julgado resumido acima.</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">paste</span>(<span class="st">&quot;Processo: &quot;</span>,cjpg1<span class="sc">$</span>processo,<span class="st">&quot;Resumo:</span><span class="sc">\n</span><span class="st">&quot;</span>, cjpg1<span class="sc">$</span>resumo)</span></code></pre></div>
 <div class="layout-chunk" data-layout="l-body">
 <pre><code>Processo: 
