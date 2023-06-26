@@ -2,11 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" version="1.0">
   <url>
     <loc>https://direitoemdados.consudata.com.br/about.html</loc>
-    <lastmod>2023-04-26T06:58:35-03:00</lastmod>
+    <lastmod>2023-06-20T15:27:30-03:00</lastmod>
   </url>
   <url>
     <loc>https://direitoemdados.consudata.com.br/</loc>
-    <lastmod>2023-04-26T06:58:36-03:00</lastmod>
+    <lastmod>2023-06-20T15:27:30-03:00</lastmod>
+  </url>
+  <url>
+    <loc>https://direitoemdados.consudata.com.br/posts/2023-06-20-direito-e-inteligncia-artificial/</loc>
+    <lastmod>2023-06-21T14:38:07-03:00</lastmod>
   </url>
   <url>
     <loc>https://direitoemdados.consudata.com.br/posts/2023-05-02-webscraping-iterao-com-purrr/</loc>

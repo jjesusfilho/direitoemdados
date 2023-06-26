@@ -50,16 +50,17 @@ pre.numberSource code > span > a:first-child::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {   }
+  { color: #00769e; background-color: #f1f3f5; }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
+code span { color: #00769e; } /* Normal */
 code span.al { color: #ad0000; } /* Alert */
 code span.an { color: #5e5e5e; } /* Annotation */
-code span.at { } /* Attribute */
+code span.at { color: #657422; } /* Attribute */
 code span.bn { color: #ad0000; } /* BaseN */
 code span.bu { } /* BuiltIn */
-code span.cf { color: #007ba5; } /* ControlFlow */
+code span.cf { color: #00769e; } /* ControlFlow */
 code span.ch { color: #20794d; } /* Char */
 code span.cn { color: #8f5902; } /* Constant */
 code span.co { color: #5e5e5e; } /* Comment */
@@ -73,9 +74,9 @@ code span.fl { color: #ad0000; } /* Float */
 code span.fu { color: #4758ab; } /* Function */
 code span.im { } /* Import */
 code span.in { color: #5e5e5e; } /* Information */
-code span.kw { color: #007ba5; } /* Keyword */
+code span.kw { color: #00769e; } /* Keyword */
 code span.op { color: #5e5e5e; } /* Operator */
-code span.ot { color: #007ba5; } /* Other */
+code span.ot { color: #00769e; } /* Other */
 code span.pp { color: #ad0000; } /* Preprocessor */
 code span.sc { color: #5e5e5e; } /* SpecialChar */
 code span.ss { color: #20794d; } /* SpecialString */
@@ -87,635 +88,39 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
 
   <!--radix_placeholder_meta_tags-->
-  <title>Direito em Dados</title>
+  <title>Resumindo decisões judiciais com o GPT</title>
+
+  <meta property="description" itemprop="description" content="Mostra como usar o GPT para resumir inteiro teor de decisões judiciais."/>
 
 
-
+  <!--  https://schema.org/Article -->
+  <meta property="article:published" itemprop="datePublished" content="2023-06-20"/>
+  <meta property="article:created" itemprop="dateCreated" content="2023-06-20"/>
+  <meta name="article:author" content="José de Jesus Filho"/>
 
   <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
-  <meta property="og:title" content="Direito em Dados"/>
+  <meta property="og:title" content="Resumindo decisões judiciais com o GPT"/>
   <meta property="og:type" content="article"/>
+  <meta property="og:description" content="Mostra como usar o GPT para resumir inteiro teor de decisões judiciais."/>
   <meta property="og:locale" content="en_US"/>
-  <meta property="og:site_name" content="Direito em Dados"/>
 
   <!--  https://dev.twitter.com/cards/types/summary -->
   <meta property="twitter:card" content="summary"/>
-  <meta property="twitter:title" content="Direito em Dados"/>
+  <meta property="twitter:title" content="Resumindo decisões judiciais com o GPT"/>
+  <meta property="twitter:description" content="Mostra como usar o GPT para resumir inteiro teor de decisões judiciais."/>
 
   <!--/radix_placeholder_meta_tags-->
   <!--radix_placeholder_rmarkdown_metadata-->
 
   <script type="text/json" id="radix-rmarkdown-metadata">
-  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","site","listing"]}},"value":[{"type":"character","attributes":{},"value":["Direito em Dados"]},{"type":"character","attributes":{},"value":["distill::distill_website"]},{"type":"character","attributes":{},"value":["posts"]}]}
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","output"]}},"value":[{"type":"character","attributes":{},"value":["Resumindo decisões judiciais com o GPT"]},{"type":"character","attributes":{},"value":["Mostra como usar o GPT para resumir inteiro teor de decisões judiciais.\n"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url"]}},"value":[{"type":"character","attributes":{},"value":["José de Jesus Filho"]},{"type":"character","attributes":{},"value":["https://github.com/jjesusfilho"]}]}]},{"type":"character","attributes":{},"value":["2023-06-20"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[false]}]}]}]}
   </script>
   <!--/radix_placeholder_rmarkdown_metadata-->
+  
+  <script type="text/json" id="radix-resource-manifest">
+  {"type":"character","attributes":{},"value":["cjpg/2023_06_21_13_34_24_058872_pagina_1.html","direito-e-inteligncia-artificial_files/anchor-4.2.2/anchor.min.js","direito-e-inteligncia-artificial_files/bowser-1.9.3/bowser.min.js","direito-e-inteligncia-artificial_files/distill-2.2.21/template.v2.js","direito-e-inteligncia-artificial_files/header-attrs-2.22/header-attrs.js","direito-e-inteligncia-artificial_files/jquery-3.6.0/jquery-3.6.0.js","direito-e-inteligncia-artificial_files/jquery-3.6.0/jquery-3.6.0.min.js","direito-e-inteligncia-artificial_files/jquery-3.6.0/jquery-3.6.0.min.map","direito-e-inteligncia-artificial_files/popper-2.6.0/popper.min.js","direito-e-inteligncia-artificial_files/tippy-6.2.7/tippy-bundle.umd.min.js","direito-e-inteligncia-artificial_files/tippy-6.2.7/tippy-light-border.css","direito-e-inteligncia-artificial_files/tippy-6.2.7/tippy.css","direito-e-inteligncia-artificial_files/tippy-6.2.7/tippy.umd.min.js","direito-e-inteligncia-artificial_files/webcomponents-2.0.0/webcomponents.js","doc_147016273.pdf"]}
+  </script>
   <!--radix_placeholder_navigation_in_header-->
-  <meta name="distill:offset" content=""/>
-
-  <script type="application/javascript">
-
-    window.headroom_prevent_pin = false;
-
-    window.document.addEventListener("DOMContentLoaded", function (event) {
-
-      // initialize headroom for banner
-      var header = $('header').get(0);
-      var headerHeight = header.offsetHeight;
-      var headroom = new Headroom(header, {
-        tolerance: 5,
-        onPin : function() {
-          if (window.headroom_prevent_pin) {
-            window.headroom_prevent_pin = false;
-            headroom.unpin();
-          }
-        }
-      });
-      headroom.init();
-      if(window.location.hash)
-        headroom.unpin();
-      $(header).addClass('headroom--transition');
-
-      // offset scroll location for banner on hash change
-      // (see: https://github.com/WickyNilliams/headroom.js/issues/38)
-      window.addEventListener("hashchange", function(event) {
-        window.scrollTo(0, window.pageYOffset - (headerHeight + 25));
-      });
-
-      // responsive menu
-      $('.distill-site-header').each(function(i, val) {
-        var topnav = $(this);
-        var toggle = topnav.find('.nav-toggle');
-        toggle.on('click', function() {
-          topnav.toggleClass('responsive');
-        });
-      });
-
-      // nav dropdowns
-      $('.nav-dropbtn').click(function(e) {
-        $(this).next('.nav-dropdown-content').toggleClass('nav-dropdown-active');
-        $(this).parent().siblings('.nav-dropdown')
-           .children('.nav-dropdown-content').removeClass('nav-dropdown-active');
-      });
-      $("body").click(function(e){
-        $('.nav-dropdown-content').removeClass('nav-dropdown-active');
-      });
-      $(".nav-dropdown").click(function(e){
-        e.stopPropagation();
-      });
-    });
-  </script>
-
-  <style type="text/css">
-
-  /* Theme (user-documented overrideables for nav appearance) */
-
-  .distill-site-nav {
-    color: rgba(255, 255, 255, 0.8);
-    background-color: #0F2E3D;
-    font-size: 15px;
-    font-weight: 300;
-  }
-
-  .distill-site-nav a {
-    color: inherit;
-    text-decoration: none;
-  }
-
-  .distill-site-nav a:hover {
-    color: white;
-  }
-
-  @media print {
-    .distill-site-nav {
-      display: none;
-    }
-  }
-
-  .distill-site-header {
-
-  }
-
-  .distill-site-footer {
-
-  }
-
-
-  /* Site Header */
-
-  .distill-site-header {
-    width: 100%;
-    box-sizing: border-box;
-    z-index: 3;
-  }
-
-  .distill-site-header .nav-left {
-    display: inline-block;
-    margin-left: 8px;
-  }
-
-  @media screen and (max-width: 768px) {
-    .distill-site-header .nav-left {
-      margin-left: 0;
-    }
-  }
-
-
-  .distill-site-header .nav-right {
-    float: right;
-    margin-right: 8px;
-  }
-
-  .distill-site-header a,
-  .distill-site-header .title {
-    display: inline-block;
-    text-align: center;
-    padding: 14px 10px 14px 10px;
-  }
-
-  .distill-site-header .title {
-    font-size: 18px;
-    min-width: 150px;
-  }
-
-  .distill-site-header .logo {
-    padding: 0;
-  }
-
-  .distill-site-header .logo img {
-    display: none;
-    max-height: 20px;
-    width: auto;
-    margin-bottom: -4px;
-  }
-
-  .distill-site-header .nav-image img {
-    max-height: 18px;
-    width: auto;
-    display: inline-block;
-    margin-bottom: -3px;
-  }
-
-
-
-  @media screen and (min-width: 1000px) {
-    .distill-site-header .logo img {
-      display: inline-block;
-    }
-    .distill-site-header .nav-left {
-      margin-left: 20px;
-    }
-    .distill-site-header .nav-right {
-      margin-right: 20px;
-    }
-    .distill-site-header .title {
-      padding-left: 12px;
-    }
-  }
-
-
-  .distill-site-header .nav-toggle {
-    display: none;
-  }
-
-  .nav-dropdown {
-    display: inline-block;
-    position: relative;
-  }
-
-  .nav-dropdown .nav-dropbtn {
-    border: none;
-    outline: none;
-    color: rgba(255, 255, 255, 0.8);
-    padding: 16px 10px;
-    background-color: transparent;
-    font-family: inherit;
-    font-size: inherit;
-    font-weight: inherit;
-    margin: 0;
-    margin-top: 1px;
-    z-index: 2;
-  }
-
-  .nav-dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: white;
-    min-width: 200px;
-    border: 1px solid rgba(0,0,0,0.15);
-    border-radius: 4px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.1);
-    z-index: 1;
-    margin-top: 2px;
-    white-space: nowrap;
-    padding-top: 4px;
-    padding-bottom: 4px;
-  }
-
-  .nav-dropdown-content hr {
-    margin-top: 4px;
-    margin-bottom: 4px;
-    border: none;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  }
-
-  .nav-dropdown-active {
-    display: block;
-  }
-
-  .nav-dropdown-content a, .nav-dropdown-content .nav-dropdown-header {
-    color: black;
-    padding: 6px 24px;
-    text-decoration: none;
-    display: block;
-    text-align: left;
-  }
-
-  .nav-dropdown-content .nav-dropdown-header {
-    display: block;
-    padding: 5px 24px;
-    padding-bottom: 0;
-    text-transform: uppercase;
-    font-size: 14px;
-    color: #999999;
-    white-space: nowrap;
-  }
-
-  .nav-dropdown:hover .nav-dropbtn {
-    color: white;
-  }
-
-  .nav-dropdown-content a:hover {
-    background-color: #ddd;
-    color: black;
-  }
-
-  .nav-right .nav-dropdown-content {
-    margin-left: -45%;
-    right: 0;
-  }
-
-  @media screen and (max-width: 768px) {
-    .distill-site-header a, .distill-site-header .nav-dropdown  {display: none;}
-    .distill-site-header a.nav-toggle {
-      float: right;
-      display: block;
-    }
-    .distill-site-header .title {
-      margin-left: 0;
-    }
-    .distill-site-header .nav-right {
-      margin-right: 0;
-    }
-    .distill-site-header {
-      overflow: hidden;
-    }
-    .nav-right .nav-dropdown-content {
-      margin-left: 0;
-    }
-  }
-
-
-  @media screen and (max-width: 768px) {
-    .distill-site-header.responsive {position: relative; min-height: 500px; }
-    .distill-site-header.responsive a.nav-toggle {
-      position: absolute;
-      right: 0;
-      top: 0;
-    }
-    .distill-site-header.responsive a,
-    .distill-site-header.responsive .nav-dropdown {
-      display: block;
-      text-align: left;
-    }
-    .distill-site-header.responsive .nav-left,
-    .distill-site-header.responsive .nav-right {
-      width: 100%;
-    }
-    .distill-site-header.responsive .nav-dropdown {float: none;}
-    .distill-site-header.responsive .nav-dropdown-content {position: relative;}
-    .distill-site-header.responsive .nav-dropdown .nav-dropbtn {
-      display: block;
-      width: 100%;
-      text-align: left;
-    }
-  }
-
-  /* Site Footer */
-
-  .distill-site-footer {
-    width: 100%;
-    overflow: hidden;
-    box-sizing: border-box;
-    z-index: 3;
-    margin-top: 30px;
-    padding-top: 30px;
-    padding-bottom: 30px;
-    text-align: center;
-  }
-
-  /* Headroom */
-
-  d-title {
-    padding-top: 6rem;
-  }
-
-  @media print {
-    d-title {
-      padding-top: 4rem;
-    }
-  }
-
-  .headroom {
-    z-index: 1000;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-  }
-
-  .headroom--transition {
-    transition: all .4s ease-in-out;
-  }
-
-  .headroom--unpinned {
-    top: -100px;
-  }
-
-  .headroom--pinned {
-    top: 0;
-  }
-
-  /* adjust viewport for navbar height */
-  /* helps vertically center bootstrap (non-distill) content */
-  .min-vh-100 {
-    min-height: calc(100vh - 100px) !important;
-  }
-
-  </style>
-
-  <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-  <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet"/>
-  <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet"/>
-  <script src="site_libs/headroom-0.9.4/headroom.min.js"></script>
-  <script src="site_libs/autocomplete-0.37.1/autocomplete.min.js"></script>
-  <script src="site_libs/fuse-6.4.1/fuse.min.js"></script>
-
-  <script type="application/javascript">
-
-  function getMeta(metaName) {
-    var metas = document.getElementsByTagName('meta');
-    for (let i = 0; i < metas.length; i++) {
-      if (metas[i].getAttribute('name') === metaName) {
-        return metas[i].getAttribute('content');
-      }
-    }
-    return '';
-  }
-
-  function offsetURL(url) {
-    var offset = getMeta('distill:offset');
-    return offset ? offset + '/' + url : url;
-  }
-
-  function createFuseIndex() {
-
-    // create fuse index
-    var options = {
-      keys: [
-        { name: 'title', weight: 20 },
-        { name: 'categories', weight: 15 },
-        { name: 'description', weight: 10 },
-        { name: 'contents', weight: 5 },
-      ],
-      ignoreLocation: true,
-      threshold: 0
-    };
-    var fuse = new window.Fuse([], options);
-
-    // fetch the main search.json
-    return fetch(offsetURL('search.json'))
-      .then(function(response) {
-        if (response.status == 200) {
-          return response.json().then(function(json) {
-            // index main articles
-            json.articles.forEach(function(article) {
-              fuse.add(article);
-            });
-            // download collections and index their articles
-            return Promise.all(json.collections.map(function(collection) {
-              return fetch(offsetURL(collection)).then(function(response) {
-                if (response.status === 200) {
-                  return response.json().then(function(articles) {
-                    articles.forEach(function(article) {
-                      fuse.add(article);
-                    });
-                  })
-                } else {
-                  return Promise.reject(
-                    new Error('Unexpected status from search index request: ' +
-                              response.status)
-                  );
-                }
-              });
-            })).then(function() {
-              return fuse;
-            });
-          });
-
-        } else {
-          return Promise.reject(
-            new Error('Unexpected status from search index request: ' +
-                        response.status)
-          );
-        }
-      });
-  }
-
-  window.document.addEventListener("DOMContentLoaded", function (event) {
-
-    // get search element (bail if we don't have one)
-    var searchEl = window.document.getElementById('distill-search');
-    if (!searchEl)
-      return;
-
-    createFuseIndex()
-      .then(function(fuse) {
-
-        // make search box visible
-        searchEl.classList.remove('hidden');
-
-        // initialize autocomplete
-        var options = {
-          autoselect: true,
-          hint: false,
-          minLength: 2,
-        };
-        window.autocomplete(searchEl, options, [{
-          source: function(query, callback) {
-            const searchOptions = {
-              isCaseSensitive: false,
-              shouldSort: true,
-              minMatchCharLength: 2,
-              limit: 10,
-            };
-            var results = fuse.search(query, searchOptions);
-            callback(results
-              .map(function(result) { return result.item; })
-            );
-          },
-          templates: {
-            suggestion: function(suggestion) {
-              var img = suggestion.preview && Object.keys(suggestion.preview).length > 0
-                ? `<img src="${offsetURL(suggestion.preview)}"</img>`
-                : '';
-              var html = `
-                <div class="search-item">
-                  <h3>${suggestion.title}</h3>
-                  <div class="search-item-description">
-                    ${suggestion.description || ''}
-                  </div>
-                  <div class="search-item-preview">
-                    ${img}
-                  </div>
-                </div>
-              `;
-              return html;
-            }
-          }
-        }]).on('autocomplete:selected', function(event, suggestion) {
-          window.location.href = offsetURL(suggestion.path);
-        });
-        // remove inline display style on autocompleter (we want to
-        // manage responsive display via css)
-        $('.algolia-autocomplete').css("display", "");
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
-
-  });
-
-  </script>
-
-  <style type="text/css">
-
-  .nav-search {
-    font-size: x-small;
-  }
-
-  /* Algolioa Autocomplete */
-
-  .algolia-autocomplete {
-    display: inline-block;
-    margin-left: 10px;
-    vertical-align: sub;
-    background-color: white;
-    color: black;
-    padding: 6px;
-    padding-top: 8px;
-    padding-bottom: 0;
-    border-radius: 6px;
-    border: 1px #0F2E3D solid;
-    width: 180px;
-  }
-
-
-  @media screen and (max-width: 768px) {
-    .distill-site-nav .algolia-autocomplete {
-      display: none;
-      visibility: hidden;
-    }
-    .distill-site-nav.responsive .algolia-autocomplete {
-      display: inline-block;
-      visibility: visible;
-    }
-    .distill-site-nav.responsive .algolia-autocomplete .aa-dropdown-menu {
-      margin-left: 0;
-      width: 400px;
-      max-height: 400px;
-    }
-  }
-
-  .algolia-autocomplete .aa-input, .algolia-autocomplete .aa-hint {
-    width: 90%;
-    outline: none;
-    border: none;
-  }
-
-  .algolia-autocomplete .aa-hint {
-    color: #999;
-  }
-  .algolia-autocomplete .aa-dropdown-menu {
-    width: 550px;
-    max-height: 70vh;
-    overflow-x: visible;
-    overflow-y: scroll;
-    padding: 5px;
-    margin-top: 3px;
-    margin-left: -150px;
-    background-color: #fff;
-    border-radius: 5px;
-    border: 1px solid #999;
-    border-top: none;
-  }
-
-  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion {
-    cursor: pointer;
-    padding: 5px 4px;
-    border-bottom: 1px solid #eee;
-  }
-
-  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion:last-of-type {
-    border-bottom: none;
-    margin-bottom: 2px;
-  }
-
-  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item {
-    overflow: hidden;
-    font-size: 0.8em;
-    line-height: 1.4em;
-  }
-
-  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item h3 {
-    font-size: 1rem;
-    margin-block-start: 0;
-    margin-block-end: 5px;
-  }
-
-  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-description {
-    display: inline-block;
-    overflow: hidden;
-    height: 2.8em;
-    width: 80%;
-    margin-right: 4%;
-  }
-
-  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-preview {
-    display: inline-block;
-    width: 15%;
-  }
-
-  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-preview img {
-    height: 3em;
-    width: auto;
-    display: none;
-  }
-
-  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-preview img[src] {
-    display: initial;
-  }
-
-  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion.aa-cursor {
-    background-color: #eee;
-  }
-  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion em {
-    font-weight: bold;
-    font-style: normal;
-  }
-
-  </style>
-
-
   <!--/radix_placeholder_navigation_in_header-->
   <!--radix_placeholder_distill-->
 
@@ -784,6 +189,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   d-article table.gt_table td,
   d-article table.gt_table th {
     border-bottom: none;
+    font-size: 100%;
   }
 
   .html-widget {
@@ -1025,10 +431,6 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
     position: relative;
     margin-bottom: 2.5em;
     margin-top: 1.5em;
-  }
-
-  .figure img {
-    width: 100%;
   }
 
   .figure .caption {
@@ -1860,9 +1262,21 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
       // hoverable references
       $('span.citation[data-cites]').each(function() {
+        const citeChild = $(this).children()[0]
+        // Do not process if @xyz has been used without escaping and without bibliography activated
+        // https://github.com/rstudio/distill/issues/466
+        if (citeChild === undefined) return true
+
+        if (citeChild.nodeName == "D-FOOTNOTE") {
+          var fn = citeChild
+          $(this).html(fn.shadowRoot.querySelector("sup"))
+          $(this).id = fn.id
+          fn.remove()
+        }
         var refs = $(this).attr('data-cites').split(" ");
         var refHtml = refs.map(function(ref) {
-          return "<p>" + $('#ref-' + ref).html() + "</p>";
+          // Could use CSS.escape too here, we insure backward compatibility in navigator
+          return "<p>" + $('div[id="ref-' + ref + '"]').html() + "</p>";
         }).join("\n");
         window.tippy(this, {
           allowHTML: true,
@@ -1874,6 +1288,31 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
           placement: 'bottom-start'
         });
       });
+
+      // fix footnotes in tables (#411)
+      // replacing broken distill.pub feature
+      $('table d-footnote').each(function() {
+        // we replace internal showAtNode methode which is triggered when hovering a footnote
+        this.hoverBox.showAtNode = function(node) {
+          // ported from https://github.com/distillpub/template/pull/105/files
+          calcOffset = function(elem) {
+              let x = elem.offsetLeft;
+              let y = elem.offsetTop;
+              // Traverse upwards until an `absolute` element is found or `elem`
+              // becomes null.
+              while (elem = elem.offsetParent && elem.style.position != 'absolute') {
+                  x += elem.offsetLeft;
+                  y += elem.offsetTop;
+              }
+
+              return { left: x, top: y };
+          }
+          // https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/offsetTop
+          const bbox = node.getBoundingClientRect();
+          const offset = calcOffset(node);
+          this.show([offset.left + bbox.width, offset.top + bbox.height]);
+        }
+      })
 
       // clear polling timer
       clearInterval(tid);
@@ -1973,6 +1412,8 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
     // mark non-body figures created by knitr chunks as 100% width
     $('.layout-chunk').each(function(i, val) {
       var figures = $(this).find('img, .html-widget');
+      // ignore leaflet img layers (#106)
+      figures = figures.filter(':not(img[class*="leaflet"])')
       if ($(this).attr('data-layout') !== "l-body") {
         figures.css('width', '100%');
       } else {
@@ -1995,7 +1436,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
     // get rid of index.html references in header
     if (window.location.protocol !== "file:") {
       $('.distill-site-header a[href]').each(function(i,val) {
-        $(this).attr('href', $(this).attr('href').replace("index.html", "./"));
+        $(this).attr('href', $(this).attr('href').replace(/^index[.]html/, "./"));
       });
     }
 
@@ -2034,369 +1475,202 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </script>
 
   <!--/radix_placeholder_distill-->
-  <script src="site_libs/header-attrs-2.13/header-attrs.js"></script>
-  <script src="site_libs/popper-2.6.0/popper.min.js"></script>
-  <link href="site_libs/tippy-6.2.7/tippy.css" rel="stylesheet" />
-  <link href="site_libs/tippy-6.2.7/tippy-light-border.css" rel="stylesheet" />
-  <script src="site_libs/tippy-6.2.7/tippy.umd.min.js"></script>
-  <script src="site_libs/anchor-4.2.2/anchor.min.js"></script>
-  <script src="site_libs/bowser-1.9.3/bowser.min.js"></script>
-  <script src="site_libs/webcomponents-2.0.0/webcomponents.js"></script>
-  <script src="site_libs/distill-2.2.21/template.v2.js"></script>
+  <script src="direito-e-inteligncia-artificial_files/header-attrs-2.22/header-attrs.js"></script>
+  <script src="direito-e-inteligncia-artificial_files/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+  <script src="direito-e-inteligncia-artificial_files/popper-2.6.0/popper.min.js"></script>
+  <link href="direito-e-inteligncia-artificial_files/tippy-6.2.7/tippy.css" rel="stylesheet" />
+  <link href="direito-e-inteligncia-artificial_files/tippy-6.2.7/tippy-light-border.css" rel="stylesheet" />
+  <script src="direito-e-inteligncia-artificial_files/tippy-6.2.7/tippy.umd.min.js"></script>
+  <script src="direito-e-inteligncia-artificial_files/anchor-4.2.2/anchor.min.js"></script>
+  <script src="direito-e-inteligncia-artificial_files/bowser-1.9.3/bowser.min.js"></script>
+  <script src="direito-e-inteligncia-artificial_files/webcomponents-2.0.0/webcomponents.js"></script>
+  <script src="direito-e-inteligncia-artificial_files/distill-2.2.21/template.v2.js"></script>
   <!--radix_placeholder_site_in_header-->
   <!--/radix_placeholder_site_in_header-->
 
 
 </head>
 
-<body class="layout-listing">
+<body>
 
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"Direito em Dados","authors":[]}
+{"title":"Resumindo decisões judiciais com o GPT","description":"Mostra como usar o GPT para resumir inteiro teor de decisões judiciais.","authors":[{"author":"José de Jesus Filho","authorURL":"https://github.com/jjesusfilho","affiliation":"&nbsp;","affiliationURL":"#","orcidID":""}],"publishedDate":"2023-06-20T00:00:00.000-03:00","citationText":"Filho, 2023"}
 </script>
 
 <!--/radix_placeholder_front_matter-->
 <!--radix_placeholder_navigation_before_body-->
-<header class="header header--fixed" role="banner">
-<nav class="distill-site-nav distill-site-header">
-<div class="nav-left">
-<a href="index.html" class="title">Direito em Dados</a>
-<input id="distill-search" class="nav-search hidden" type="text" placeholder="Search..."/>
-</div>
-<div class="nav-right">
-<a href="index.html">Home</a>
-<a href="about.html">About</a>
-<a href="javascript:void(0);" class="nav-toggle">&#9776;</a>
-</div>
-</nav>
-</header>
 <!--/radix_placeholder_navigation_before_body-->
 <!--radix_placeholder_site_before_body-->
 <!--/radix_placeholder_site_before_body-->
-<!--radix_placeholder_article_listing-->
-
-
-<script type="application/javascript">
-
-function init_posts_list() {
-
-  function load_image(img) {
-    var src = $(img).attr('data-src');
-    if (src) {
-      $(img).attr('src', src);
-      $(img).on("load", function() {
-        img.removeAttribute('data-src');
-      });
-    }
-  }
-
-  function set_posts_visible(posts, visible) {
-    if (visible) {
-
-      // show bottom border by default
-      $(posts).removeClass('post-preview-last');
-
-      // apply limits if need be
-      var max_posts = 25;
-      var apply_limits = $('.posts-container').hasClass('posts-apply-limit');
-      if (apply_limits && posts.length > max_posts) {
-        posts = $(posts).slice(0, max_posts);
-      } else {
-        $('.posts-more a').addClass('hidden');
-      }
-
-      // apply last style
-      $(posts.slice(-1)[0]).addClass('post-preview-last');
-
-      $(posts).removeClass('hidden');
-      $(posts).find('img[data-src]').each(function(i, img) {
-        load_image(img);
-      });
-    } else {
-      $(posts).addClass('hidden');
-    }
-  }
-
-  function apply_hash_filter() {
-
-    // clear active state
-    $('.categories .active').removeClass('active');
-
-    // mark all posts invisible to start
-    set_posts_visible($('.posts-list').children('a'), false);
-
-    // if we have a hash filter
-    if (window.location.hash && window.location.hash.startsWith("#category:")) {
-
-      // mark posts that match the category visible
-      var page_category = window.location.hash.replace(/^#category:/, "");
-      page_category = decodeURIComponent(page_category)
-      var posts = $('.post-metadata').map(function(idx, script) {
-        var metadata = $.parseJSON($(script).html());
-        var post = null;
-        $.each(metadata.categories, function(idx, category) {
-          category = category.replace(/ /g,"_");
-          if ((page_category || '').toLowerCase() === "articles" || category === page_category) {
-            post = $(script).parent().get();
-            return false;
-          }
-        });
-        return post;
-      });
-      set_posts_visible(posts, true);
-
-      // mark the hash active
-      $('.categories li>a[href="' + decodeURIComponent(window.location.hash) + '"]').addClass('active');
-
-      // update the list_caption
-      var list_caption = $('.posts-list-caption');
-      var caption = (page_category || '').toLowerCase() === "articles"
-        ? list_caption.attr('data-caption')
-        : ('Category: ' + page_category.replace(/_/g," "));
-      list_caption.text(caption);
-
-    } else {
-
-      // no hash filter, make all posts visible (subject to max display)
-      set_posts_visible($('.posts-list').children(), true);
-
-      // reset list caption
-      var list_caption = $('.posts-list-caption');
-      list_caption.text(list_caption.attr('data-caption'));
-
-
-    }
-  }
-
-  // more articles
-  function apply_post_limits(apply) {
-    if (apply) {
-      $('.posts-container').addClass('posts-apply-limit');
-      $('.posts-more a').removeClass('hidden');
-    } else {
-      $('.posts-container').removeClass('posts-apply-limit');
-      $('.posts-more a').addClass('hidden');
-    }
-  }
-
-  // click handling for tags
-  $('.dt-tag').click(function(ev) {
-    window.location.hash = '#category:' + $(this).text().replace(/ /g, "_");
-    return false;
-  })
-
-  // hash filter handling
-  apply_hash_filter();
-  $(window).on('hashchange',function() {
-    apply_post_limits(true);
-    apply_hash_filter();
-  });
-
-  // more articles link
-  $('.posts-more a').click(function(e) {
-    e.preventDefault();
-    apply_post_limits(false);
-    apply_hash_filter();
-    return false;
-  });
-
-}
-
-</script>
-
-
-
-<div class="posts-container posts-apply-limit l-page">
-<div class="posts-list">
-<h1 class="posts-list-caption" data-caption="Direito em Dados">Direito em Dados</h1>
-<a href="posts/2023-06-20-direito-e-inteligncia-artificial/" class="post-preview">
-<script class="post-metadata" type="text/json">{"categories":[]}</script>
-<div class="metadata">
-<div class="publishedDate">June 20, 2023</div>
-<div class="dt-authors">
-<div class="dt-author">José de Jesus Filho</div>
-</div>
-</div>
-<div class="thumbnail"></div>
-<div class="description">
-<h2>Resumindo decisões judiciais com o GPT</h2>
-<div class="dt-tags"></div>
-<p>Mostra como usar o GPT para resumir inteiro teor de decisões judiciais.</p>
-</div>
-</a>
-<a href="posts/2023-05-02-webscraping-iterao-com-purrr/" class="post-preview">
-<script class="post-metadata" type="text/json">{"categories":[]}</script>
-<div class="metadata">
-<div class="publishedDate">May 2, 2023</div>
-<div class="dt-authors">
-<div class="dt-author">José de Jesus Filho</div>
-</div>
-</div>
-<div class="thumbnail">
-<img/>
-</div>
-<div class="description">
-<h2>Raspagem de tribunais - Parte 4: iteração com purrr</h2>
-<div class="dt-tags"></div>
-<p>Este tutorial ensina como iterar sobre várias páginas de consulta em tribunais para coletar e organizar dados de processos judiciais.</p>
-</div>
-</a>
-<a href="posts/2023-05-02-extracaocomxpath/" class="post-preview">
-<script class="post-metadata" type="text/json">{"categories":[]}</script>
-<div class="metadata">
-<div class="publishedDate">May 2, 2023</div>
-<div class="dt-authors">
-<div class="dt-author">José de Jesus Filho</div>
-</div>
-</div>
-<div class="thumbnail">
-<img/>
-</div>
-<div class="description">
-<h2>Raspagem nos tribunais - Parte 3: extração com XPATH</h2>
-<div class="dt-tags"></div>
-<p>Neste terceiro tutorial, eu mostro como extrair dados de páginas web baixadas dos tribunais usando uma ferramenta poderosa como xpath.</p>
-</div>
-</a>
-<a href="posts/2023-04-26-raspagem-de-tribunais-requisio-http/" class="post-preview">
-<script class="post-metadata" type="text/json">{"categories":[]}</script>
-<div class="metadata">
-<div class="publishedDate">April 26, 2023</div>
-<div class="dt-authors">
-<div class="dt-author">José de Jesus Filho</div>
-</div>
-</div>
-<div class="thumbnail">
-<img/>
-</div>
-<div class="description">
-<h2>Raspagem de tribunais: requisição http.</h2>
-<div class="dt-tags"></div>
-<p>Este tutorial introduz os principais elementos de uma requisição http e como realizá-la em tribunais de justiça e administrativos.</p>
-</div>
-</a>
-<a href="posts/2022-12-26-json-no-rparte1/" class="post-preview">
-<script class="post-metadata" type="text/json">{"categories":[]}</script>
-<div class="metadata">
-<div class="publishedDate">Dec. 26, 2022</div>
-<div class="dt-authors">
-<div class="dt-author">José de Jesus Filho</div>
-</div>
-</div>
-<div class="thumbnail">
-<img/>
-</div>
-<div class="description">
-<h2>Json no R - Parte 1</h2>
-<div class="dt-tags"></div>
-<p>Este é o primeiro tutorial de dois sobre JSON no R. Nesta primeira parte, mostro como usar o pacote `jsonlite` para converter de JSON para R e vice-versa. Na [segunda parte](https://direitoemdados.consudata.com.br/posts/2022-12-26-json-no-rparte2/), trato de como trabalhar com JSON como JSON mesmo no R, sem convertê-lo para lista ou dataframe.</p>
-</div>
-</a>
-<a href="posts/2022-12-26-json-no-rparte2/" class="post-preview">
-<script class="post-metadata" type="text/json">{"categories":[]}</script>
-<div class="metadata">
-<div class="publishedDate">Dec. 26, 2022</div>
-<div class="dt-authors">
-<div class="dt-author">José de Jesus Filho</div>
-</div>
-</div>
-<div class="thumbnail">
-<img/>
-</div>
-<div class="description">
-<h2>Json no R - Parte 2</h2>
-<div class="dt-tags"></div>
-<p>Este é o segundo tutorial sobre JSON no R. Na [primeira parte](https://direitoemdados.consudata.com.br/posts/2022-12-26-json-no-rparte1/), trabalhamos com o pacote `jsonlite`, que converte json para R. Neste, trabalhamos com o pacote `jqr`, o qual manuseia o json por ele mesmo.</p>
-</div>
-</a>
-<a href="posts/2022-10-15-objetos/" class="post-preview">
-<script class="post-metadata" type="text/json">{"categories":[]}</script>
-<div class="metadata">
-<div class="publishedDate">Oct. 15, 2022</div>
-<div class="dt-authors">
-<div class="dt-author">José de Jesus Filho</div>
-</div>
-</div>
-<div class="thumbnail">
-<img/>
-</div>
-<div class="description">
-<h2>Objetos no R</h2>
-<div class="dt-tags"></div>
-<p>Neste tutorial, mostramos o que são objetos no R e como
-manuseá-los.</p>
-</div>
-</a>
-<a href="posts/2022-10-06-sobrevivencia/" class="post-preview">
-<script class="post-metadata" type="text/json">{"categories":[]}</script>
-<div class="metadata">
-<div class="publishedDate">Oct. 6, 2022</div>
-<div class="dt-authors">
-<div class="dt-author">José de Jesus Filho</div>
-</div>
-</div>
-<div class="thumbnail">
-<img data-src="posts/2022-10-06-sobrevivencia/sobrevivencia_files/figure-html5/unnamed-chunk-10-1.png"/>
-</div>
-<div class="description">
-<h2>O tempo do processo judicial</h2>
-<div class="dt-tags"></div>
-<p>Como calculo a duração do processo? Neste tutorial, introduzo uma metodologia própria para estimar o tempo desde a instauração até a apreciação do pedido. A análise de sobrevivência ou análise de duração compreende várias técnicas estatísticas para estimar a duração do processo.</p>
-</div>
-</a>
-<a href="posts/welcome/" class="post-preview">
-<script class="post-metadata" type="text/json">{"categories":[]}</script>
-<div class="metadata">
-<div class="publishedDate">April 29, 2022</div>
-<div class="dt-authors">
-<div class="dt-author">José de Jesus Filho</div>
-</div>
-</div>
-<div class="thumbnail">
-<img/>
-</div>
-<div class="description">
-<h2>Jurimetria</h2>
-<div class="dt-tags"></div>
-<p>Blog voltado à comunidade jurídica interessada em jurimetria.</p>
-</div>
-</a>
-<a href="posts/2022-04-29-como-baixar-dados-do-tjsp/" class="post-preview">
-<script class="post-metadata" type="text/json">{"categories":[]}</script>
-<div class="metadata">
-<div class="publishedDate">April 29, 2022</div>
-<div class="dt-authors">
-<div class="dt-author">José de Jesus Filho</div>
-</div>
-</div>
-<div class="thumbnail">
-<img data-src="posts/2022-04-29-como-baixar-dados-do-tjsp/feminicidio2.png"/>
-</div>
-<div class="description">
-<h2>Como baixar dados do TJSP</h2>
-<div class="dt-tags"></div>
-<p>Nesta primeira postagem do blog, falaremos sobre como baixar e estruturar dados do Tribunal de Justiça de São Paulo. Nas próximas, veremos como agregar valor a esses dados e como aplicar técnicas de machine learning  e métodos estatísticos para analisar e fazer predições.</p>
-</div>
-</a>
-</div>
-<div class="posts-more">
-<a href="#">More articles &raquo;</a>
-</div>
-</div>
-<!--/radix_placeholder_article_listing-->
 
 <div class="d-title">
-<h1>Direito em Dados</h1>
+<h1>Resumindo decisões judiciais com o GPT</h1>
 <!--radix_placeholder_categories-->
 <!--/radix_placeholder_categories-->
-
+<p><p>Mostra como usar o GPT para resumir inteiro teor de decisões judiciais.</p></p>
 </div>
 
+<div class="d-byline">
+  José de Jesus Filho <a href="https://github.com/jjesusfilho" class="uri">https://github.com/jjesusfilho</a> 
+  
+<br/>2023-06-20
+</div>
 
 <div class="d-article">
-<div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="layout-chunk" data-layout="l-body">
+<style type="text/css">
+pre code {
+  white-space: pre-wrap;
+}
+</style>
+</div>
+<h2 id="introdução">Introdução</h2>
+<p>Há uma infinidade de possibilidades para o direito quando se trata de transformers, que são o estado da arte em processamento de linguagem natural. O GPT da <a href="https://openai.com/">Openai</a> é, sem dúvida alguma, o modelo mais bem elaborado de que temos à disposição.</p>
+<p>Quando comecei a tratar do assunto com meus alunos, a primeira reação de muitos foi: “Mas o chatGPT mente…”. Sim, o chatGPT viaja (alucina) às vezes, especialmente quando você pede informações acerca dos dados sobre os quais ele foi treinado.</p>
+<p>No entanto, muitas das tarefas dos juristas estão relacionadas à extração de dados de peças processuais ou geração de peças com base informações fornecidas ad-hoc. Com efeito, na minha experiência, quando restringimos o GPT a trabalhar com dados fornecidos ad-hoc, ele desempenha muito bem e realiza tarefas relevantes, as quais os humanos detestam fazer. Uma delas é resumir o inteiro teor de decisões judiciais.</p>
+<p>Isso, porém, não lhe dispensa de validar resultados. Geralmente, eu coleto uma amostra dos resultados e verifico se realmente a extração ou resumo são confiáveis.</p>
+<h2 id="api-da-openai">API da Openai</h2>
+<p>Para esse tutorial, usaremos a API da Openai e um dos pacotes do R que a implementa, o pacote <a href="https://github.com/irudnyts/openai">openai</a></p>
+<p>A primeira coisa a fazer é criar uma conta na <a href="https://openai.com/">Openai</a> e, em seguida, criar uma <a href="https://platform.openai.com/account/api-keys">chave</a>. Quando você cria uma conta, a OPENAI oferece U$5.00 para testar. Use esses créditos nesse tutorial.</p>
+<p>Além disso, você tem de criar uma variável de ambiente para armazenar a chave que você criou. Para tanto, use a função <code>edit_r_environ()</code> do pacote <code>usethis</code>:</p>
+<pre><code>usethis::edit_r_environ()</code></pre>
+<p>Adicione a chave:</p>
+<pre><code>OPENAI_API_KEY=&quot;sk-....&quot;</code></pre>
+<p>salve o arquivo e reinicie o R.</p>
+<h2 id="instalação-dos-pacotes-necessários">Instalação dos pacotes necessários</h2>
+<p>Para chamar a API, você pode usar o pacote <code>openai</code>:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;openai&quot;</span>)</span></code></pre></div>
+<p>No entanto, para este tutorial, vou pedir que você instale o pacate <code>JurisMiner</code>, o qual contêm uma função, a qual chama a api da OPENAI para resumir inteiro teor de decisões:</p>
+<pre><code>install.packages(&#39;remotes&#39;). ## Se já não tiver instalado.
+remotes::install_github(&quot;courtsbr/JurisMiner&quot;)</code></pre>
+<p>Além disso, instale o pacote <code>tjsp</code> para baixar algumas decisões judiciais a fim de testarmos.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">&quot;jjesusfilho/tjsp&quot;</span>)</span></code></pre></div>
+<h2 id="mãos-à-obra">Mãos à obra</h2>
+<p>Carregue os pacotes:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tjsp)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(JurisMiner)</span></code></pre></div>
+<p>Iremos baixar apenas dez decisões de primeira instância. As primeiras que aparecerem da <a href="http://esaj.tjsp.jus.br/cjpg/">busca de julgados de primeiro grau(cjpg)</a>:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(<span class="st">&quot;cjpg&quot;</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>busca <span class="ot">&lt;-</span> r<span class="st">&quot;(&quot;</span>danos morais<span class="st">&quot; OU &quot;</span>dano moral<span class="st">&quot;)&quot;</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tjsp_baixar_cjpg</span>(<span class="at">livre=</span> busca,</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="at">paginas =</span> <span class="dv">1</span>,</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="at">diretorio =</span> <span class="st">&quot;cjpg&quot;</span>)</span></code></pre></div>
+<p>Depois disso, leia os dados para o R:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>cjpg <span class="ot">&lt;-</span> <span class="fu">tjsp_ler_cjpg</span>(<span class="at">diretorio =</span> <span class="st">&quot;cjpg&quot;</span>)</span></code></pre></div>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<p>Basicamente, esses são os dados retornados:</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre><code>Rows: 10
+Columns: 13
+$ processo         &lt;chr&gt; &quot;10010631920238260008&quot;, &quot;100616022202282604…
+$ pagina           &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
+$ hora_coleta      &lt;dttm&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA
+$ duplicado        &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, F…
+$ classe           &lt;chr&gt; &quot;Procedimento do Juizado Especial Cível&quot;, …
+$ assunto          &lt;chr&gt; &quot;Inclusão Indevida em Cadastro de Inadimple…
+$ magistrado       &lt;chr&gt; &quot;Roseleine Belver dos Santos Ricci&quot;, &quot;Gabri…
+$ comarca          &lt;chr&gt; &quot;SÃO PAULO&quot;, &quot;Olímpia&quot;, &quot;Taquarituba&quot;, &quot;SÃO…
+$ foro             &lt;chr&gt; &quot;Foro Regional VIII - Tatuapé&quot;, &quot;Foro de Ol…
+$ vara             &lt;chr&gt; &quot;1ª Vara do Juizado Especial Cível&quot;, &quot;2ª Va…
+$ disponibilizacao &lt;date&gt; 2023-06-21, 2023-06-21, 2023-06-21, 2023-06…
+$ julgado          &lt;chr&gt; &quot;TRIBUNAL DE JUSTIÇA DO ESTADO DE SÃO PAULO…
+$ cd_doc           &lt;chr&gt; &quot;080018O4B0000-8-PG5REG-147016273&quot;, &quot;B4000…</code></pre>
+</div>
+<p>Nossa tarefa será criar uma nova coluna com o resumo dos julgados. Antes disso, porém, vamos resumir o primeiro julgado. Seguramente, o seu será diferente do meu:</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre><code>[1] &quot;TRIBUNAL DE JUSTIÇA DO ESTADO DE SÃO PAULO COMARCA de SÃO PAULO Foro Regional VIII - Tatuapé 1ª Vara do Juizado Especial Cível Rua Santa Maria nº 257, São Paulo - SP - cep 03085-000 1001063-19.2023.8.26.0008 - lauda CONCLUSÃO Em 21 de junho de 2023 Faço estes autos conclusos ao(à) MM(a.). Juiz(a) de Direito Dr(a). Roseleine Belver dos Santos Ricci Eu, , DIEGO CASTANHO LIGUORI, digitei e subscrevi. SENTENÇA Processo nº: 1001063-19.2023.8.26.0008 - Procedimento do Juizado Especial Cível Requerente: Ana Caroline Amaral Cruz Requerido: Sociedade de Ensino Superior Estácio de Sá LTDA Vistos. Trata-se de ação de indenização. Dispensado o relatório nos termos do artigo 38 da Lei 9099/95. O processo comporta julgamento antecipado de seu mérito, perfeitamente possível no âmbito dos Juizados Especiais Civeis. Além de não ter vedação expressa, pois até o art. Lei 9.099/95 fala em julgamento antecipado, cabe ao Magistrado, destinatário da prova, analisar o caso concreto. Sendo assim, entendo que se a conciliação é frustrada na primeira audiência, com defesa já apresentada pelo réu, desnecessidade de produção de prova e ausência de pedido expresso de qualquer das partes para que se realize obrigatoriamente a audiência de instrução e julgamento, é desnecessária a realização de audiência, como no caso. Importa consignar, de pronto, que entre as partes há verdadeira relação de consumo, uma vez que a requerida é fornecedora de serviços, enquanto que o autor é o destinatário final destes. Assim, se o requerente encaixa-se no conceito de consumidor a teor do previsto no Art. 2º da Lei 8.078/90, também é certo que a parte ré igualmente encaixa-se na definição de fornecedora, de acordo com o Art. 3º, daquela mesma lei, uma vez que é pessoa jurídica que desenvolve atividade de comercialização de produtos e/ou serviço no mercado de consumo. Desta forma, aplica-se ao caso em tela o Código de Defesa do Consumidor, o que faz com que o litígio seja inteiramente analisado tendo em vista as regras e princípios que emergem da legislação consumerista, onde a parte autora é, incontestavelmente, vulnerável frente a outra. O pedido é procedente. E ante a hipossuficiência da autora e ante a verossimilhança dos seus argumentos, inverto os ônus da prova, com fundamento no artigo 6º, inciso VIII, do CDC, considerando ainda o porte empresarial da parte requerida. Em face disso, verifico que a requerida não logrou êxito em afastar as alegações da autora no sentido de que sofreu a negativação ilegítima do seu nome, já que relativa a um débito indevido, à medida que foi realizado por um erro no processamento do pedido de cancelamento da matrícula, conforme denota-se pelas conversas realizadas entre a autora e a funcionária da ré (fls. 16/28). Assim, porque indevidas a cobrança do montante informado na exordial, procede o pleito de declaração de inexistência de débitos. Entendo, também, como devida a indenização por danos morais. Inexistindo prova da regularidade da dívida, a negativação perpetrada pela ré foi indevida. Comprovada a negativação indevida do nome da parte autora, os danos morais são presumidos, sendo desnecessária qualquer prova nesse sentido.A propósito: Apelação - Declaratória de inexigibilidade de débito c/c indenização por danos morais - Inscrição indevida do apelado no cadastro de inadimplentes, por suposta habilitação de linha telefônica, não comprovada - Eventual fraude de terceiro não afasta a responsabilidade sobre a negativação indevida - Dano moral in re ipsa, não sendo necessária a demonstração de efetivo prejuízo para a sua caracterização- Negligência por parte da ré - Inexigibilidade do débito e danos morais reconhecidos - Sentença modificada – alor da indenização majorado para R$ 10.000,00 - Recurso do autor parcialmente provido e recurso do réu improvido” (TJSP Apel. nº 0125602-12.2011.8.26.0100, Rel. Luis MarioGalbetti, j. 09/04/2014 VU). É notório que qualquer pessoa inscrita em cadastros de maus pagadores não consegue obter crédito, e nem mesmo emitir um simples cheque. Em suma, fica alijada da prática de atos civis comezinhos por ser considerada uma má pagadora. Impossível deixar de considerar tais consequências como dano moral. Resta assim quantificar o dano. A indenização por dano moral deve ser equivalente à extensão do prejuízo, mas também levar em consideração as condições pessoais das partes envolvidas e o grau de culpa do ofensor. A condenação à indenização por danos morais não pode, servir de pretexto jurídico para gerar o enriquecimento indevido da vítima, mas deve atingir o patrimônio do causador do dano com o intuito salutar e moderado de propiciar a sua reflexão e de evitar a sua reincidência em circunstâncias análogas. Assim, partindo-se do princípio da razoabilidade e da equidade, em casos como o dos autos e consideradas as circunstâncias em que se deram os fatos, mostra-se prudente a fixação do valor do dano moral em R$ 4.000,00 (quatro mil reais). Ante o exposto, JULGO PROCEDENTE O PEDIDO para declarar inexigível o débito indicado na inicial e condenar a parte requerida ao pagamento de indenização à autora por dano moral no valor de R$ 4.000,00 (quatro mil reais), a ser atualizada monetariamente (Tabela do TJSP) a partir desta data e acrescida de juros legais de 1% ao mês desde a citação. Deixo de condenar a vencida nas verbas da sucumbência nos termos do artigo 55, da Lei 9.099/95. a) o prazo para interposição de recurso é de 10 (dez) dias úteis; b) Em caso de recurso, ressalvada a hipótese de concessão de gratuidade da justiça, deverá ser comprovado o recolhimento, sob pena de deserção: b.1) da taxa judiciária de ingresso no importe de 1% sobre o valor ATUALIZADO da causa (observado o valor mínimo de 5 UFESPs); somada a b.2) da taxa judiciária referente às custas de preparo, no importe de 4% sobre o valor ATUALIZADO fixado na sentença ou, se não houver condenação, 4% sobre o valor ATUALIZADO da causa (em ambos os casos observado o valor mínimo de 5 UFESPs). O recolhimento da soma das parcelas “b.1” e “b.2” deverá ser feito em guia DARE-SP, código 230-6 b.3) além das despesas processuais atualizadas referentes a todos os serviços forenses eventualmente utilizados (despesas postais/carta AR unipaginada - guia do F.E.D.T.J. - código 120-1; diligências de Oficial de Justiça - guia GRD; expedição de carta precatória – guia DARE – código 233-1; taxas para pesquisas nos sistemas conveniados, como SISBAJUD, INFOJUD, RENAJUD - guia do F.E.D.T.J. - código 434-1); entre outras, nos termos do Comunicado CG nº 1530/2021 e 489/2022. b.4) Caso haja mídia eletrônica juntada no processo (CD/DVD/pendrive), deverá ser recolhida também a taxa relativa às despesas de porte de remessa e retorno por volume = R$ 43,00 (guia F.E.D.T.J., código 110-4); Dispensada a indicação e publicação do preparo, o recolhimento independe de cálculo elaborado pela serventia, que apenas será responsável pela conferência dos valores, nos termos dos Comunicados CG nº 916/16 e nº 489/2022. c) efetuado o pagamento voluntário mediante depósito judicial, fica desde já deferida a expedição de Mandado de Levantamento Eletrônico em favor do credor, devendo ser indicada a forma pretendida para levantamento ou transferência, o que será certificado no processo após a sua efetivação; d) Após o trânsito em julgado, as partes terão o prazo de 10 (dez) dias corridos para retirar os documentos originais juntados no decorrer do processo, assim como mídias (CD/DVD/pendrive), sob pena de inutilização. e) Com o trânsito em julgado, arquivem-se os autos. P.I.C São Paulo, 21 de junho de 2023. DOCUMENTO ASSINADO DIGITALMENTE NOS TERMOS DA LEI 11.419/2006, CONFORME IMPRESSÃO À MARGEM DIREITA&quot;</code></pre>
+</div>
+<h2 id="criando-o-resumo">Criando o resumo</h2>
+<p>Chamaremos a função <code>resumir_inteiro_teor</code> do pacote <code>JurisMiner</code> para ver como fica o resumo.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">resumir_inteiro_teor</span>(cjpg<span class="sc">$</span>julgado[<span class="dv">1</span>]) <span class="sc">|&gt;</span> </span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>()</span></code></pre></div>
+<div class="layout-chunk" data-layout="l-body">
+<pre><code>A decisão judicial proferida pela 1ª Vara do Juizado Especial Cível da Comarca de São Paulo, no processo nº 1001063-19.2023.8.26.0008, julgou procedente o pedido de indenização por danos morais feito pela requerente Ana Caroline Amaral Cruz contra a Sociedade de Ensino Superior Estácio de Sá LTDA. O juiz considerou que houve negativação indevida do nome da autora devido a um erro no processamento do pedido de cancelamento da matrícula. Portanto, declarou a inexigibilidade do débito e condenou a requerida ao pagamento de indenização por danos morais no valor de R$ 4.000,00, além de atualização monetária e juros legais.</code></pre>
+</div>
+<p>Nada mal, hein?</p>
+<h2 id="resumindo-múltiplos-julgados">Resumindo múltiplos julgados</h2>
+<p>Podemos agora chamar a função sobre todo o dataframe:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>cjpg <span class="ot">&lt;-</span> cjpg <span class="sc">|&gt;</span> </span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">mutate</span>(<span class="at">resumo =</span> <span class="fu">resumir_inteiro_teor</span>(julgado), <span class="at">.before =</span> julgado)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(cjpg)</span></code></pre></div>
+<div class="layout-chunk" data-layout="l-body">
+<pre><code>Rows: 10
+Columns: 14
+$ processo         &lt;chr&gt; &quot;10010631920238260008&quot;, &quot;100616022202282604…
+$ pagina           &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
+$ hora_coleta      &lt;dttm&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA
+$ duplicado        &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, F…
+$ classe           &lt;chr&gt; &quot;Procedimento do Juizado Especial Cível&quot;, …
+$ assunto          &lt;chr&gt; &quot;Inclusão Indevida em Cadastro de Inadimple…
+$ magistrado       &lt;chr&gt; &quot;Roseleine Belver dos Santos Ricci&quot;, &quot;Gabri…
+$ comarca          &lt;chr&gt; &quot;SÃO PAULO&quot;, &quot;Olímpia&quot;, &quot;Taquarituba&quot;, &quot;SÃO…
+$ foro             &lt;chr&gt; &quot;Foro Regional VIII - Tatuapé&quot;, &quot;Foro de Ol…
+$ vara             &lt;chr&gt; &quot;1ª Vara do Juizado Especial Cível&quot;, &quot;2ª Va…
+$ disponibilizacao &lt;date&gt; 2023-06-21, 2023-06-21, 2023-06-21, 2023-06…
+$ resumo           &lt;chr&gt; &quot;A decisão judicial proferida pela 1ª Vara …
+$ julgado          &lt;chr&gt; &quot;TRIBUNAL DE JUSTIÇA DO ESTADO DE SÃO PAUL…
+$ cd_doc           &lt;chr&gt; &quot;080018O4B0000-8-PG5REG-147016273&quot;, &quot;B40005…</code></pre>
+</div>
+<h3 id="visualizando-os-resumos">Visualizando os resumos</h3>
+<p>Para finalizar, vamos visualizar os resumos. Eu adicionei os números dos processos, caso você queira comparar o resumo com o inteiro teor. Note que, a segunda chamada da função resultou em um resumo diferente para o primeiro julgado resumido acima.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">paste</span>(<span class="st">&quot;Processo: &quot;</span>,cjpg1<span class="sc">$</span>processo,<span class="st">&quot;Resumo:</span><span class="sc">\n</span><span class="st">&quot;</span>, cjpg1<span class="sc">$</span>resumo)</span></code></pre></div>
+<div class="layout-chunk" data-layout="l-body">
+<pre><code>Processo: 
+10010631920238260008
+Resumo:
+A decisão judicial proferida pela 1ª Vara do Juizado Especial Cível da Comarca de São Paulo, no processo nº 1001063-19.2023.8.26.0008, julgou procedente o pedido de indenização por danos morais feito pela requerente Ana Caroline Amaral Cruz contra a Sociedade de Ensino Superior Estácio de Sá LTDA. O juiz considerou que houve negativação indevida do nome da autora devido a um erro no processamento do pedido de cancelamento da matrícula. Assim, declarou a inexigibilidade do débito e condenou a requerida ao pagamento de indenização por danos morais no valor de R$ 4.000,00, além de atualização monetária e juros legais. A parte vencida foi isenta das verbas da sucumbência. Foi concedido prazo de 10 dias úteis para interposição de recurso, com a necessidade de comprovação do recolhimento das taxas judiciárias e demais despesas processuais. Após o trânsito em julgado, os autos serão arquivados.
+
+Processo: 
+10061602220228260400
+Resumo:
+A decisão judicial determina que a empresa Planetur Planejamento e Desenvolvimento Urbano e Holding Ltda deve pagar uma indenização de 0,5% do valor atualizado dos contratos aos autores da ação, Matheus Pedroso Bruno e Luis Henrique Motta Buffalo, devido ao atraso na entrega das unidades imobiliárias. O atraso foi de 20 meses, e os valores devidos serão corrigidos monetariamente e acrescidos de juros de mora. A empresa também foi condenada a pagar as custas e despesas processuais, além de honorários advocatícios.
+
+Processo: 
+10003493720218260620
+Resumo:
+A decisão judicial determina que a ré, Cia Jaguari Energia, seja obrigada a realizar as adaptações necessárias na rede elétrica para atender a construção de um edifício de propriedade do autor, Saul Pereira. Além disso, a cobrança realizada pela obra é considerada inexigível e a ré deve devolver o valor já adiantado pelo autor. A decisão se baseia no fato de que a ré, como fornecedora de energia, possui responsabilidade objetiva em relação aos danos causados aos consumidores, e não conseguiu comprovar de forma clara e transparente o valor cobrado e a participação devida pelo autor. A decisão também determina o pagamento das custas processuais e honorários advocatícios pela ré.
+
+Processo: 
+10076107820238260007
+Resumo:
+A decisão judicial determina que o réu, Grupo Hu Viagens e Turismos S/A (Hotel Urbano), deve indicar novas datas para a realização da viagem mencionada na ação, conforme disponibilidade dos autores, no prazo de 15 dias, sob pena de multa diária. Além disso, o réu deve pagar uma indenização de R$ 3.000,00 por danos morais aos autores, com correção monetária a partir da data da sentença e juros de mora desde a citação. A decisão também informa sobre o prazo para apresentação de recurso e os procedimentos para pagamento das custas processuais.
+
+Processo: 
+10080502220228260068
+Resumo:
+A decisão judicial trata de uma ação movida por um motorista de aplicativo contra a empresa Uber. O motorista alega ter sido suspenso definitivamente da plataforma sem justificativa, violando uma lei municipal. No entanto, o juiz considerou que a relação entre as partes é de natureza contratual e não de consumo, e que a empresa tinha o direito de rescindir o contrato de forma unilateral, de acordo com os termos e condições de uso do aplicativo. Portanto, o pedido de reintegração do motorista foi negado. A lei municipal invocada pelo autor não é aplicável nesta comarca. A ação foi julgada improcedente e o processo foi encerrado.
+
+Processo: 
+10284667520228260564
+Resumo:
+A decisão judicial determina que o Banco Master S/A (atual denominação do Banco Máxima S/A) restitua ao autor, Rony Anderson Duarte de Souza, os valores descontados indevidamente de seu salário em razão de um empréstimo não solicitado. Além disso, o banco deve pagar uma indenização por danos morais no valor de R$ 5.000,00. A decisão se baseia na falta de provas por parte do banco de que o autor teria solicitado ou concordado com o empréstimo, bem como na falha na prestação de serviços da instituição financeira. O autor também teve deferida a gratuidade de justiça e a antecipação de tutela.
+
+Processo: 
+10020247020228260306
+Resumo:
+A decisão judicial determina que a instituição de ensino ré deve cumprir as obrigações assumidas em relação ao pagamento do contrato do FIES firmado pelo autor. Além disso, a ré é condenada a pagar uma indenização por danos morais no valor de R$ 5.000,00 ao autor. A decisão também estabelece que a ré deve arcar com as custas processuais, despesas e honorários advocatícios. Os órgãos de proteção ao crédito devem ser informados para que excluam o nome do autor dos cadastros de devedores. A parte contrária tem o prazo de 15 dias úteis para apresentar recurso de apelação.
+
+Processo: 
+10026758920238260008
+Resumo:
+A decisão judicial trata de uma ação de indenização em que o autor alega ter sido negativado indevidamente devido a uma dívida em conta corrente de uma pessoa jurídica da qual ele já não faz parte. O juiz entende que a negativação foi indevida e determina que o réu pague uma indenização por danos morais no valor de R$ 4.000,00. O juiz também destaca que há uma relação de consumo entre as partes e que o Código de Defesa do Consumidor deve ser aplicado ao caso.
+
+Processo: 
+10039030620228260115
+Resumo:
+A decisão judicial determina que as requeridas, Facebook Serviços Online do Brasil Ltda. e Telefônica Brasil S.A., sejam condenadas solidariamente a pagar uma indenização por danos morais no valor de R$ 5.000,00 ao autor, Luiz Diego de Oliveira. A ação foi movida pelo autor após ter seu número de celular hackeado e utilizado para aplicar golpes em seus seguidores nas redes sociais. A decisão considerou que as requeridas falharam em garantir a segurança dos serviços prestados, o que resultou em danos à imagem do autor. A sentença também destacou a responsabilidade solidária das empresas envolvidas na cadeia negocial.
+
+Processo: 
+10101717520238260007
+Resumo:
+A decisão judicial determina que a parte ré, TAM Linhas Aéreas S/A (LATAM Airlines Brasil), seja condenada a pagar à parte autora, Thagylla de Oliveira Silva, a quantia de R$ 3.280,00, sendo R$ 280,00 por danos materiais e R$ 3.000,00 por danos morais. A responsabilidade da companhia aérea é considerada objetiva, de acordo com o Código de Defesa do Consumidor, e a conduta da ré foi reconhecida como ofensiva à dignidade do consumidor. A decisão ressalta que a indenização tem a função punitivo-pedagógica e visa incentivar a melhora na prestação do serviço. Não há condenação ao pagamento de honorários e custas processuais. As partes são intimadas sobre o prazo para apresentação de recurso e a possibilidade de buscar assistência judiciária da Defensoria Pública.</code></pre>
+</div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>

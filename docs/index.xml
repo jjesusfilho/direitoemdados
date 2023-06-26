@@ -7,14 +7,22 @@
     <description>Ciência de Dados Aplicada ao Direito
 </description>
     <generator>Distill</generator>
-    <lastBuildDate>Tue, 02 May 2023 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>2023-06-20</lastBuildDate>
+    <item>
+      <title>Resumindo decisões judiciais com o GPT</title>
+      <dc:creator>José de Jesus Filho</dc:creator>
+      <link>https://direitoemdados.consudata.com.br/posts/2023-06-20-direito-e-inteligncia-artificial</link>
+      <description>Mostra como usar o GPT para resumir inteiro teor de decisões judiciais.</description>
+      <guid>https://direitoemdados.consudata.com.br/posts/2023-06-20-direito-e-inteligncia-artificial</guid>
+      <pubDate>2023-06-20</pubDate>
+    </item>
     <item>
       <title>Raspagem de tribunais - Parte 4: iteração com purrr</title>
       <dc:creator>José de Jesus Filho</dc:creator>
       <link>https://direitoemdados.consudata.com.br/posts/2023-05-02-webscraping-iterao-com-purrr</link>
       <description>Este tutorial ensina como iterar sobre várias páginas de consulta em tribunais para coletar e organizar dados de processos judiciais.</description>
       <guid>https://direitoemdados.consudata.com.br/posts/2023-05-02-webscraping-iterao-com-purrr</guid>
-      <pubDate>Tue, 02 May 2023 00:00:00 +0000</pubDate>
+      <pubDate>2023-05-02</pubDate>
     </item>
     <item>
       <title>Raspagem nos tribunais - Parte 3: extração com XPATH</title>
@@ -22,7 +30,7 @@
       <link>https://direitoemdados.consudata.com.br/posts/2023-05-02-extracaocomxpath</link>
       <description>Neste terceiro tutorial, eu mostro como extrair dados de páginas web baixadas dos tribunais usando uma ferramenta poderosa como xpath.</description>
       <guid>https://direitoemdados.consudata.com.br/posts/2023-05-02-extracaocomxpath</guid>
-      <pubDate>Tue, 02 May 2023 00:00:00 +0000</pubDate>
+      <pubDate>2023-05-02</pubDate>
     </item>
     <item>
       <title>Raspagem de tribunais: requisição http.</title>
@@ -30,7 +38,7 @@
       <link>https://direitoemdados.consudata.com.br/posts/2023-04-26-raspagem-de-tribunais-requisio-http</link>
       <description>Este tutorial introduz os principais elementos de uma requisição http e como realizá-la em tribunais de justiça e administrativos.</description>
       <guid>https://direitoemdados.consudata.com.br/posts/2023-04-26-raspagem-de-tribunais-requisio-http</guid>
-      <pubDate>Wed, 26 Apr 2023 00:00:00 +0000</pubDate>
+      <pubDate>2023-04-26</pubDate>
     </item>
     <item>
       <title>Json no R - Parte 1</title>
@@ -38,7 +46,7 @@
       <link>https://direitoemdados.consudata.com.br/posts/2022-12-26-json-no-rparte1</link>
       <description>Este é o primeiro tutorial de dois sobre JSON no R. Nesta primeira parte, mostro como usar o pacote `jsonlite` para converter de JSON para R e vice-versa. Na [segunda parte](https://direitoemdados.consudata.com.br/posts/2022-12-26-json-no-rparte2/), trato de como trabalhar com JSON como JSON mesmo no R, sem convertê-lo para lista ou dataframe.</description>
       <guid>https://direitoemdados.consudata.com.br/posts/2022-12-26-json-no-rparte1</guid>
-      <pubDate>Mon, 26 Dec 2022 00:00:00 +0000</pubDate>
+      <pubDate>2022-12-26</pubDate>
     </item>
     <item>
       <title>Json no R - Parte 2</title>
@@ -46,7 +54,7 @@
       <link>https://direitoemdados.consudata.com.br/posts/2022-12-26-json-no-rparte2</link>
       <description>Este é o segundo tutorial sobre JSON no R. Na [primeira parte](https://direitoemdados.consudata.com.br/posts/2022-12-26-json-no-rparte1/), trabalhamos com o pacote `jsonlite`, que converte json para R. Neste, trabalhamos com o pacote `jqr`, o qual manuseia o json por ele mesmo.</description>
       <guid>https://direitoemdados.consudata.com.br/posts/2022-12-26-json-no-rparte2</guid>
-      <pubDate>Mon, 26 Dec 2022 00:00:00 +0000</pubDate>
+      <pubDate>2022-12-26</pubDate>
     </item>
     <item>
       <title>Objetos no R</title>
@@ -55,7 +63,7 @@
       <description>Neste tutorial, mostramos o que são objetos no R e como
 manuseá-los.</description>
       <guid>https://direitoemdados.consudata.com.br/posts/2022-10-15-objetos</guid>
-      <pubDate>Sat, 15 Oct 2022 00:00:00 +0000</pubDate>
+      <pubDate>2022-10-15</pubDate>
     </item>
     <item>
       <title>O tempo do processo judicial</title>
@@ -63,7 +71,7 @@ manuseá-los.</description>
       <link>https://direitoemdados.consudata.com.br/posts/2022-10-06-sobrevivencia</link>
       <description>Como calculo a duração do processo? Neste tutorial, introduzo uma metodologia própria para estimar o tempo desde a instauração até a apreciação do pedido. A análise de sobrevivência ou análise de duração compreende várias técnicas estatísticas para estimar a duração do processo.</description>
       <guid>https://direitoemdados.consudata.com.br/posts/2022-10-06-sobrevivencia</guid>
-      <pubDate>Thu, 06 Oct 2022 00:00:00 +0000</pubDate>
+      <pubDate>2022-10-06</pubDate>
       <media:content url="https://direitoemdados.consudata.com.br/posts/2022-10-06-sobrevivencia/sobrevivencia_files/figure-html5/unnamed-chunk-10-1.png" medium="image" type="image/png" width="1248" height="768"/>
     </item>
     <item>
@@ -72,7 +80,7 @@ manuseá-los.</description>
       <link>https://direitoemdados.consudata.com.br/posts/welcome</link>
       <description>Blog voltado à comunidade jurídica interessada em jurimetria.</description>
       <guid>https://direitoemdados.consudata.com.br/posts/welcome</guid>
-      <pubDate>Fri, 29 Apr 2022 00:00:00 +0000</pubDate>
+      <pubDate>2022-04-29</pubDate>
     </item>
     <item>
       <title>Como baixar dados do TJSP</title>
@@ -80,7 +88,7 @@ manuseá-los.</description>
       <link>https://direitoemdados.consudata.com.br/posts/2022-04-29-como-baixar-dados-do-tjsp</link>
       <description>Nesta primeira postagem do blog, falaremos sobre como baixar e estruturar dados do Tribunal de Justiça de São Paulo. Nas próximas, veremos como agregar valor a esses dados e como aplicar técnicas de machine learning  e métodos estatísticos para analisar e fazer predições.</description>
       <guid>https://direitoemdados.consudata.com.br/posts/2022-04-29-como-baixar-dados-do-tjsp</guid>
-      <pubDate>Fri, 29 Apr 2022 00:00:00 +0000</pubDate>
+      <pubDate>2022-04-29</pubDate>
       <media:content url="https://direitoemdados.consudata.com.br/posts/2022-04-29-como-baixar-dados-do-tjsp/feminicidio2.png" medium="image" type="image/png" width="1286" height="616"/>
     </item>
   </channel>
