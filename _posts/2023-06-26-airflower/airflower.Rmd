@@ -1,0 +1,208 @@
+---
+title: "R em produção com Airflow"
+description: |
+ Neste tutorial, eu mostro todo o caminho para instalar o R e o Airflow na Nuvem
+author:
+  - name: José de Jesus Filho
+    url: https://github.com/jjesusfilho
+date: 2023-06-26
+output:
+  distill::distill_article:
+    self_contained: false
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+## Introdução 
+
+Este tutorial mostra como instalar e configurar o Airflow na nuvem para colocar scripts do R em produção. Ele assume que você já tem o R rodando na nuvem. Se você não tem, há outro tutorial que você pode usar. Clique [aqui](https://direito.consudata.com.br/r/rnuvem/).
+
+Como no tutorial sobre o R na nuvem, este aqui é algo em permanente construção. Conforme vou ganhando experiência e aperfeiçoando a ferramenta, atualizo o manual para que ele fique cada vez melhor.
+
+## Prerrequisitos
+
+Para seguir com este roteiro, você já terá:
+
+1 - Alugado uma máquina na nuvem com Ubuntu. Eu recomendo, pelo preço, o [Contabo](https://contabo.com). 
+
+2 - Instalado o R na nuvem. Siga o roteiro que indiquei acima.
+
+3 - Instalado o Nginx. Siga o reteiro que indiquei acima.
+
+4 - Configurado o SSL. Siga o roteiro que indiquei acima.
+
+## Python e Miniconda
+
+Para este roteiro, eu usei Python 3.10 e Miniconda3. Seguramente, você terá esta ou outra versão superior do Python instalada. Com relação ao Miniconda3, se você é usuário do R, eu recomendo porque é o que a comunidade do Posit utiliza para trabalhar com Python do R. No entanto, se preferir usar PIP com virtualenv or venv, fique à vontade.
+
+### Instale Miniconda:
+
+Comece por [baixar](https://docs.conda.io/en/latest/miniconda.html) e [instalar](https://docs.conda.io/projects/conda/en/latest/user-guide/install/linux.htm):
+
+```sh
+$ wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+
+$ bash Miniconda3-latest-Linux-x86_64.sh
+```
+
+## Banco de dados
+
+O airflow precisa de um banco SQL para operar. Ele vem com o SQLite. No entanto, eu percebo que a comunidade tem preferência pelo PostgreSQL. Sugiro que você instale o Postgres antes de proesseguir. Se quiser, [neste tutorial](http://rpg.consudata.com.br/posts/2021-01-04-chamando-o-r-do-postgresql/), eu mostro como instalar o PostgreSQL.
+
+## Usuário airflow
+
+Você precisa criar um usuário para o Airflow. Este usuário terá de ser sudoer.
+
+```sh
+$ adduser airflow ### Você pode dar outro nome se quiser.
+$ chmod -AG sudo airflow
+```
+
+Opcionalmente, crie um grupo ou use o airflow como grupo e adicione outros usuários a ele:
+
+```sh
+# addgroup airflow
+$ usermod -aG airflow jose
+```
+
+Além disso, é importante você remover a necessidade de usar senha quando der sudo <comando> neste usuário. Chame o comando `visudo`
+
+```sh
+$ visudo
+```
+e adicione a seguinte diretiva no final do arquivo. Lembre-se que deve ser no final do arquivo e o usuário deve ser aquele que você criou:
+
+```sh
+airflow ALL=(ALL) NOPASSWD: ALL
+```
+
+## Instalando o Airflow
+
+### Diretorio do airflow
+
+Antes de tudo, crie um diretório para o airflow e autorize o usuário recêm criado a usá-lo. Eu vou criar dentro do /opt porque este é próprio para receber pragramas add-on ou seja, programas que não fazem parte do sistema e são, portanto, opcionais.
+
+```sh
+$ mkdir /opt/airflow
+$ chown -R :airflow /opt/airflow
+$ chmod g+wrx /opt/airflow
+```
+
+### Caminho para o Airflow: variável de ambiente.
+
+Antes de instalar o airflow, você deve definir uma variável de ambiente, informando o caminho para o diretório onde o airflow será instalado.
+
+```sh
+$ export AIRFLOW_HOME=/opt/airflow
+```
+
+Em seguida, crie um ambiente para instalar o Airflow:
+
+```sh
+$ conda create -n airflow_env python=3.10
+```
+Ative o ambiente
+```
+$ conda activate airflow_env
+
+```
+
+
+Instale o airflow. Note que, ao instalar o airflow, você pode informar outras dependências que mais tarde irá usar. No caso abaixo, eu estou instalando o airflow juntamente com os pacotes para conexão com o s3 e PostgreSQL. Basicamente, o boto, o psycopg2 e o SQLAlchemy serão também instalados.
+
+```sh
+$ conda install -c conda-forge airflow[s3,postgres]
+```
+
+### Banco de dados
+
+Conecte-se ao banco como superuser e proceda à criação do usário.
+```
+create role airflow_admin;
+create user airflow_user with password 'senha';
+grant airflow_admin with airflow_user;
+grant airflow_admin with jose;
+```
+Crie o banco de dados
+
+```
+create database airflow_db owner airflow_admin;
+grant all on schema public to airflow_admin;
+```
+Não se esqueça de que o acesso ao banco deve estar devidamente autorizado no arquivo `pg_hba.conf` do PostgreSQL. 
+
+Verifique se está tudo certo,i.e, conectando-se com o usário airflow_user ao banco airflow_db.
+
+## PGbouncer
+
+Quando instalei pela primeira vez o airflow e conectei-o ao PostgreSQL, notei uma multiplicidade de sessões abertas com o mesmo usário após fazer alguns testes com dags. Uma característica do Airflow é gerar múltiplas conexões do mesmo usuário ao banco airflow_bd (ou o nome que você deu). Isso pode sobrecarregar os recursos disponíveis do seu banco, especialmente memória. 
+
+Para prevenir esse tipo de problema, é recomendável usar o Pgbouncer, o qual funciona como intermediário entre a aplicação (airflow) e o banco (PostgreSQL) de modo a  agrupar as conexões de um mesmo usuário ao mesmo banco em uma única sessão. Dessa forma, é recomendável o configurar para acesso ao PosgreSQL.
+
+Instale o PGBouncer:
+
+```sh
+$ apt update
+$ apt install pgbouncer
+```
+Depois disso, altere arquivo `/etc/pgbouncer/pgbouncer.ini` e adicione a seguinte diretiva no local indicado:
+
+```sh
+$ [databases]
+
+```
+### Configurações
+
+```sh
+postgresql+psycopg2://<user>:<password>@<host>/<db>
+```
+
+### Depois disso, você deve configurar o pg_bouncer..
+
+isso funcionou: https://www.scaleway.com/en/docs/tutorials/install-pgbouncer/
+
+pgbouncer.ini  userlist.txt
+
+
+listen_addr=*
+
+
+## Inicie o banco de dados
+
+```sh
+airflow db init
+```
+
+### Criando o usuário para login:
+
+```sh
+airflow users create \
+          --username jose \
+          --firstname 'José' \
+          --lastname 'de Jesus Filho' \
+          --role Admin \
+          --email jose@....com.br
+
+```
+Atualize as permissões. Vá para o shell, reative o embiente e rode o seguinte:
+
+```sh
+airflow sync-perm
+```
+
+
+
+
+### WEbserver
+
+
+
+### Dicas
+
+1 - Crie projetos dentro da pasta airflow, e.g,. `/opt/airflow/projetos/projeto1/`, com o usuário airflow. Dessa forma, você evita dor de cabeça com permissões. 
+
+
