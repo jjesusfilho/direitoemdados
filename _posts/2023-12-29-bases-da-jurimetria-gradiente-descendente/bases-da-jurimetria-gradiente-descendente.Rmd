@@ -14,7 +14,7 @@ output:
 
 ## Introdução
 
-Neste tutorial iremos mostrar como usar gradiente descendente para estimar os coeficientes de uma regressão linear. Uma vez compreendido, gradiente descendente pode ser usado para estimar outros modelos e, se você se aventurar por deep learning, verá que gradiente descedente é peça chave no processo de estimar pesos em redes neurais. O domínio de gradiente descendente é fundamental para quem quer trabalhar com  inteligência artificial aplicada ao direito.
+Neste tutorial iremos mostrar como usar gradiente descendente para estimar os coeficientes de uma regressão linear. Uma vez compreendido, gradiente descendente pode ser usado para estimar outros modelos e, se você se aventurar por deep learning, verá que gradiente descendente é peça chave no processo de estimar pesos em redes neurais. O domínio de gradiente descendente é fundamental para quem quer trabalhar com  inteligência artificial aplicada ao direito.
 
 Para demonstrar como gradiente descendente funciona, faremos um primeiro exercício para encontrar o intercepto de uma regressão linear usando uma sequência de valores possíveis e verificar qual deles retorna a menor soma dos quadrados dos resíduos (SQR).
 
@@ -198,7 +198,7 @@ A linha agora está bem mais próxima dos pontos. No entanto, esse método possu
 
 ## *Gradiente descendente*
 
-Para superar essas limitações, usaremos gradiente descendente. Com gradiente descedente, em vez de gerar múltiplos valores para depois compará-los, realiza-se uma aproximação gradual aos menores valores das variáveis de interesse.
+Para superar essas limitações, usaremos gradiente descendente. Com gradiente descendente, em vez de gerar múltiplos valores para depois compará-los, realiza-se uma aproximação gradual aos menores valores das variáveis de interesse.
 
 A rigor, gradiente é uma generalização da derivada de funções de múltiplas variáveis. No presente caso, as variáveis seriam os parâmetros da equação da reta da regressão linear. Inicia-se por valores aleatórios das variáveis que se quer otimizar, no caso, as variáveis são os betas. Depois disso, calcula-se a derivada parcial da soma dos quadrados em relação a cada beta. Essas derivadas são as inclinações das retas tangentes à curva que representa os SQRs em relação aos candidatos a intercepto.
 
@@ -231,7 +231,7 @@ m <- map2_dbl(df$x, df$y, ~{
 
 O valor de m é -145, bem longe de zero. A tarefa seguinte é aproximar a inclinação o tanto quanto possível de zero. Como o valor é grande, podemos dar saltos maiores, mas conforme ele vai diminuindo, os saltos ficam cada vez menores.
 
-Os próximos saltos devem respeitar, portanto, o tamanho de cada coeficiente angular (m). Gradiente descendente utiliza algo que chamamos de taxa de aprendizado. Multiplicamos a taxa de aprendizado pelo valor de m e assim temos o tamanho do salto e o subtraímos do antigo intercepto. Esse processo de subtrair o produto da inclinação (gradiente) pela taxa de aprendizado do intercepto atual, repetidamente, conduz para direção oposta ao gradiente atual em caminho descedente até o menor atingir um gradiente satisfatoriamente próximo de zero.
+Os próximos saltos devem respeitar, portanto, o tamanho de cada coeficiente angular (m). Gradiente descendente utiliza algo que chamamos de taxa de aprendizado. Multiplicamos a taxa de aprendizado pelo valor de m e assim temos o tamanho do salto e o subtraímos do antigo intercepto. Esse processo de subtrair o produto da inclinação (gradiente) pela taxa de aprendizado do intercepto atual, repetidamente, conduz para direção oposta ao gradiente atual em caminho descendente até o menor atingir um gradiente satisfatoriamente próximo de zero.
 
 $$
  novo\_intercepto = antigo\_intercepto - inclinacao\_atual*taxa\_de\_aprendizado
@@ -252,7 +252,7 @@ m <- map2_dbl(df$x, df$y, ~{
 }) |> sum()
 ```
 
-Levando tudo o que foi dito em consideração, podemos criar uma função para estimar o intercepto com base em gradiente descedente.
+Levando tudo o que foi dito em consideração, podemos criar uma função para estimar o intercepto com base em gradiente descendente.
 
 É comum definir pelo menos mil iterações ou 0.0009 como um valor bem próximo de zero para m.
 
@@ -317,7 +317,7 @@ m <- map2_dbl(df$x, df$y, ~{
 }) |> sum()
 ```
 
-A função abaixo generaliza esse processo, a qual é por essa mesma razão chamada de gradiente descendente porque opera sobre múltiplas variáveis simultaneamente e percorre um processo descedente até encontrar o mínimo da função de perda (SQR).
+A função abaixo generaliza esse processo, a qual é por essa mesma razão chamada de gradiente descendente porque opera sobre múltiplas variáveis simultaneamente e percorre um processo descendente até encontrar o mínimo da função de perda (SQR).
 
 Adotamos uma taxa de aprendizado (ta) de 0.0001 e a inclinação da reta tangente como 0.0009, que é um valor tão próximo de 0 quanto desejamos para encontrar os betas. O intercepto ficou em zero e o slope ($\beta_1$) inicial em 0.5. Claro, você pode colocar outros valores.
 
