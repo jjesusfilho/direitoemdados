@@ -67,11 +67,11 @@ df |>
   theme_minimal()
 ```
 
-Note que os pontos estão um tanto distantes da linha. O objetivo da regressão linear encontrar uma reta que reduza tanto quanto possível a distância entre ela e os pontos.
+Note que os pontos estão um tanto distantes da linha. O objetivo da regressão linear é encontrar uma reta que reduza, tanto quanto possível, a distância entre ela e os pontos.
 
-Para isso, busca por valores para o intercepto e o coeficiente angular que ajustem melhor a linha aos pontos. Nessa primeira etapa, iremos buscar o melhor intercepto, mais adiante, faremos com os dois (intercepto e inclinação).
+Para isso, busca por valores para o intercepto e para o coeficiente angular que ajustem melhor a linha aos pontos. Nessa primeira etapa, iremos buscar o melhor intercepto, mais adiante, faremos com os dois (intercepto e inclinação).
 
-Graficamente, bastaria ir subindo a linha pelo eixo y, até posicioná-la num ponto ótimo. Matematicamente, calculamos a soma das distâncias (na verdade, o quadrado das distâncias). Essas distâncias são chamadas de resíduos. O objetivo é encontrar a linha cuja soma dos quadrados dos resíduos (SQR) é mínima. Esse processo se chama otimização. A SQR é muito importante, bem como sua média. Seu cálculo pode ser resumido da seguinte forma:
+Visualmente falando, daria para ir subindo a linha pelo eixo y, até posicioná-la num ponto ótimo. Mas para maior acurácia, calculamos a soma das distâncias (na verdade, o quadrado das distâncias). Essas distâncias são chamadas de resíduos. O objetivo é encontrar a reta que torne a soma quadrados dos resíduos (SQR) mínima. Esse processo se chama otimização. A SQR é muito importante. Seu cálculo pode ser resumido da seguinte forma:
 
 $$  SQR = \sum_{i=1}^{n} (y_i - \hat{y}_i)^2 $$ Onde:
 
@@ -287,13 +287,20 @@ fi  <- function(x, y, slope_i = 0.5, intercept = 0, ta = 0.01, m_final = 0.0009)
 
 ```
 
+Aplicando a função:
+
+```{r}
+fi(df$x, df$y)
+```
+
+
 O intercepto é 7,249958, arredondando, 7,25, quando a inclinação, ou seja, $\beta_1$ é 0,5.
 
 O valor não é tão diferente daquele que encontramos acima,7.3, sem recorrer à derivada.
 
 Precisamos dar uma passo adiante e calcular não só o intercepto como também o coeficiente angular ($\beta_0\,e\, \beta_1$)
 
-A derivada da inclinação é alcançada seguindo as regras da cadeia e derivada parcial. Abaixo aplicamos a derivada sobre o segundo ponto do dataset, x = 2, y = 3, pois o primeiro pode gerar alguma confusão na leitura. Realçamos o valor 2 quando ele representa o valor de x.
+A derivada da inclinação é alcançada seguindo as regras da cadeia e derivada parcial. Abaixo aplicamos a derivada sobre o segundo ponto do dataset `df`, x = 2, y = 3, pois o primeiro ponto pode gerar alguma confusão na leitura. Pusemos o valor 2 em negrito quando ele representa o valor de x.
 
 $$
 \frac{d}{d\,inclinacao} (3 - (intercepto + inclinacao*2))^2 = 2(1-(intercepto + inclinacao*1))* -2 =\\ - 2 * \textbf{2}*(3-(intercepto + inclinacao*\textbf{2}))
@@ -312,7 +319,7 @@ m <- map2_dbl(df$x, df$y, ~{
 
 A função abaixo generaliza esse processo, a qual é por essa mesma razão chamada de gradiente descendente porque opera sobre múltiplas variáveis simultaneamente e percorre um processo descedente até encontrar o mínimo da função de perda (SQR).
 
-Adotamos uma taxa de aprendizado (ta) de 0.0001 e a inclinação da reta tangente como 0.0009, que é um valor tão próximo de 0 quanto desejamos para encontrar os betas. O intercept ficou em zero e o slope ($\beta_1$) inicial em 0.5. Claro, você pode colocar outros valores.
+Adotamos uma taxa de aprendizado (ta) de 0.0001 e a inclinação da reta tangente como 0.0009, que é um valor tão próximo de 0 quanto desejamos para encontrar os betas. O intercepto ficou em zero e o slope ($\beta_1$) inicial em 0.5. Claro, você pode colocar outros valores.
 
 ```{r}
 
@@ -352,7 +359,7 @@ gd  <- function(x, y, slope = 0.5, intercept = 0, ta = 0.001, m_final = 0.0009){
 
 ```
 
-Feito isso, vamos estimar os betas de nossa base usando gradiente descendente:
+Feito isso, vamos estimar os betas de nosso modelo usando gradiente descendente:
 
 ```{r}
 gd(df$x, df$y)
