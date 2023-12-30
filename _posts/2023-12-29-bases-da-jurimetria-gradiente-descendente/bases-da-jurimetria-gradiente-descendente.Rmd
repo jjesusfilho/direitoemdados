@@ -85,7 +85,7 @@ $$  SQR = \sum_{i=1}^{n} (y_i - \hat{y}_i)^2 $$ Onde:
 
 -   $\hat{y}_i​$ representa os valores preditos.
 
-SQR é também chamada de função de perda (loss function). Função de perda cumpre papel relevantíssimo em algorítimos de aprendizado de máquina (machine learning) porque são otimizadas para reduzir a discrepância entre os valores reais e os valores preditos.
+SQR é também chamada de função de perda (loss function). Funções de perda cumprem papel relevantíssimo em algorítimos de aprendizado de máquina (machine learning) porque são otimizadas para reduzir a discrepância entre os valores reais e os valores preditos.
 
 Uma maneira de fazer isso seria gerar muitos interceptos e verificar qual deles reduz a distância ao mínimo possível. Geraremos vários interceptos com valores pequenos entre eles e calcularemos a soma dos quadrados dos resíduos para cada um.
 

@@ -2181,7 +2181,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <div class="d-article">
 <h2 id="introdução">Introdução</h2>
-<p>Neste tutorial iremos mostrar como usar gradiente descendente para estimar os coeficientes de uma regressão linear. Uma vez compreendido, gradiente descendente pode ser usado para estimar outros modelos e, se você se aventurar por deep learning, verá que gradiente descedente é peça chave no processo de estimar pesos em redes neurais. O domínio de gradiente descendente é fundamental para quem quer trabalhar com inteligência artificial aplicada ao direito.</p>
+<p>Neste tutorial iremos mostrar como usar gradiente descendente para estimar os coeficientes de uma regressão linear. Uma vez compreendido, gradiente descendente pode ser usado para estimar outros modelos e, se você se aventurar por deep learning, verá que gradiente descendente é peça chave no processo de estimar pesos em redes neurais. O domínio de gradiente descendente é fundamental para quem quer trabalhar com inteligência artificial aplicada ao direito.</p>
 <p>Para demonstrar como gradiente descendente funciona, faremos um primeiro exercício para encontrar o intercepto de uma regressão linear usando uma sequência de valores possíveis e verificar qual deles retorna a menor soma dos quadrados dos resíduos (SQR).</p>
 <p>Após aprender como estimar o intercepto a partir de uma sequência de possíveis valores, mostraremos como fazer o mesmo com derivada e, por fim, usaremos gradiente descendente para estimar tanto o intercepto quanto o coeficiente angular do modelo.</p>
 <p>Neste tutorial, assumimos que você já conhece algo de regressão linear e do processo de estimação de parâmetros
@@ -2258,9 +2258,9 @@ via mínimos quadrados.</p>
 </div>
 <p><img src="bases-da-jurimetria-gradiente-descendente_files/figure-html5/unnamed-chunk-5-1.png" width="624" /></p>
 </div>
-<p>Note que os pontos estão um tanto distantes da linha. O objetivo da regressão linear encontrar uma reta que reduza tanto quanto possível a distância entre ela e os pontos.</p>
-<p>Para isso, busca por valores para o intercepto e o coeficiente angular que ajustem melhor a linha aos pontos. Nessa primeira etapa, iremos buscar o melhor intercepto, mais adiante, faremos com os dois (intercepto e inclinação).</p>
-<p>Graficamente, bastaria ir subindo a linha pelo eixo y, até posicioná-la num ponto ótimo. Matematicamente, calculamos a soma das distâncias (na verdade, o quadrado das distâncias). Essas distâncias são chamadas de resíduos. O objetivo é encontrar a linha cuja soma dos quadrados dos resíduos (SQR) é mínima. Esse processo se chama otimização. A SQR é muito importante, bem como sua média. Seu cálculo pode ser resumido da seguinte forma:</p>
+<p>Note que os pontos estão um tanto distantes da linha. O objetivo da regressão linear é encontrar uma reta que reduza, tanto quanto possível, a distância entre ela e os pontos.</p>
+<p>Para isso, busca por valores para o intercepto e para o coeficiente angular que ajustem melhor a linha aos pontos. Nessa primeira etapa, iremos buscar o melhor intercepto, mais adiante, faremos com os dois (intercepto e inclinação).</p>
+<p>Visualmente falando, daria para ir subindo a linha pelo eixo y, até posicioná-la num ponto ótimo. Mas para maior acurácia, calculamos a soma das distâncias (na verdade, o quadrado das distâncias). Essas distâncias são chamadas de resíduos. O objetivo é encontrar a reta que torne a soma quadrados dos resíduos (SQR) mínima. Esse processo se chama otimização. A SQR é muito importante. Seu cálculo pode ser resumido da seguinte forma:</p>
 <p><span class="math display">\[  SQR = \sum_{i=1}^{n} (y_i - \hat{y}_i)^2 \]</span> Onde:</p>
 <ul>
 <li><p>SQR é a soma dos quadrados dos resíduos.</p></li>
@@ -2269,7 +2269,7 @@ via mínimos quadrados.</p>
 <li><p><span class="math inline">\(y_i\)</span>​ representa os valores observados.</p></li>
 <li><p><span class="math inline">\(\hat{y}_i​\)</span> representa os valores preditos.</p></li>
 </ul>
-<p>SQR é também chamada de função de perda (loss function). Função de perda cumpre papel relevantíssimo em algorítimos de aprendizado de máquina (machine learning) porque são otimizadas para reduzir a discrepância entre os valores reais e os valores preditos.</p>
+<p>SQR é também chamada de função de perda (loss function). Funções de perda cumprem papel relevantíssimo em algorítimos de aprendizado de máquina (machine learning) porque são otimizadas para reduzir a discrepância entre os valores reais e os valores preditos.</p>
 <p>Uma maneira de fazer isso seria gerar muitos interceptos e verificar qual deles reduz a distância ao mínimo possível. Geraremos vários interceptos com valores pequenos entre eles e calcularemos a soma dos quadrados dos resíduos para cada um.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -2423,7 +2423,7 @@ via mínimos quadrados.</p>
 <li>Pode demorar muito.</li>
 </ul>
 <h2 id="gradiente-descendente"><em>Gradiente descendente</em></h2>
-<p>Para superar essas limitações, usaremos gradiente descendente. Com gradiente descedente, em vez de gerar múltiplos valores para depois compará-los, realiza-se uma aproximação gradual aos menores valores das variáveis de interesse.</p>
+<p>Para superar essas limitações, usaremos gradiente descendente. Com gradiente descendente, em vez de gerar múltiplos valores para depois compará-los, realiza-se uma aproximação gradual aos menores valores das variáveis de interesse.</p>
 <p>A rigor, gradiente é uma generalização da derivada de funções de múltiplas variáveis. No presente caso, as variáveis seriam os parâmetros da equação da reta da regressão linear. Inicia-se por valores aleatórios das variáveis que se quer otimizar, no caso, as variáveis são os betas. Depois disso, calcula-se a derivada parcial da soma dos quadrados em relação a cada beta. Essas derivadas são as inclinações das retas tangentes à curva que representa os SQRs em relação aos candidatos a intercepto.</p>
 <p>Sobre o gráfico que montamos, se adicionarmos o sqr no eixo y e o intercepto no eixo x, podemos traçar uma reta tangente a ele cujas coordenadas são x = 7.3 e y = 113.65 . Abaixo traçamos essa linha com coeficiente angular zero (nem sempre o zero é possível) e intercepto em y (SQR) = 113.65, apenas para efeitos de ilustração.</p>
 <div class="layout-chunk" data-layout="l-body">
@@ -2452,7 +2452,7 @@ via mínimos quadrados.</p>
 </div>
 </div>
 <p>O valor de m é -145, bem longe de zero. A tarefa seguinte é aproximar a inclinação o tanto quanto possível de zero. Como o valor é grande, podemos dar saltos maiores, mas conforme ele vai diminuindo, os saltos ficam cada vez menores.</p>
-<p>Os próximos saltos devem respeitar, portanto, o tamanho de cada coeficiente angular (m). Gradiente descendente utiliza algo que chamamos de taxa de aprendizado. Multiplicamos a taxa de aprendizado pelo valor de m e assim temos o tamanho do salto e o subtraímos do antigo intercepto. Esse processo de subtrair o produto da inclinação (gradiente) pela taxa de aprendizado do intercepto atual, repetidamente, conduz para direção oposta ao gradiente atual em caminho descedente até o menor atingir um gradiente satisfatoriamente próximo de zero.</p>
+<p>Os próximos saltos devem respeitar, portanto, o tamanho de cada coeficiente angular (m). Gradiente descendente utiliza algo que chamamos de taxa de aprendizado. Multiplicamos a taxa de aprendizado pelo valor de m e assim temos o tamanho do salto e o subtraímos do antigo intercepto. Esse processo de subtrair o produto da inclinação (gradiente) pela taxa de aprendizado do intercepto atual, repetidamente, conduz para direção oposta ao gradiente atual em caminho descendente até o menor atingir um gradiente satisfatoriamente próximo de zero.</p>
 <p><span class="math display">\[
 novo\_intercepto = antigo\_intercepto - inclinacao\_atual*taxa\_de\_aprendizado
 \]</span></p>
@@ -2471,7 +2471,7 @@ novo\_intercepto = antigo\_intercepto - inclinacao\_atual*taxa\_de\_aprendizado
 <span><span class='op'>}</span><span class='op'>)</span> <span class='op'>|&gt;</span> <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='op'>)</span></span></code></pre>
 </div>
 </div>
-<p>Levando tudo o que foi dito em consideração, podemos criar uma função para estimar o intercepto com base em gradiente descedente.</p>
+<p>Levando tudo o que foi dito em consideração, podemos criar uma função para estimar o intercepto com base em gradiente descendente.</p>
 <p>É comum definir pelo menos mil iterações ou 0.0009 como um valor bem próximo de zero para m.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -2503,10 +2503,17 @@ novo\_intercepto = antigo\_intercepto - inclinacao\_atual*taxa\_de\_aprendizado
 <span><span class='op'>}</span></span></code></pre>
 </div>
 </div>
+<p>Aplicando a função:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'>fi</span><span class='op'>(</span><span class='va'>df</span><span class='op'>$</span><span class='va'>x</span>, <span class='va'>df</span><span class='op'>$</span><span class='va'>y</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>[1] 7.249958</code></pre>
+</div>
 <p>O intercepto é 7,249958, arredondando, 7,25, quando a inclinação, ou seja, <span class="math inline">\(\beta_1\)</span> é 0,5.</p>
 <p>O valor não é tão diferente daquele que encontramos acima,7.3, sem recorrer à derivada.</p>
 <p>Precisamos dar uma passo adiante e calcular não só o intercepto como também o coeficiente angular (<span class="math inline">\(\beta_0\,e\, \beta_1\)</span>)</p>
-<p>A derivada da inclinação é alcançada seguindo as regras da cadeia e derivada parcial. Abaixo aplicamos a derivada sobre o segundo ponto do dataset, x = 2, y = 3, pois o primeiro pode gerar alguma confusão na leitura. Realçamos o valor 2 quando ele representa o valor de x.</p>
+<p>A derivada da inclinação é alcançada seguindo as regras da cadeia e derivada parcial. Abaixo aplicamos a derivada sobre o segundo ponto do dataset <code>df</code>, x = 2, y = 3, pois o primeiro ponto pode gerar alguma confusão na leitura. Pusemos o valor 2 em negrito quando ele representa o valor de x.</p>
 <p><span class="math display">\[
 \frac{d}{d\,inclinacao} (3 - (intercepto + inclinacao*2))^2 = 2(1-(intercepto + inclinacao*1))* -2 =\\ - 2 * \textbf{2}*(3-(intercepto + inclinacao*\textbf{2}))
 \]</span></p>
@@ -2521,8 +2528,8 @@ novo\_intercepto = antigo\_intercepto - inclinacao\_atual*taxa\_de\_aprendizado
 <span><span class='op'>}</span><span class='op'>)</span> <span class='op'>|&gt;</span> <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='op'>)</span></span></code></pre>
 </div>
 </div>
-<p>A função abaixo generaliza esse processo, a qual é por essa mesma razão chamada de gradiente descendente porque opera sobre múltiplas variáveis simultaneamente e percorre um processo descedente até encontrar o mínimo da função de perda (SQR).</p>
-<p>Adotamos uma taxa de aprendizado (ta) de 0.0001 e a inclinação da reta tangente como 0.0009, que é um valor tão próximo de 0 quanto desejamos para encontrar os betas. O intercept ficou em zero e o slope (<span class="math inline">\(\beta_1\)</span>) inicial em 0.5. Claro, você pode colocar outros valores.</p>
+<p>A função abaixo generaliza esse processo, a qual é por essa mesma razão chamada de gradiente descendente porque opera sobre múltiplas variáveis simultaneamente e percorre um processo descendente até encontrar o mínimo da função de perda (SQR).</p>
+<p>Adotamos uma taxa de aprendizado (ta) de 0.0001 e a inclinação da reta tangente como 0.0009, que é um valor tão próximo de 0 quanto desejamos para encontrar os betas. O intercepto ficou em zero e o slope (<span class="math inline">\(\beta_1\)</span>) inicial em 0.5. Claro, você pode colocar outros valores.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>gd</span>  <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span>, <span class='va'>slope</span> <span class='op'>=</span> <span class='fl'>0.5</span>, <span class='va'>intercept</span> <span class='op'>=</span> <span class='fl'>0</span>, <span class='va'>ta</span> <span class='op'>=</span> <span class='fl'>0.001</span>, <span class='va'>m_final</span> <span class='op'>=</span> <span class='fl'>0.0009</span><span class='op'>)</span><span class='op'>{</span></span>
@@ -2560,7 +2567,7 @@ novo\_intercepto = antigo\_intercepto - inclinacao\_atual*taxa\_de\_aprendizado
 <span><span class='op'>}</span></span></code></pre>
 </div>
 </div>
-<p>Feito isso, vamos estimar os betas de nossa base usando gradiente descendente:</p>
+<p>Feito isso, vamos estimar os betas de nosso modelo usando gradiente descendente:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'>gd</span><span class='op'>(</span><span class='va'>df</span><span class='op'>$</span><span class='va'>x</span>, <span class='va'>df</span><span class='op'>$</span><span class='va'>y</span><span class='op'>)</span></span></code></pre>
@@ -2588,7 +2595,7 @@ Coefficients:
 <h2 id="conclusão">Conclusão</h2>
 <p>Nesse tutorial, vimos como usar gradiente descendente para estimar os coeficientes de uma regressão linear. Você pode usar o mesmo procedimento para estimar mais coeficientes ou mesmo estimar coeficientes de outros modelos como regressão logística e poisson.</p>
 <p>No entanto, essa aula foi mais voltada para aquele que têm interesse em, futuramente, aprender redes neurais profundas, pois gradiente descendente é um passo fundamental nesse processo.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
